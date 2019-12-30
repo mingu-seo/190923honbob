@@ -51,6 +51,7 @@ public class TestController {
 			TestVO vo) {
 		
 		List<TestVO> list = testDao.memberList(vo);
+		// 장수정 수정
 		model.addAttribute("list", list);
 		model.addAttribute("vo", vo);
 		return "memberList2";
