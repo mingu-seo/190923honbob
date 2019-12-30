@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="test">
+	<select id="selectMember" resultType="test.TestVO" parameterType="test.TestVO">
+		SELECT * FROM spring5fs.member
+		<where>
+			<if test="email != null">
+			and email like '%${email}%'
+			</if>
+			<if test="name != null">
+			and name = #{name}
+			</if>
+			<if test="from != null and to != null and from != '' and to != ''">
+			and regdate between #{from} and #{to}
+			</if>
+		</where>
+		ORDER BY regdate DESC
+	</select>
+	
+	
+	<insert id="insertMember" parameterType="test.TestVO">
+		INSERT INTO spring5fs.member
+		(email, password, name, regdate, profile, introduce)
+		values
+		(#{email}, #{password}, #{name}, now(), #{profile}, #{introduce})
+	</insert>
+	
+	<select id="memberDetail" parameterType="Integer" resultType="test.TestVO">
+		SELECT * FROM spring5fs.member WHERE id=#{id}
+	</select>
+	
+	<update id="updateMember" parameterType="test.TestVO">
+		UPDATE spring5fs.member SET
+		email=#{email}, password=#{password}, name=#{name}, introduce=#{introduce}
+		<if test="profile != null">
+			, profile=#{profile}
+		</if>
+		WHERE id= #{id}
+	</update>
+	
+	<delete id="deleteMember" parameterType="Integer">
+		DELETE FROM spring5fs.member WHERE id=#{id}
+	</delete>
+	
+	<select id="loginCheck" parameterType="java.util.HashMap" resultType="test.TestVO">
+		SELECT * FROM spring5fs.member WHERE email=#{mail} AND password=#{pwd}
+	</select>
+	
+</mapper>
