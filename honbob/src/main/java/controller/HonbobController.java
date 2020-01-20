@@ -9,5 +9,7 @@ import service.HonbobDetailService;
 public class HonbobController {
 	
 	@Autowired
-	HonbobDetailService hbDetailService;
+	private HonbobDetailService hbDetailService;
+	
+	
 }
