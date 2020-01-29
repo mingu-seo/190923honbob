@@ -8,7 +8,7 @@
 				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<!-- component-scan : 자동으로 어노테이션 클래스 객체 생성 -->
-	<context:component-scan base-package="Honmuk"/>
+	<context:component-scan base-package="controller, dao, service"/>
 	
 	<!-- annotation 활성화 -->
 	<mvc:annotation-driven/>
