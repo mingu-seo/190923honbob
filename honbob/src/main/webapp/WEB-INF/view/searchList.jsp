@@ -1,6 +1,6 @@
-<%@page import="java.util.List"%> 
-<%@page import="Honmuk.RestaurantVO"%>
-<%@page import="Honmuk.PageInfo"%>
+<%@page import="java.util.List"%>
+<%@page import="vo.RestaurantVO"%>
+<%@page import="util.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -350,7 +350,12 @@
                                    <div class="restaurants-info">
                                        <a href="#"><h2>${res.res_name }</h2></a>
                                        <strong class="grade"><img src="images/grade_icon.png" width="15" height="15">${res.grade }</strong>
-                                       <p><span>지역 / 카테고리</span></p>
+                                       <p><span>지역 / 
+										 <c:if test="${res.koreafood}==1">한식</c:if><c:if test="${res.japanfood}==1">일식</c:if>
+										 <c:if test="${res.chinafood}==1">중식</c:if><c:if test="${res.westernfood}==1">양식</c:if>
+										 <c:if test="${res.etcfood}==1">기타</c:if><c:if test="${res.drink}==1">혼술</c:if>
+										 <c:if test="${res.partition2}==1">칸막이</c:if><c:if test="${res.calculator}==1">무인계산기</c:if>
+										 <c:if test="${res.park}==1">주차가능</c:if><c:if test="${res.table2}==1">2인테이블</c:if></span></p>
                                        <p>
                                            <span class="view_count"><img src="images/read_icon.png" width="15" height="15">${res.readcount }</span>
                                            <span class="review_count"><img src="images/review_icon.jpg" width="15" height="15">${res.reviewcount }</span>
