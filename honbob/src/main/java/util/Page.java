@@ -1,7 +1,7 @@
 package util;
 
-import Honmuk.RestaurantVO;
-import Honmuk.PageInfo;
+import util.PageInfo;
+import vo.RestaurantVO;
 
 public class Page {
 	
