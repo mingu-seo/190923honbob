@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import util.PageInfo;
 import util.Page;
-
+import vo.RestaurantVO;
 
 @Controller
 public class HonmukController {
@@ -25,8 +25,8 @@ public class HonmukController {
 	//메인페이지에서 키워드로 검색시 경로
 	@RequestMapping("/searchList.do")
 	public String searchKeyword(Model model, RestaurantVO resVO, @RequestParam(name="page", required = false) String page,
-			HttpServletRequest request, @RequestParam(name="filter1", required = false) String filter1,
-			@RequestParam(name="keyword", required = false) String keyword) {
+								HttpServletRequest request, @RequestParam(name="filter1", required = false) String filter1,
+								@RequestParam(name="keyword", required = false) String keyword) {
 		
 		//필터창 정렬순 지정
 		if("grade".equals(filter1)) {
@@ -52,7 +52,7 @@ public class HonmukController {
 		
 		
 		//데이터로 검색결과 받는 경로		
-		List<RestaurantVO> searchlist = hmDetailService.searchList(resVO); 
+		List<RestaurantVO> searchlist = hmDetailService.searchList(resVO);
 		model.addAttribute("searchlist", searchlist);	
 		
 		
