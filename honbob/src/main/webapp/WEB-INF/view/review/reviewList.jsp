@@ -8,5 +8,9 @@
 <title>Review List</title>
 </head>
 <body>
+${dataSample}
+<c:forEach var="sample" items="${samples}">
+    ${sample.subject} ${sample.content}
+</c:forEach>
 </body>
 </html>
