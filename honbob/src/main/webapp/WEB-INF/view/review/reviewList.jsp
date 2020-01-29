@@ -5,11 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Review List</title>
 </head>
 <body>
-<c:forEach var="member" items="${list}" varStatus="status">
-	${member.id} ${member.name} ${member.email} ${member.regdate}<br>
-</c:forEach>
 </body>
 </html>
