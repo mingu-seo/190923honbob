@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mybatis 사용 -->
+<mapper namespace="Honmuk">
+	
+	<select id="searchList" parameterType="Honmuk.RestaurantVO" resultType="Honmuk.RestaurantVO">
+		select * from restaurantvo
+		<where>
+			<if test="keyword != null">
+				res_name like '%${keyword}%' or address like '%${keyword}%'
+			</if>
+		
+			<if test="koreafood == 1">
+				koreafood='1'
+			</if>
+			<if test="japanfood == 1">
+				 or japanfood='1'
+			</if>
+			<if test="westernfood == 1">
+				 or westernfood='1'
+			</if>
+			<if test="chinafood == 1">
+				 or chinafood='1'
+			</if>
+			<if test="etcfood == 1">
+				 or etcfood='1' 
+			</if>		 
+		 
+			<if test="drink == 1">
+				 or drink='1' 
+			</if>
+			<if test="partition2 == 1">
+				 or partition2='1' 
+			</if>
+			<if test="calculator == 1">
+				 or calculator='1' 
+			</if>
+			<if test="park == 1">
+				 or park='1' 
+			</if>
+			<if test="table2 == 1">
+				 or table2='1' 
+			</if>
+		</where>		
+		
+		<if test="grade == 1">
+			order by grade desc
+		</if>
+		<if test="readcount == 1">
+			order by readcount desc
+		</if>
+		<if test="reviewcount == 1">
+			order by reviewcount desc
+		</if>
+		
+		limit #{startIndex}, #{limit};
+	</select>
+		
+	<select id="searchCount" resultType="int">
+		select count(*) from restaurantvo;
+	</select>
+
+</mapper>
