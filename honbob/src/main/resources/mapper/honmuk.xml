@@ -4,7 +4,7 @@
 <!-- Mybatis 사용 -->
 <mapper namespace="Honmuk">
 	
-	<select id="searchList" parameterType="Honmuk.RestaurantVO" resultType="Honmuk.RestaurantVO">
+	<select id="searchList" parameterType="vo.RestaurantVO" resultType="vo.RestaurantVO">
 		select * from restaurantvo
 		<where>
 			<if test="keyword != null">
