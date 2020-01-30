@@ -1,4 +1,4 @@
-package Honmuk;
+package vo;
 
 public class RestaurantVO {
 

@@ -60,5 +60,14 @@
 	<select id="searchCount" resultType="int">
 		select count(*) from restaurantvo;
 	</select>
+	
+	<select id="getList" resultType="vo.RestaurantVO">
+		select * from restaurant;
+	</select>
+	
+	<insert id="registImageVO">
+		insert into restaurantImage(res_image_num,res_num,best_image,res_image_name)
+							values(#{res_image_num},#{res_num},#{best_image},#{res_image_name})
+	</insert>
 
 </mapper>

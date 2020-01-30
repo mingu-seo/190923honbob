@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import util.PageInfo;
+import vo.RestaurantImageVO;
+import vo.RestaurantVO;
 import util.Page;
 
 
@@ -57,6 +59,21 @@ public class HonmukController {
 		
 		
 		return "searchList";
+	}
+	@RequestMapping("/DetailView.do")
+	public String DetailRes(Model model) {
+		
+		
+		return "detail/detailView";
+	}
+	
+	@RequestMapping("/create_picture")
+	public String RegistPicture() {
+		
+		List<RestaurantVO> resList = hmDetailService.getList();
+		
+		
+		return "detail/detailView";
 	}
 	
 }
