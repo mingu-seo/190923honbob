@@ -50,8 +50,36 @@ public class RestaurantVO {
 	private int startIndex;	
 	
 	private String keyword;
+	
+	private String addressCut;
+	private String category;
+	private String option;
 		
 	
+	public String getOption() {
+		return option;
+	}
+
+	public void setOption(String option) {
+		this.option = option;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getAddressCut() {
+		return addressCut;
+	}
+
+	public void setAddressCut(String addressCut) {
+		this.addressCut = addressCut;
+	}
+
 	public String getKeyword() {
 		return keyword;
 	}

@@ -81,6 +81,13 @@
             width: 385px;
             height: 250px;
         }
+        .restaurants-info p:nth-child(3) span{
+        	white-space : nowrap;
+	    	overflow : hidden;
+	    	text-overflow: ellipsis;
+	    	display: block;
+	    	width: 385px;
+    	}
         .paging{
             font-size: xx-large; 
             text-align: center;       
@@ -222,8 +229,10 @@
         .filterArea label{
         	cursor: pointer;
         }
-
-
+        #img{
+	    	position : absolute;
+	    }       
+    	
     </style>
     <style>
     .wrap {
@@ -241,15 +250,21 @@
     .wrap .info:nth-child(1) {
     border: 0;box-shadow: 0px 1px 2px #888;
     }
-
+	.info .title{
+		position: absolute;
+		background-color: #fbe7b2;
+		width: 286px;
+		height: 43px;		
+	}
     .info .body {
-    position: relative;overflow: hidden;
+    position: relative;overflow: hidden; left: 8px;
     }
     .info .desc {
-    position: relative;margin: 13px 0 0 90px;height: 75px;
+    position: relative;margin: 13px 0 0 90px;height: 90px;
     }
     .desc .ellipsis {
     overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
+    font-size: 20px;
     }
     .desc .jibun {
     font-size: 11px;color: #888;margin-top: -2px;
@@ -264,11 +279,7 @@
     }
     .info .link {
     color: #5085BB;
-    }
-    
-    #img{
-    	position : absolute;
-    }    
+    }           
     </style>
 <script>
 
@@ -350,12 +361,7 @@
                                    <div class="restaurants-info">
                                        <a href="#"><h2>${res.res_name }</h2></a>
                                        <strong class="grade"><img src="images/grade_icon.png" width="15" height="15">${res.grade }</strong>
-                                       <p><span>지역 / 
-										 <c:if test="${res.koreafood}==1">한식</c:if><c:if test="${res.japanfood}==1">일식</c:if>
-										 <c:if test="${res.chinafood}==1">중식</c:if><c:if test="${res.westernfood}==1">양식</c:if>
-										 <c:if test="${res.etcfood}==1">기타</c:if><c:if test="${res.drink}==1">혼술</c:if>
-										 <c:if test="${res.partition2}==1">칸막이</c:if><c:if test="${res.calculator}==1">무인계산기</c:if>
-										 <c:if test="${res.park}==1">주차가능</c:if><c:if test="${res.table2}==1">2인테이블</c:if></span></p>
+                                       <p><span>${res.addressCut } - ${res.category }${res.option }</span></p>
                                        <p>
                                            <span class="view_count"><img src="images/read_icon.png" width="15" height="15">${res.readcount }</span>
                                            <span class="review_count"><img src="images/review_icon.jpg" width="15" height="15">${res.reviewcount }</span>
@@ -456,7 +462,7 @@
                             </div>
                             <div class="icon <% if(resVO.getWesternfood()==1){%>checked<%}%>">
                                 <input type="checkbox" id="westernfood" name="westernfood" value="1" <% if(resVO.getWesternfood()==1){%>checked="checked"<%}%>>
-                                <label for="westernfood" class="westernfood"><img id="img" src="images/westernfood.jpg" style="cursor:pointer; <% if(resVO.getWesternfood()==1){%>opacity:0<%}%>"><img src="images/westernfood_clicked.png" style="cursor:pointer"><h4>양식</h4></label>
+                                <label for="westernfood" class="westernfood"><img id="img" src="images/westernfood.jpeg" style="cursor:pointer; <% if(resVO.getWesternfood()==1){%>opacity:0<%}%>"><img src="images/westernfood_clicked.jpeg" style="cursor:pointer"><h4>양식</h4></label>
                             </div>
                             <div class="icon <% if(resVO.getEtcfood()==1){%>checked<%}%>">
                                 <input type="checkbox" id="etcfood" name="etcfood" value="1" <% if(resVO.getEtcfood()==1){%>checked="checked"<%}%>>
@@ -503,7 +509,7 @@
     
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=968f5cb093e2b0f76e796a0721504779&libraries=services"></script>
 <script>
-
+	
 	var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 		mapOption = { 
 		    center: new kakao.maps.LatLng(33.451475, 126.570528), // 지도의 중심좌표
@@ -514,36 +520,55 @@
 	
 	var geocoder = new kakao.maps.services.Geocoder();
 	
-	console.log("<%=searchlist.get(0).getAddress()%>");
 	
-	var locations = [
-		'서울특별시 금천구 가산동 가산디지털2로 115',
-		'서울 금천구 가산디지털1로 168',
-		'서울 금천구 가산디지털2로 108',
-		'서울 금천구 가산디지털2로 98'
-	]
-	<%-- <% for(int i=0; i<searchlist.size(); i++){
-		locations[i] = searchlist.get(i).getAddress();
-	}
-	%> --%>
+	var locations = [];
+	var res_name = [];
+	var grade = [];
+	var addressCut = [];
+	var category = [];
+	var readcount = [];
+	var reviewcount = [];	
+	var markericon = [];
+	
+	<c:forEach items="${searchlist}" var="list">		
+		locations.push("${list.address}");
+		res_name.push("${list.res_name}");
+		grade.push("${list.grade}");
+		addressCut.push("${list.addressCut}");
+		category.push("${list.category}");
+		readcount.push("${list.readcount}");
+		reviewcount.push("${list.reviewcount}");		
+		
+		<c:if test="${list.koreafood==1}">markericon.push("images/koreafood_border.png")</c:if>
+		<c:if test="${list.japanfood==1}">markericon.push("images/japanfood_border.png")</c:if>
+		<c:if test="${list.chinafood==1}">markericon.push("images/chinafood_border.png")</c:if>
+		<c:if test="${list.westernfood==1}">markericon.push("images/westernfood_border.png")</c:if>
+		<c:if test="${list.etcfood==1}">markericon.push("images/etcfood_border.png")</c:if>
+		
+	</c:forEach>
 	
 	
-	var content;
+	var content;	
+	var arrIdx = 0;
 	
 	
-	locations.forEach(function(location){		
-	
-		geocoder.addressSearch(location, function(result, status) {			
+	locations.forEach(function(element){		
+		geocoder.addressSearch(element, function(result, status) {			
 			
 		    // 정상적으로 검색이 완료됐으면 
 		     if (status === kakao.maps.services.Status.OK) {
 	
 		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 	
+		        
+		        var icon = new kakao.maps.MarkerImage(markericon[arrIdx],
+		    	        new kakao.maps.Size(42, 42));
+		        
 		        // 결과값으로 받은 위치를 마커로 표시합니다
 		        var marker = new kakao.maps.Marker({
 		            map: map,
-		            position: coords
+		            position: coords,
+		            image : icon
 		        });
 		
 		        
@@ -556,11 +581,6 @@
 					position: marker.getPosition()       
 				});	
 				
-				/* var div = document.createElement('div');
-				var info = document.createElement('div');
-				div.className = 'testClass';
-				div.appendChild(info); */
-				
 				overlay.setPosition(marker.getPosition());
 				overlay.setContent('<div class="wrap">' + 
 				        '    <div class="info">' + 
@@ -568,13 +588,15 @@
 				        '        </div>' + 
 				        '        <div class="body">' + 
 				        '            <div class="img">' +
-				        '                <img src="http://cfile181.uf.daum.net/image/250649365602043421936D" width="90" height="90">' +
+				        '                <img src="http://cfile181.uf.daum.net/image/250649365602043421936D" width="75" height="73">' +
 				        '           </div>' + 
 				        '            <div class="desc">' + 
-				        '                <div class="ellipsis">식당명 </div>' + 
-				        '                <div class="marker-grade">별점 </div>' + 
-				        '                <div class="jibun ellipsis">지역 - 카테고리</div>' + 
-				        '                <div>즐겨찾기수 + 리뷰수</div>' + 
+				        '                <div class="ellipsis">'+res_name[arrIdx]+'</div>' + 
+				        '                <div class="marker-grade"><img src="images/grade_icon.png" width="15" height="15">'+grade[arrIdx]+' </div>' + 
+				        '                <div class="jibun ellipsis">'+addressCut[arrIdx]+' - '+category[arrIdx]+'</div>' + 
+				        '                <div><img src="images/read_icon.png" width="15" height="15">'+readcount[arrIdx]+
+				        '					  <img src="images/review_icon.jpg" width="15" height="15"> '+reviewcount[arrIdx]+
+				        '				 </div>' + 
 				        '            </div>' + 
 				        '        </div>' + 
 				        '    </div>' +    
@@ -597,8 +619,8 @@
 		        map.setCenter(coords);
    
 		    } 
+			arrIdx++;
 		});  
-		
 	});
 
 </script>
