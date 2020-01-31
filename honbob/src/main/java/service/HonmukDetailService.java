@@ -47,14 +47,29 @@ public class HonmukDetailService {
 	public int count() {
 		return HonmukDao.count();
 	}
-
+	//리스트 가져오기
 	public List<RestaurantVO> getList() {
 		return HonmukDao.getList();
 		
 	}
-
+	//이미지DB 등록
 	public int registImageVO(RestaurantImageVO resImageVo) {
 		return HonmukDao.registImageVO(resImageVo);
 	}
+	//식당 정보 가져오기
+	public RestaurantVO getRestaurantById(int res_num) {
+		return HonmukDao.getRestaurantById(res_num);
+	}
+	//식당 사진 가져오기
+	public List<RestaurantImageVO> getRestaurantImageById(int res_num) {
+		return HonmukDao.getImageList(res_num);
+	}
+	//추천 식당 정보가져오기
+
+	//조회수 올리기
+	public int upViewCount(int res_num) {
+		return HonmukDao.upViewCount(res_num);
+	}
 	
+	//리뷰 가져오기
 }

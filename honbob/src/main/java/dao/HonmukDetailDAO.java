@@ -27,8 +27,24 @@ public class HonmukDetailDAO {
 		
 		return sqlSession.selectList("Honmuk.getList");
 	}
-
+	//식당 사진 데이터베이스 등록
 	public int registImageVO(RestaurantImageVO resImageVo) {
 		return sqlSession.insert("Honmuk.registImageVO", resImageVo);
+	}
+	//식당 사진 가져오기
+	public List<RestaurantImageVO> getImageList(int res_num){
+		return sqlSession.selectList("Honmuk.getImage", res_num);
+	}
+	//식당 대표사진 가져오기
+	public RestaurantImageVO getBestImageList(int res_num){
+		return sqlSession.selectOne("Honmuk.getBestImage", res_num);
+	}
+	//식당 정보 가져오기
+	public RestaurantVO getRestaurantById(int res_num) {
+		return sqlSession.selectOne("Honmuk.getRestaurantById",res_num);
+	}
+	//조회수 올리기
+	public int upViewCount(int res_num) {
+		return sqlSession.update("Honmuk.upViewCount",res_num);
 	}
 }

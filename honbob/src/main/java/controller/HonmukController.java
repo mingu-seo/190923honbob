@@ -61,19 +61,32 @@ public class HonmukController {
 		return "searchList";
 	}
 	@RequestMapping("/DetailView.do")
-	public String DetailRes(Model model) {
+	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num) {
+		//식당정보 가져오기
+		RestaurantVO restDetail = hmDetailService.getRestaurantById(res_num);
+		//식당사진 가져오기
+		List<RestaurantImageVO> imageList = hmDetailService.getRestaurantImageById(res_num);
+		//추천식당 3개정도 가져오기
 		
+		//리뷰가져오기
+		
+		//조회수 올리기
+		int upCount = hmDetailService.upViewCount(res_num);
+		if(upCount==1) {
+			System.out.println("up");
+		}else {
+			System.out.println("fail");
+		}
+		//별점 올리기
+		
+		//별점 내리기
+		
+		//모델에 넣기
+		model.addAttribute("restaurantDetail", restDetail);
+		model.addAttribute("imageList", imageList);
 		
 		return "detail/detailView";
 	}
 	
-	@RequestMapping("/create_picture")
-	public String RegistPicture() {
-		
-		List<RestaurantVO> resList = hmDetailService.getList();
-		
-		
-		return "detail/detailView";
-	}
 	
 }

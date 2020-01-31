@@ -60,14 +60,29 @@
 	<select id="searchCount" resultType="int">
 		select count(*) from restaurantvo;
 	</select>
-	
+	<!-- 전체 식당 리스트 불러오기 -->
 	<select id="getList" resultType="vo.RestaurantVO">
 		select * from restaurant;
 	</select>
-	
-	<insert id="registImageVO">
+	<!-- id로 식당 정보 가져오기 -->
+	<select id="getRestaurantById" parameterType="Integer" resultType="vo.RestaurantVO">
+		select * from restaurant where res_num=#{res_num}
+	</select>
+	<!-- 식당 번호로 식당사진 불러오기 -->
+	<select id ="getImage" resultType="vo.RestaurantImageVO" parameterType="Integer">
+		select * from restaurantImage where res_num=#{res_num}
+	</select>
+	<!-- 식당 대표 사진 불러오기 -->
+	<select id ="getBestImage" resultType="vo.RestaurantImageVO" parameterType="Integer">
+		select * from restaurantImage where best_image=1 and res_num=#{res_num}
+	</select>
+	<!-- imageDB 등록 -->
+	<insert id="registImageVO" parameterType="vo.RestaurantImageVO">
 		insert into restaurantImage(res_image_num,res_num,best_image,res_image_name)
 							values(#{res_image_num},#{res_num},#{best_image},#{res_image_name})
 	</insert>
-
+	<!-- 조회수 올리기 -->
+	<update id="upViewCount" parameterType="Integer">
+		update restaurant set readcount = readcount+1 where res_num=#{res_num}
+	</update>
 </mapper>
