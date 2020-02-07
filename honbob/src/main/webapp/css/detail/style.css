@@ -1,0 +1,112 @@
+*{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+a{
+	text-decoration: none;
+}
+.all{
+    margin: 0 auto;
+    width: 100%;
+}
+body{
+    background: white;
+}
+#content_subject{
+	width:1200px;
+	height:70px;
+	margin:0 auto;
+	padding: 10px 0;
+}
+#content_main{
+	width:1200px;
+	margin:0 auto;
+	padding: 10px 0;
+}
+#content_left{
+	width:70%;
+	float:left;
+}
+#content_right{
+	width:30%;
+	float:right;
+	background-color: #eeeeee;
+}
+#subject_text{
+	font-weight:bold;
+	font-size: 30px;
+	line-height: 1.05;
+}
+#restaurant_grade_text{
+	font-size: 25px;
+	color : #FE9A2E;
+	line-height: 1.05;
+}
+#detail_count{
+	font-size:15px;
+	margin:0 auto;
+	margin-top: 10px;
+}
+.detail_count_picture{
+	margin:0 auto;
+	height:18px;
+}
+.detail_count_text{
+	margin:0 auto;
+	
+}
+#subject_left_side{
+	float:left;
+}
+#subject_right_side{
+	float:right;
+}
+#subject_right_side > img{
+	height:35px;
+}
+.size{
+	position:relative;
+}
+
+
+      .visual{
+      	position:relative;
+      	clear:both;
+      	height:500px;
+      	width:100%;
+      	background-color:#ffffff;
+      	text-align: center;
+      	padding-bottom:30px;
+      }
+      .visual> img{
+      	display:block;
+      }
+      .swiper{
+      	height:500px;
+      }
+      .swiper-slide{
+      	background-position: center center;
+      	background-repeat: no-repeat;
+      	background-size:cover;
+      	text-align: center;
+      }
+#content_info{
+	line-height: 2.5;
+	font-size:17px;
+	padding-left: 20px;
+}
+#subject_right_side{
+	margin-right: 100px;
+	margin-top:15px;
+}
+.recom_image{
+	width:94%;
+	padding:3%;
+}
+.recom_res{
+	width:94%;
+	margin:3%;
+	background-color: white;
+	text-align: left;
+}
