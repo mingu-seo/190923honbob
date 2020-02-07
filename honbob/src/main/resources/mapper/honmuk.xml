@@ -85,4 +85,53 @@
 	<update id="upViewCount" parameterType="Integer">
 		update restaurant set readcount = readcount+1 where res_num=#{res_num}
 	</update>
+	<!-- 별점 합가져오기 -->
+	<select id="getGradeSum" resultType="Integer">
+		select sum(grade) from grade where res_num=#{res_num}
+	</select>
+	<!-- 별점한 사람 수 가져오기 -->
+	<select id="getGradeCnt" resultType="Integer">
+		select count(grade) from grade where res_num=#{res_num}
+	</select>
+	<!-- 추천식당 가져오기 -->
+	<select id="getRecommandRestaurant" parameterType="vo.RestaurantVO" resultType="vo.RestaurantVO">
+		select * from restaurant 
+		<where> 
+			<if test="koreafood == 1">
+				koreafood='1'
+			</if>
+			<if test="japanfood == 1">
+				 or japanfood='1'
+			</if>
+			<if test="westernfood == 1">
+				 or westernfood='1'
+			</if>
+			<if test="chinafood == 1">
+				 or chinafood='1'
+			</if>
+			<if test="etcfood == 1">
+				 or etcfood='1' 
+			</if>
+		</where>
+		order by readcount desc limit 3
+	</select>
+	<!-- 유저가 별점을 했는지 찾아본다 -->
+	<select id="getUserGrade" parameterType="vo.GradeVO" resultType="Integer">
+		select grade from grade where res_num=#{res_num} and userNo = #{userNo}
+	</select>
+	<!-- insertGrade -->
+	<insert id="insertGrade" parameterType="vo.GradeVO">
+		insert into grade(res_num,userNo,grade) values (#{res_num},#{userNo},#{grade})
+	</insert>
+	<!-- updateGrade -->
+	<update id="updateGrade" parameterType="vo.GradeVO">
+		update grade set grade = #{grade} where res_num=#{res_num} and userNo = #{userNo}
+	</update>
+	<!-- deleteGrade -->
+	<delete id="deleteGrade" parameterType="vo.GradeVO">
+		delete from grade
+		where res_num=#{res_num} and userNo = #{userNo}
+	</delete>
+	<!-- 리뷰 리스트 가져오기 -->
+	
 </mapper>
