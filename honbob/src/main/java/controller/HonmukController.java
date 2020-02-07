@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import service.HonmukDetailService;
+import service.HonmukMainPageService;
 import util.PageInfo;
 import vo.GradeVO;
 import vo.RestaurantImageVO;
@@ -26,6 +27,8 @@ public class HonmukController {
 	
 	@Autowired
 	private HonmukDetailService hmDetailService;
+	@Autowired
+	private HonmukMainPageService hmMainService;
 	
 	//메인페이지에서 키워드로 검색시 경로
 	@RequestMapping("/searchList.do")
@@ -140,4 +143,14 @@ public class HonmukController {
 		model.addAttribute("star_count", star_count);
 		return "detail/detailAjax";
 	}
+	
+	@RequestMapping("/mainPage.do")
+	public String mainPage(Model model,ReviewVO rvo){
+		List<ReviewVO> review = hmMainService.mainReview(rvo);		
+		model.addAttribute("reviewList",review);
+		
+		
+		return "mainPage";
+	}
+	
 }
