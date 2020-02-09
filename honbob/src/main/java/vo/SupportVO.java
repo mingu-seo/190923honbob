@@ -13,7 +13,7 @@ public class SupportVO {
 	private boolean lock;
 	private boolean sendemail;
 	private int file_num;
-	private String user_userId;
+	private int user_userId;
 	private int comment_num;
 
 }

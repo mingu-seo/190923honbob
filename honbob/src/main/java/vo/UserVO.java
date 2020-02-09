@@ -4,15 +4,15 @@ import java.sql.Date;
 
 public class UserVO {
 	//회원번호
-	private int UserNo;
+	private int userNo;
 	//아이디
 	private String userId;
 	//이름
 	private String userName;
 	//이메일
-	private String UserEmail;
+	private String userEmail;
 	//비밀번호
-	private String UserPassword;
+	private String userPassword;
 	//비번확인질문
 	private String pwdQuestion;
 	//비번 확인 답변
@@ -26,10 +26,10 @@ public class UserVO {
 	
 	
 	public int getUserNo() {
-		return UserNo;
+		return userNo;
 	}
 	public void setUserNo(int userNo) {
-		UserNo = userNo;
+		this.userNo = userNo;
 	}
 	public String getUserId() {
 		return userId;
@@ -44,16 +44,16 @@ public class UserVO {
 		this.userName = userName;
 	}
 	public String getUserEmail() {
-		return UserEmail;
+		return userEmail;
 	}
 	public void setUserEmail(String userEmail) {
-		UserEmail = userEmail;
+		this.userEmail = userEmail;
 	}
 	public String getUserPassword() {
-		return UserPassword;
+		return userPassword;
 	}
 	public void setUserPassword(String userPassword) {
-		UserPassword = userPassword;
+		this.userPassword = userPassword;
 	}
 	public String getPwdQuestion() {
 		return pwdQuestion;

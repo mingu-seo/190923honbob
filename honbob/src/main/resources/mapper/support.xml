@@ -10,9 +10,15 @@
 		where user_userNo = #{id}
 		ORDER BY registdate DESC LIMIT 8;
 	</select>
-		
-	<select id="searchCount" resultType="int">
-		select count(*) from restaurantvo;
+
+	<select id="getSupport" parameterType="int" resultType="vo.SupportVO">
+		select * from support where id = #{id};
 	</select>
+
+	<insert id="insertSupport" parameterType="vo.SupportVO">
+		INSERT INTO `honmuck`.`support`
+			(`id`, `subject`, `content`, `registdate`, `lock`, `sendemail`, `user_userNo`)
+		VALUES (NULL, #{subject}, #{content}, #{registdate}, #{lock}, #{sendemail}, #{user_userId});
+	</insert>
 
 </mapper>

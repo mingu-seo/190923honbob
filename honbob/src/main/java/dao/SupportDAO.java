@@ -16,4 +16,13 @@ public class SupportDAO {
     public List<SupportVO> getSupports(int userId) {
         return sqlSession.selectList("Support.getSupports", userId);
     }
+
+    public SupportVO getSupport(int supportDocumentId) {
+        SupportVO vo = sqlSession.selectOne("Support.getSupport", supportDocumentId);
+        return vo;
+    }
+
+    public void insertSupport(SupportVO vo) {
+        int result = sqlSession.insert("Support.insertSupport", vo);
+    }
 }

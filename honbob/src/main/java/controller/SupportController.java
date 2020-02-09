@@ -2,6 +2,7 @@ package controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,23 +10,24 @@ import service.support.SupportService;
 import vo.SupportVO;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 public class SupportController {
-
     @Autowired
     private SupportService supportService;
 
-    public void setSupportService(SupportService supportService) {this.supportService = supportService; }
+    public void setSupportService(SupportService supportService) {
+        this.supportService = supportService;
+    }
 
-    @RequestMapping(path="/supportList", method=RequestMethod.GET)
+    @RequestMapping(path = "/supportList", method = RequestMethod.GET)
     public ModelAndView supportList(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-//        int userId = (int) session.getAttribute("userId");
+//        HttpSession session = request.getSession();
+//        TestVO testVO = (TestVO) session.getAttribute("adminSession");
+//        int userId = testVO.getId();
+        // TODO 로그인 미구현이므로, 세션에서 유저 정보를 가져올 수 가 없는 상태
         int userId = 1;
-        /////
         ModelAndView mav = new ModelAndView();
         String pageName = "support/supportList";
         mav.setViewName(pageName);
@@ -35,35 +37,18 @@ public class SupportController {
         return mav;
 
     }
-    @RequestMapping(path = "/supportDetail", method = RequestMethod.GET)
-    public ModelAndView supportDetail(){
+
+    @RequestMapping(path = "/supportDetail/{supportDocumentId}", method = RequestMethod.GET)
+    public ModelAndView supportDetail(@PathVariable int supportDocumentId) {
         ModelAndView mav = new ModelAndView();
+        SupportVO supportVO = supportService.getSupportDetail(supportDocumentId);
         String pageName = "support/supportDetail";
         mav.setViewName(pageName);
+        mav.addObject("support", supportVO);
         return mav;
     }
 
-    /*
-    @RequestMapping(path = "/supportReply", method = RequestMethod.GET)
-    public ModelAndView supportReply(){
-        ModelAndView mav = new ModelAndView();
-        String pageName = "support/supportDetail";
-        mav.setViewName(pageName);
-        return mav;
-    } */
-
-//    @RequestMapping(path = "/supportReply", method = RequestMethod.POST)
-//    public ModelAndView supportReply(HttpServletRequest request){
-//        ModelAndView mav = new ModelAndView();
-//        String pageName = "support/supportDetail";
-//        mav.setViewName(pageName);
-//        request.getParameter(user_id);
-//
-//        return mav;
-//    }
-//
-
-    @RequestMapping(path="/supportEdit", method=RequestMethod.GET)
+    @RequestMapping(path = "/supportEdit", method = RequestMethod.GET)
     public ModelAndView supportEdit() {
         ModelAndView mav = new ModelAndView();
         String pageName = "support/supportEdit";
@@ -71,26 +56,23 @@ public class SupportController {
         return mav;
     }
 
-    @RequestMapping(path = "/supportWrite", method=RequestMethod.GET)
-    public ModelAndView supportWrite(){
+    @RequestMapping(path = "/supportWrite", method = RequestMethod.GET)
+    public ModelAndView supportWritePage() {
         ModelAndView mav = new ModelAndView();
         String pageName = "support/supportWrite";
         mav.setViewName(pageName);
         return mav;
     }
-    /*
-    @RequestMapping (path="/supportSave", method=RequestMethod.POST)
-    public ModelAndView supportSave(HttpServletRequest request) {
+
+    @RequestMapping(path = "/supportWrite", method = RequestMethod.POST)
+    public ModelAndView supportWrite(SupportVO vo) {
         ModelAndView mav = new ModelAndView();
-        String pageName = "support/supportWrite";
+        // Call SupportWrite Service Method Call
+        supportService.insertSupport(vo);
+        System.out.println(vo);
+        ////
+        String pageName = "support/supportList";
         mav.setViewName(pageName);
-        String subject = request.getParameter("subject");
-        String content = request.getParameter("content");
-        System.out.println(subject+""+content);
         return mav;
     }
-    */
-
-
-
 }

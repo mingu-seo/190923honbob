@@ -6,7 +6,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import vo.GradeVO;
+import vo.RestaurantImageVO;
 import vo.RestaurantVO;
+import vo.ReviewVO;
 
 @Repository
 public class HonmukDetailDAO {
@@ -20,5 +23,68 @@ public class HonmukDetailDAO {
 	
 	public int count() {
 		return sqlSession.selectOne("Honmuk.searchCount");
+	}
+
+	public List<RestaurantVO> getList() {
+		
+		return sqlSession.selectList("Honmuk.getList");
+	}
+	//식당 사진 데이터베이스 등록
+	public int registImageVO(RestaurantImageVO resImageVo) {
+		return sqlSession.insert("Honmuk.registImageVO", resImageVo);
+	}
+	//식당 사진 가져오기
+	public List<RestaurantImageVO> getImageList(int res_num){
+		return sqlSession.selectList("Honmuk.getImage", res_num);
+	}
+	//식당 대표사진 가져오기
+	public RestaurantImageVO getBestImage(int res_num){
+		return sqlSession.selectOne("Honmuk.getBestImage", res_num);
+	}
+	//식당 정보 가져오기
+	public RestaurantVO getRestaurantById(int res_num) {
+		return sqlSession.selectOne("Honmuk.getRestaurantById",res_num);
+	}
+	//조회수 올리기
+	public int upViewCount(int res_num) {
+		return sqlSession.update("Honmuk.upViewCount",res_num);
+	}
+	//별점 합 가져오기
+	public int getGradeSum(int res_num) {
+		return sqlSession.selectOne("Honmuk.getGradeSum",res_num);
+	}
+	//별점한 사람수
+	public int getGradeCnt(int res_num) {
+		return sqlSession.selectOne("Honmuk.getGradeCnt",res_num);
+	}
+	//추천 식당 가져오기
+	public List<RestaurantVO> getRecommnadRestaurant(RestaurantVO restDetail) {
+		return sqlSession.selectList("Honmuk.getRecommandRestaurant", restDetail);
+	}
+	//리뷰 가져오기
+	public List<ReviewVO> getReviewList(int res_num) {
+		//return sqlSession.selectList("Honmuk.getReviewList", res_num);
+		return null;
+	}
+	//유저가 별점한건지 가져오기
+	public int getUserGrade(GradeVO gradevo) {
+		if (sqlSession.selectOne("Honmuk.getUserGrade", gradevo)==null) {
+			return 0;
+		}else {
+			return sqlSession.selectOne("Honmuk.getUserGrade", gradevo);
+		}
+		
+	}
+	//insertGrade
+	public int insertGrade(GradeVO gradevo) {
+		return sqlSession.insert("Honmuk.insertGrade", gradevo);
+	}
+	//updateGrade
+	public int updateGrade(GradeVO gradevo) {
+		return sqlSession.update("Honmuk.updateGrade", gradevo);
+	}
+	//deleteGrade
+	public int deleteGrade(GradeVO gradevo) {
+		return sqlSession.delete("Honmuk.deleteGrade", gradevo);
 	}
 }
