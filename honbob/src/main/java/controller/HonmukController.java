@@ -1,15 +1,24 @@
 package controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import honbab.AdminVO;
+import honbab.hmUserService;
+import honbab.UserVO;
+import mail.SendMail;
 import service.HonmukDetailService;
 import service.HonmukMainPageService;
 import util.PageInfo;
@@ -29,6 +38,8 @@ public class HonmukController {
 	private HonmukDetailService hmDetailService;
 	@Autowired
 	private HonmukMainPageService hmMainService;
+	@Autowired
+	private HonmukUserService hmUserService;
 	
 	//메인페이지에서 키워드로 검색시 경로
 	@RequestMapping("/searchList.do")
@@ -153,4 +164,233 @@ public class HonmukController {
 		return "mainPage";
 	}
 	
+	
+	// =================================================================
+	
+	// 일단 경로 저장 (추후 삭제)
+	@RequestMapping("/index.do") 
+	public String index() {
+		return "user/index";
+	}
+	
+	// 로그인
+	@RequestMapping("/loginForm.do") 
+	public String loginForm() {
+		return "user/loginForm";
+	}
+	
+	@RequestMapping("/login.do")
+	public String login(UserVO vo, HttpSession session, HttpServletResponse response) throws IOException {
+		UserVO login = hmUserService.login(vo);
+		if ( login == null ) {
+			response.setCharacterEncoding("UTF-8");		
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print("<script>");
+			out.print("alert('아이디 또는 비밀번호가\\n올바르지 않습니다.');");
+			out.print("location.href='loginForm.do';");
+			out.print("</script>");
+			return null;
+		} else {
+			session.setAttribute("Session", login);
+			return "redirect:/user/loginForm.do";
+		}
+	}
+	
+	
+	// 로그아웃
+	@RequestMapping("/logOut.do")
+	public String logout(HttpSession session, @RequestParam(name="url", required=false) String url) {
+		session.invalidate();
+		return "redirect:"+url.substring(4);
+	}
+	
+	
+	// 아이디 찾기
+	@RequestMapping("/search_Id.do")
+	public String search_Id() {
+		return "user/search_Id";
+	}
+	
+	@RequestMapping("/search_id.do")
+	public String search_id(Model model, UserVO vo, HttpServletResponse response) throws IOException {
+		UserVO search = hmUserService.search_id(vo);
+		if ( search == null ) {
+			response.setCharacterEncoding("UTF-8");		
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print("<script>");
+			out.print("alert('일치하는 정보가 없습니다.');");
+			out.print("location.href='search_Id.do';");
+			out.print("</script>");
+			return null;
+		} else {
+			model.addAttribute("search",search);
+			return "user/search_Id";
+		}
+	}
+	
+	
+	// 비밀번호 찾기
+	@RequestMapping("/search_Pwd.do")
+	public String search_Pwd() {
+		return "user/search_Pwd";
+	}
+	
+	@RequestMapping("/search_pwd.do")
+	public String search_pwd(Model model, UserVO vo, HttpServletResponse response) throws IOException {
+		UserVO search = hmUserService.search_pwd(vo);
+		
+		if ( search == null ) {
+			response.setCharacterEncoding("UTF-8");		
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print("<script>");
+			out.print("alert('일치하는 정보가 없습니다.');");
+			out.print("location.href='search_Pwd.do';");
+			out.print("</script>");
+			return null;
+		} else {
+			model.addAttribute("search",search);
+			return "user/search_Pwd";
+		}
+	}
+	
+	// 비밀번호 질문,대답 체크
+	@RequestMapping("/qwdAnswerCheck.do")
+	public String qwdAnswerCheck(Model model,@RequestParam("pwdAnswer") String pwdAnswer) {
+		int r = hmUserService.qwdAnswerCheck(pwdAnswer);
+		model.addAttribute("value",r);
+		return "include/return";
+	}
+	
+	// 회원가입
+	@RequestMapping("/userJoinForm.do")
+	public String userJoinForm() {
+		return "user/userJoinForm";
+	}
+	
+	@RequestMapping("/userJoin.do")
+	public String userJoin(UserVO vo, Model model) throws IOException{
+		int r = hmUserService.userJoin(vo);
+		String msg = "";
+		String url = "";
+		if ( r > 0 ) {
+			msg = "정상적으로 가입되었습니다.";
+			url = "/honbab/user/index.do";
+		} else {
+			msg = "회원가입 실패";
+			url = "/honbab/user/userJoinForm.do";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		return "include/alert";
+	}
+	
+	
+	// 아이디 중복확인
+	@RequestMapping("/idCheck.do")
+	public String idCheck(Model model, @RequestParam("userId") String userId) {
+		int cnt = hmUserService.idCheck(userId);
+		model.addAttribute("value",cnt);
+		return "include/return";
+	}
+	
+	
+	// 이메일 중복확인 // 이메일 인증번호 전송
+	@RequestMapping(/emailCheck.do")
+	public String emailCheck(Model model, @RequestParam("userEmail") String userEmail, HttpSession session) throws Exception {
+		int cnt = hmUserService.emailCheck(userEmail);
+		model.addAttribute("value",cnt);
+	
+		if ( cnt != 0 ) {
+			return "include/return";
+		} else if ( cnt == 0 ) {
+			String emailPwd = hmUserService.emailPass();
+			System.out.println("랜덤코드:"+emailPwd);
+			SendMail.sendEmail("duwkdutns2@naver.com", userEmail, "안녕하세요^^. [밥먹자] 회원가입 입니다.", " 회원가입 이메일 인증번호 : "+emailPwd);
+			session.setAttribute("emailPwd",emailPwd);
+			return "include/return";
+		}
+		return null;
+	}
+	
+	
+	// 인증번호 확인
+	@RequestMapping("/emailPwdCheck.do")
+	public String emailPwdCheck(Model model, @RequestParam("emailPwdNumber") String emailPwdNumber, HttpSession session) throws IOException {
+		int r = hmUserService.emailPwdCheck(emailPwdNumber, (String)session.getAttribute("emailPwd"));
+		model.addAttribute("value", r);
+		return "ajax/return";
+	}
+	
+	
+	// 회원상세정보 (마이페이지)
+	@RequestMapping("/userInfoView.do")
+	public String userInfoView(Model model, HttpSession sess, HttpServletResponse response) throws IOException {
+		UserVO uv = (UserVO)sess.getAttribute("Session");
+		UserVO vo = hmUserService.userInfoView(uv.getUserNo());
+		model.addAttribute("vo",vo);
+		return "userInfoView";	
+	}
+			
+	// 비밀번호 변경
+	@RequestMapping("/pwdChange.do")
+	public String pwdChange(UserVO vo, HttpServletResponse response) throws IOException {
+		int r = hmUserService.pwdChange(vo);
+
+		response.setCharacterEncoding("UTF-8");		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		if ( r == 0 ) {
+			out.print("<script>");
+			out.print("alert('현재 비밀번호가 일치하지 않습니다.');");
+			out.print("location.href='index.do';");
+			out.print("</script>");
+		} else {
+			out.print("<script>");
+			out.print("alert('비밀번호 변경 완료되었습니다.');");
+			out.print("location.href='index.do';");
+			out.print("</script>");
+			}
+		return null;
+		}
+	
+	
+	// 회원탈퇴
+	@RequestMapping("/userInfoDeleteForm.do")
+	public String userInfoDeleteForm() {
+		return "user/userInfoDeleteForm";
+	}
+	
+	@RequestMapping("/userInfoDelete.do")
+	public String userInfoDelete(UserVO vo, HttpSession session, HttpServletResponse response) throws IOException {
+		int r = hmUserService.userDelete(vo);
+		
+		response.setCharacterEncoding("UTF-8");		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		if ( r == 0 ) {
+			out.print("<script>");
+			out.print("alert('정보가 일치하지 않습니다.');");
+			out.print("location.href='userInfoDeleteForm.do';");
+			out.print("</script>");
+		} else {
+			session.invalidate();
+			out.print("<script>");
+			out.print("alert('회원탈퇴 되었습니다.');");
+			out.print("location.href='index.do';");
+			out.print("</script>");
+			}
+		return null;
+	}
+	
+	
+	// 프로필 변경
+	@RequestMapping("/userImageUpdate.do")
+	public String imageUpdate(UserVO vo, @RequestParam("userImage_tmp") MultipartFile file, HttpServletRequest req) {
+		hmUserService.imageUpdate(vo,file,req);
+		return "redirect:/user/myPage.do";			
+	}
+
 }
