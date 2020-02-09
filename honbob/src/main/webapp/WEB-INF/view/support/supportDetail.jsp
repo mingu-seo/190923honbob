@@ -41,7 +41,7 @@
     </button>
 </div>
 <div class="optionButtons">
-    <button type="button" class="btn btn-warning">수정</button>
+    <button id="editPageBtn" type="button" class="btn btn-warning">수정</button>
 </div>
 
 <script>
@@ -51,6 +51,19 @@
                 window.location.href = "http://localhost:8080/supportList";
             }
         );
+
+        $('#editPageBtn').click(
+            function(e) {
+                window.location.href = "http://localhost:8080/supportEdit/${support.id}";
+            }
+        );
+
+        $('#editPageBtn').click(
+            function(e) {
+                window.location.href = "http://localhost:8080/supportEdit/${support.id}";
+            }
+        );
+
     });
 
 </script>

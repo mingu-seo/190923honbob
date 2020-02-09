@@ -3,10 +3,10 @@ package service.support;
 import dao.SupportDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vo.SupportVO;
+import vo.support.SupportEditRequest;
+import vo.support.SupportVO;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,5 +29,9 @@ public class SupportService {
         vo.setRegistdate(date);
         vo.setUser_userId(1);
         supportDao.insertSupport(vo);
+    }
+
+    public void updateSupport(SupportEditRequest requestVo) {
+        supportDao.updateSupport(requestVo);
     }
 }

@@ -4,18 +4,28 @@
 <!-- Mybatis 사용 -->
 <mapper namespace="Support">
 
-	<select id="getSupports" parameterType="int" resultType="vo.SupportVO">
+	<select id="getSupports" parameterType="int" resultType="vo.support.SupportVO">
 		select *
 		from support
 		where user_userNo = #{id}
 		ORDER BY registdate DESC LIMIT 8;
 	</select>
 
-	<select id="getSupport" parameterType="int" resultType="vo.SupportVO">
+	<select id="getSupport" parameterType="int" resultType="vo.support.SupportVO">
 		select * from support where id = #{id};
 	</select>
 
-	<insert id="insertSupport" parameterType="vo.SupportVO">
+	<delete id="deleteSupport" parameterType="int">
+		DELETE FROM `honmuck`.`support` WHERE (`id` = #{id});
+	</delete>
+
+	<update id="updateSupport" parameterType="vo.support.SupportEditRequest">
+		UPDATE `honmuck`.`support`
+		SET `subject` = #{subject}, `content` = #{content}
+		WHERE (`id` = #{id});
+	</update>
+
+	<insert id="insertSupport" parameterType="vo.support.SupportVO">
 		INSERT INTO `honmuck`.`support`
 			(`id`, `subject`, `content`, `registdate`, `lock`, `sendemail`, `user_userNo`)
 		VALUES (NULL, #{subject}, #{content}, #{registdate}, #{lock}, #{sendemail}, #{user_userId});

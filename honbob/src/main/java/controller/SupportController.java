@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import service.support.SupportService;
-import vo.SupportVO;
+import vo.support.SupportEditRequest;
+import vo.support.SupportVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -48,10 +49,25 @@ public class SupportController {
         return mav;
     }
 
-    @RequestMapping(path = "/supportEdit", method = RequestMethod.GET)
-    public ModelAndView supportEdit() {
+    @RequestMapping(path = "/supportEdit/{supportDocumentId}", method = RequestMethod.GET)
+    public ModelAndView supportEdit(@PathVariable int supportDocumentId) {
         ModelAndView mav = new ModelAndView();
         String pageName = "support/supportEdit";
+        mav.setViewName(pageName);
+        SupportVO support = supportService.getSupportDetail(supportDocumentId);
+        mav.addObject("support", support);
+        return mav;
+    }
+
+    @RequestMapping(path = "/supportEdit", method = RequestMethod.POST)
+    public ModelAndView supportEdit(SupportEditRequest requestVo) {
+        ModelAndView mav = new ModelAndView();
+        // DB UPDATE
+        supportService.updateSupport(requestVo);
+
+
+        // AFTER DB UPDATE
+        String pageName = "support/supportList";
         mav.setViewName(pageName);
         return mav;
     }
