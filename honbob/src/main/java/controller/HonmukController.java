@@ -1,5 +1,6 @@
 package controller;
 
+<<<<<<< HEAD
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -8,28 +9,39 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+=======
+>>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob.git
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+<<<<<<< HEAD
 import org.springframework.web.multipart.MultipartFile;
 
 import honbab.AdminVO;
 import honbab.hmUserService;
 import honbab.UserVO;
 import mail.SendMail;
+=======
+>>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob.git
 import service.HonmukDetailService;
 import service.HonmukMainPageService;
+import util.Page;
 import util.PageInfo;
 import vo.GradeVO;
 import vo.RestaurantImageVO;
 import vo.RestaurantVO;
 import vo.ReviewVO;
+<<<<<<< HEAD
 import util.Page;
 import util.PageInfo;
 import vo.RestaurantVO;
+=======
+>>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob.git
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class HonmukController {
@@ -44,8 +56,8 @@ public class HonmukController {
 	//메인페이지에서 키워드로 검색시 경로
 	@RequestMapping("/searchList.do")
 	public String searchKeyword(Model model, RestaurantVO resVO, @RequestParam(name="page", required = false) String page,
-			HttpServletRequest request, @RequestParam(name="filter1", required = false) String filter1,
-			@RequestParam(name="keyword", required = false) String keyword) {
+								HttpServletRequest request, @RequestParam(name="filter1", required = false) String filter1,
+								@RequestParam(name="keyword", required = false) String keyword) {
 		
 		//필터창 정렬순 지정
 		if("grade".equals(filter1)) {
@@ -71,7 +83,7 @@ public class HonmukController {
 		
 		
 		//데이터로 검색결과 받는 경로		
-		List<RestaurantVO> searchlist = hmDetailService.searchList(resVO); 
+		List<RestaurantVO> searchlist = hmDetailService.searchList(resVO);
 		model.addAttribute("searchlist", searchlist);	
 		
 		

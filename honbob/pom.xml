@@ -25,7 +25,16 @@
     	<artifactId>jstl</artifactId>
     	<version>1.2</version>
     </dependency>
-    <dependency>
+
+	  <!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
+	  <dependency>
+		  <groupId>javax.servlet</groupId>
+		  <artifactId>servlet-api</artifactId>
+		  <version>2.5</version>
+		  <scope>provided</scope>
+	  </dependency>
+
+	  <dependency>
     	<groupId>org.springframework</groupId>
     	<artifactId>spring-webmvc</artifactId>
     	<version>5.0.2.RELEASE</version>
@@ -81,6 +90,7 @@
 	    <artifactId>cos</artifactId>
 	    <version>05Nov2002</version>
 	</dependency>
+<<<<<<< HEAD
 	
 	<!-- 이메일로 메일 전송  -->
 	<dependency>
@@ -89,7 +99,25 @@
 	    <version>1.4.7</version>
 	</dependency>
 	
+=======
+	  <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+	  <dependency>
+		  <groupId>org.projectlombok</groupId>
+		  <artifactId>lombok</artifactId>
+		  <version>1.18.6</version>
+		  <scope>provided</scope>
+	  </dependency>
+	  <!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
+	  <dependency>
+		  <groupId>javax.servlet</groupId>
+		  <artifactId>servlet-api</artifactId>
+		  <version>2.5</version>
+		  <scope>provided</scope>
+	  </dependency>
+
+>>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob.git
   </dependencies>
+
   <build>
     <finalName>honbob</finalName>
     <plugins>

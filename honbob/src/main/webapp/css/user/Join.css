@@ -1,0 +1,63 @@
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+	#container {
+        width: 800px; height: 600px;
+        margin: 80px auto;
+        line-height: 45px;
+        text-align:center;
+	}
+	
+	#momtong {
+		position: relative;
+		margin: auto;
+		width : 57%; height: 100%;
+	}
+	
+	.bab {
+		width: 100%;
+		text-align: center;
+	}
+	
+	h4 {
+		position: relative;
+		text-align: left;
+		left: 5px;
+	}
+	
+	#id, #email {
+		position: relative;
+		width: 380px;
+		height: 40px;
+		top: -10px;
+	}
+	
+	#email {
+		position: relative;
+		left: 5px;
+	}
+	
+	.input1 {
+		position: relative;
+		width: 440px;
+		height: 40px;
+		top: -10px;
+	}
+	
+	#qwdQuestion {
+		width: 445px;
+	}
+	
+	.button {
+		position: relative;
+   		background: #A4A4A4;
+   		height: 42px;
+   		width: 60px;
+   		top: -9px;
+    }
+        
+    .button:hover {
+    	cursor: pointer;
+    }

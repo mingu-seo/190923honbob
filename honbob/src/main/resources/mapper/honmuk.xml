@@ -3,7 +3,6 @@
 
 <!-- Mybatis 사용 -->
 <mapper namespace="Honmuk">
-	
 	<select id="searchList" parameterType="vo.RestaurantVO" resultType="vo.RestaurantVO">
 		select * from restaurantvo
 		<where>
