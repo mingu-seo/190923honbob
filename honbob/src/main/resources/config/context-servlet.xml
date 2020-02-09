@@ -28,7 +28,7 @@
 	<!-- dataSource 설정 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://localhost/spring5fs?characterEncoding=utf8&amp;serverTimezone=Asia/Seoul"/>
+		<property name="url" value="jdbc:mysql://localhost/honmuck?characterEncoding=utf8&amp;serverTimezone=Asia/Seoul"/>
 		<property name="username" value="root"/>
 		<property name="password" value="test1234"/>
 	</bean>
@@ -47,7 +47,7 @@
 		<property name="defaultEncoding" value="utf-8"/>
 		<property name="maxUploadSize" value="10000000"/>
 	</bean>
-	
+
 	<!-- 인터셉터:가로채기 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -57,22 +57,4 @@
 			<bean class="interceptor.AdminInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 </beans>
