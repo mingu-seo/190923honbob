@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="honbab.UserVO"%>
+<%@page import="vo.UserVO"%>
 <%
 	UserVO search = (UserVO) request.getAttribute("search");
 	UserVO sess = (UserVO)session.getAttribute("Session");

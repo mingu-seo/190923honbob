@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import dao.HonmukUserDAO;
 import util.FileUtil;
+import vo.UserVO;
 
 @Service
 public class HonmukUserService {
@@ -54,9 +56,6 @@ public class HonmukUserService {
 		return honmukUserDAO.userDelete(vo);
 	}
 
-	public int adminLogin(AdminVO vo) {
-		return honmukUserDAO.adminLogin(vo);
-	}
 	
 	public int imageUpdate(UserVO vo, MultipartFile file, HttpServletRequest req) {
 		FileUtil fu = new FileUtil();
