@@ -1,0 +1,251 @@
+<%@page import="java.util.List"%>
+<%@page import="vo.RestaurantVO"%>
+<%@page import="util.PageInfo"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	PageInfo pageInfo=(PageInfo)request.getAttribute("pageInfo");
+	int listCount=pageInfo.getListCount();
+	int nowPage=pageInfo.getPage();
+	int maxPage=pageInfo.getMaxPage();
+	int startPage=pageInfo.getStartPage();
+	int endPage=pageInfo.getEndPage();	
+%>
+<meta name="viewport" charset="utf-8" content="user-scalable=no, initial-scale=1, maximum-scale=1">
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+$(function(){
+	$(".locationSearch").hover(function(){
+    	$(this).css({'color':'#ff792a', 'background-color':'white'});
+    }, function(){
+    	$(this).css({'color':'white', 'background-color':'#ff792a'});
+    });
+})
+
+</script>
+<style>
+	.pagePointer{
+    	border-radius: 40px;
+    	background-color: #ff792a;
+    	padding: 0 13 0 13;
+    }
+</style>
+<style>
+    .wrap {
+    position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;
+    text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+    line-height: 1.5;
+    }
+    .wrap * {
+    padding: 0;margin: 0;
+    }
+    .wrap .info {
+    width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;
+    border-right: 1px solid #ccc;overflow: hidden;background: #fff; z-index:99;
+    }
+    .wrap .info:nth-child(1) {
+    border: 0;box-shadow: 0px 1px 2px #888;
+    }
+	.info .title{
+		position: absolute;
+		background-color: #fbe7b2;
+		width: 286px;
+		height: 43px;		
+	}
+    .info .body {
+    position: relative;overflow: hidden; left: 8px;
+    }
+    .info .desc {
+    position: relative;margin: 13px 0 0 90px;height: 90px;
+    }
+    .desc .ellipsis {
+    overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
+    font-size: 20px;
+    }
+    .desc .jibun {
+    font-size: 11px;color: #888;margin-top: -2px;
+    }
+    .info .img {
+    position: absolute;top: 20px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;
+    color: #888;overflow: hidden;
+    }
+    .info:after {
+    content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;
+    background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+    }
+    .info .link {
+    color: #5085BB;
+    }           
+</style>
+
+	<div class="Lcontent">
+    	<div class="inner">
+            <div class="search-info">
+                <h1>밥먹자 맛집 검색순위</h1>
+                <div class="filter" onclick="showFilter()" style="cursor:pointer">
+                    <p>필터</p>
+                </div>
+            </div>
+            <div class="search-restaurants-list">
+                <div class="restaurants-list">
+                	<c:forEach var = "res" items="${searchlist }" varStatus="status">
+						<div class="restaurants-item">
+						   <div class="restaurants-thumb">
+						   </div>
+						   <div class="restaurants-info">
+						       <a href="DetailView.do?res_num=${res.res_num }"><h2>${res.res_name }</h2></a>
+						       <strong class="grade"><img src="images/list/grade_icon.png" width="15" height="15">${res.grade }</strong>
+						       <p><span>${res.addressCut } - ${res.category }${res.option }</span></p>
+						       <p>
+						           <span class="view_count"><img src="images/list/read_icon.png" width="15" height="15">${res.readcount }</span>
+						           <span class="review_count"><img src="images/list/review_icon.jpg" width="15" height="15">${res.reviewcount }</span>
+						       </p>                                        
+						   </div>
+						</div>   
+					</c:forEach>
+				</div>
+			</div>
+		</div>
+		<p class="paging">
+			<%if(nowPage<=1){ %>
+				◀&nbsp;
+			<%}else{ %>
+				<a href="javascript:setPage('<%=nowPage-1 %>');">◀</a>&nbsp;
+			<%} %>
+		
+			<%for (int a=startPage; a<=endPage; a++){
+				if(a==nowPage){%>
+					<a href="javascript:setPage('<%=a %>');" class="pagePointer"><%=a %></a>&nbsp;
+				<%}else{ %>
+					<a href="javascript:setPage('<%=a %>');"><%=a %></a>&nbsp;
+				<%} %>
+			<%} %>
+			
+			<%if(nowPage>=maxPage){ %>
+				▶
+			<%}else{ %>
+				<a href="javascript:setPage('<%=nowPage+1 %>');">▶</a>
+			<%} %>
+        </p>
+	</div>
+    <div class="Rcontent">
+    	<div class="map">    		
+         	<div id="map" style="width:100%;height:700px;"><div class="locationSearch" onclick="locationSearch()">이 위치로 검색</div></div>	                
+     	</div>
+    	<div class="chat">
+             chat
+    	</div>
+    </div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=968f5cb093e2b0f76e796a0721504779&libraries=services"></script>
+<script>
+	var mapLevel = $("#mapLevel").val()
+	var mapContainer = document.getElementById('map'), // 지도의 중심좌표
+		mapOption = { 
+		    center: new kakao.maps.LatLng(37.497928, 127.027583), // 지도의 중심좌표
+		    level: mapLevel // 지도의 확대 레벨
+	}; 
+	
+	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다	
+	
+	
+	var latitude = [];
+	var longitude = [];
+	var res_name = [];
+	var res_num = [];
+	var grade = [];
+	var addressCut = [];
+	var category = [];
+	var readcount = [];
+	var reviewcount = [];	
+	var markericon = [];
+	
+	<c:forEach items="${searchlist}" var="list">		
+		latitude.push("${list.latitude}");
+		longitude.push("${list.longitude}");
+		res_name.push("${list.res_name}");
+		res_num.push("${list.res_num}");
+		grade.push("${list.grade}");
+		addressCut.push("${list.addressCut}");
+		category.push("${list.category}");
+		readcount.push("${list.readcount}");
+		reviewcount.push("${list.reviewcount}");		
+		
+		<c:if test="${list.koreafood==1}">markericon.push("images/list/koreafood_border.png")</c:if>
+		<c:if test="${list.japanfood==1}">markericon.push("images/list/japanfood_border.png")</c:if>
+		<c:if test="${list.chinafood==1}">markericon.push("images/list/chinafood_border.png")</c:if>
+		<c:if test="${list.westernfood==1}">markericon.push("images/list/westernfood_border.png")</c:if>
+		<c:if test="${list.etcfood==1}">markericon.push("images/list/etcfood_border.png")</c:if>
+		
+	</c:forEach>
+	
+		
+	var content;	
+	var arrIdx = 0;	
+	
+	latitude.forEach(function(element){
+		        
+		        var icon = new kakao.maps.MarkerImage(markericon[arrIdx],
+		    	        new kakao.maps.Size(42, 42));
+		        
+		        
+		        var markerPosition  = new kakao.maps.LatLng(element, longitude[arrIdx]);		
+		        // 결과값으로 받은 위치를 마커로 표시합니다
+		        var marker = new kakao.maps.Marker({
+		            map: map,
+		            position: markerPosition,
+		            image : icon
+		        });
+		        
+				//마커 위에 커스텀오버레이를 표시합니다
+				//마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다\
+				
+				var overlay = new kakao.maps.CustomOverlay({
+					content: content,
+					map: map,
+					position: marker.getPosition()       
+				});	
+				
+				overlay.setPosition(marker.getPosition());
+				overlay.setContent('<div class="wrap">' + 
+				        '    <div class="info">' + 
+				        '        <div class="title">' + 
+				        '        </div>' + 
+				        '        <div class="body">' + 
+				        '            <div class="img">' +
+				        '                <img src="" width="75" height="73">' +
+				        '           </div>' + 
+				        '            <div class="desc">' + 
+				        '                <div class="ellipsis"><a href="DetailView.do?res_num='+res_num[arrIdx]+'">'+res_name[arrIdx]+'</a></div>' + 
+				        '                <div class="marker-grade"><img src="images/list/grade_icon.png" width="15" height="15">'+grade[arrIdx]+' </div>' + 
+				        '                <div class="jibun ellipsis">'+addressCut[arrIdx]+' - '+category[arrIdx]+'</div>' + 
+				        '                <div><img src="images/list/read_icon.png" width="15" height="15">'+readcount[arrIdx]+
+				        '					  <img src="images/list/review_icon.jpg" width="15" height="15"> '+reviewcount[arrIdx]+
+				        '				 </div>' + 
+				        '            </div>' + 
+				        '        </div>' + 
+				        '    </div>' +    
+				        '</div>');
+				
+				overlay.setMap(null);
+				
+				
+				//마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+			        
+		    	kakao.maps.event.addListener(marker, 'click', function() {
+		    		overlay.setMap(null);
+		    		overlay.setMap(map);
+		        });
+				
+		    	kakao.maps.event.addListener(map, 'click', function() {
+		    		overlay.setMap(null);
+		        });
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(markerPosition);
+   
+		        arrIdx++;
+	});	    
+		
+
+</script>

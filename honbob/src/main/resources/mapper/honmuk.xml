@@ -3,7 +3,6 @@
 
 <!-- Mybatis 사용 -->
 <mapper namespace="Honmuk">
-	
 	<select id="searchList" parameterType="vo.RestaurantVO" resultType="vo.RestaurantVO">
 	
 		<if test="latitude == 0 and longitude == 0">		
@@ -176,5 +175,10 @@
 		where res_num=#{res_num} and userNo = #{userNo}
 	</delete>
 	<!-- 리뷰 리스트 가져오기 -->
+	
+	<!-- 메인페이지에서 최신리뷰 6개 가져오기 -->
+	<select id="mainpageReview" resultType="vo.ReviewVO" parameterType="vo.ReviewVO">	
+			SELECT * FROM project.review WHERE registdate LIMIT 0,6
+	</select>
 	
 </mapper>
