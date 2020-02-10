@@ -116,3 +116,14 @@ body{
 	margin-top: 10px;
 	font-weight: bold;
 }
+.recom_grade_txt{
+	font-size: 23px;
+	color : #FE9A2E;
+	line-height: 1.2;
+}
+.recom_subject_txt{
+	font-size: 16px;
+}
+.recom_content_txt{
+	padding:15px;
+}

@@ -147,6 +147,33 @@ public class HonmukDetailService {
 		
 		return recomImageList;
 	}
+
+	public List<String> getRecommandGrade(List<RestaurantVO> recomRest) {
+		List<String> recomGradeList = new ArrayList<String>();
+		
+		for(int i=0;i<recomRest.size();i++) {
+			//별점 합
+			int gradeSum = 0;
+			//별점 한사람수
+			int gradeCnt = HonmukDao.getGradeCnt(recomRest.get(i).getRes_num());
+			if(gradeCnt == 0) {
+				gradeCnt = 1;
+			}else {
+				gradeSum = HonmukDao.getGradeSum(recomRest.get(i).getRes_num());
+			}
+			
+			//별점 계산
+			
+			recomGradeList.add(String.format("%.1f", (double)gradeSum/(double)gradeCnt));
+			
+		}
+		
+		return recomGradeList;
+	}
+
+	public int getGradeCnt(int res_num) {
+		return HonmukDao.getGradeCnt(res_num);
+	}
 	
 	//리뷰 가져오기
 }
