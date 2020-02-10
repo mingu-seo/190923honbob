@@ -23,11 +23,11 @@ $(function(){
     });
 })
 
+	$(".pagePointer").css({"color":"#ff792a", "text-decoration" : "underline" });
+
 </script>
 <style>
 	.pagePointer{
-    	border-radius: 40px;
-    	background-color: #ff792a;
     	padding: 0 13 0 13;
     }
 </style>
@@ -76,7 +76,14 @@ $(function(){
     }
     .info .link {
     color: #5085BB;
-    }           
+    }
+    .info .close {
+    position: absolute; top: 10px; right: 10px; color: #888; width: 17px; height: 17px; z-index : 1000;
+    background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+    }
+    .info .close:hover {
+    cursor: pointer;
+    }     
 </style>
 
 	<div class="Lcontent">
@@ -180,72 +187,81 @@ $(function(){
 		
 	</c:forEach>
 	
-		
-	var content;	
-	var arrIdx = 0;	
+	var markers = [];
+	var overlays = [];
+	var arrIdx = 0;
+	
 	
 	latitude.forEach(function(element){
-		        
-		        var icon = new kakao.maps.MarkerImage(markericon[arrIdx],
-		    	        new kakao.maps.Size(42, 42));
-		        
-		        
-		        var markerPosition  = new kakao.maps.LatLng(element, longitude[arrIdx]);		
-		        // 결과값으로 받은 위치를 마커로 표시합니다
-		        var marker = new kakao.maps.Marker({
-		            map: map,
-		            position: markerPosition,
-		            image : icon
-		        });
-		        
-				//마커 위에 커스텀오버레이를 표시합니다
-				//마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다\
-				
-				var overlay = new kakao.maps.CustomOverlay({
-					content: content,
-					map: map,
-					position: marker.getPosition()       
-				});	
-				
-				overlay.setPosition(marker.getPosition());
-				overlay.setContent('<div class="wrap">' + 
-				        '    <div class="info">' + 
-				        '        <div class="title">' + 
-				        '        </div>' + 
-				        '        <div class="body">' + 
-				        '            <div class="img">' +
-				        '                <img src="" width="75" height="73">' +
-				        '           </div>' + 
-				        '            <div class="desc">' + 
-				        '                <div class="ellipsis"><a href="DetailView.do?res_num='+res_num[arrIdx]+'">'+res_name[arrIdx]+'</a></div>' + 
-				        '                <div class="marker-grade"><img src="images/list/grade_icon.png" width="15" height="15">'+grade[arrIdx]+' </div>' + 
-				        '                <div class="jibun ellipsis">'+addressCut[arrIdx]+' - '+category[arrIdx]+'</div>' + 
-				        '                <div><img src="images/list/read_icon.png" width="15" height="15">'+readcount[arrIdx]+
-				        '					  <img src="images/list/review_icon.jpg" width="15" height="15"> '+reviewcount[arrIdx]+
-				        '				 </div>' + 
-				        '            </div>' + 
-				        '        </div>' + 
-				        '    </div>' +    
-				        '</div>');
-				
-				overlay.setMap(null);
-				
-				
-				//마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-			        
-		    	kakao.maps.event.addListener(marker, 'click', function() {
-		    		overlay.setMap(null);
-		    		overlay.setMap(map);
-		        });
-				
-		    	kakao.maps.event.addListener(map, 'click', function() {
-		    		overlay.setMap(null);
-		        });
-		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-		        map.setCenter(markerPosition);
-   
-		        arrIdx++;
-	});	    
 		
+		var icon = new kakao.maps.MarkerImage(markericon[arrIdx],
+    	        new kakao.maps.Size(42, 42));        
+        
+        var markerPosition = new kakao.maps.LatLng(element, longitude[arrIdx]);	
+        
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: markerPosition,
+            image : icon
+        });
+		
+        
+		var overlay = new kakao.maps.CustomOverlay({
+			content: "",
+			map: map,
+			position: ""
+		});	
+		
+		overlay.setPosition(new kakao.maps.LatLng(element, longitude[arrIdx]));
+		overlay.setContent('<div class="wrap">' + 
+		        '    <div class="info">' + 
+		        '        <div class="title">' + 
+	            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+		        '        </div>' + 
+		        '        <div class="body">' + 
+		        '            <div class="img">' +
+		        '                <img src="" width="75" height="73">' +
+		        '           </div>' + 
+		        '            <div class="desc">' + 
+		        '                <div class="ellipsis"><a href="DetailView.do?res_num='+res_num[arrIdx]+'">'+res_name[arrIdx]+'</a></div>' + 
+		        '                <div class="marker-grade"><img src="images/list/grade_icon.png" width="15" height="15">'+grade[arrIdx]+' </div>' + 
+		        '                <div class="jibun ellipsis">'+addressCut[arrIdx]+' - '+category[arrIdx]+'</div>' + 
+		        '                <div><img src="images/list/read_icon.png" width="15" height="15">'+readcount[arrIdx]+
+		        '					  <img src="images/list/review_icon.jpg" width="15" height="15"> '+reviewcount[arrIdx]+
+		        '				 </div>' + 
+		        '            </div>' + 
+		        '        </div>' + 
+		        '    </div>' +    
+		        '</div>');
+		
+		map.setCenter(markerPosition);		
+		overlay.setMap(null);		
+		
+		markers.push(marker);
+		overlays.push(overlay);
+		
+		arrIdx++;
+	});
+	
+	function closeOverlay() {
+	    overlay.setMap(null);     
+	}
+	
+	
+	function getClickHandler(seq) {
+	    return function(e) {
+	    	
+	        for(var i=0; i<markers.length; i++){
+	        	overlays[i].setMap(null);
+	        }
+	        
+	        overlay = overlays[seq];
+	        overlay.setMap(map)
+	    };
+	};
+	
+	for (var i=0, ii=markers.length; i<ii; i++) {
+		kakao.maps.event.addListener(markers[i], 'click', getClickHandler(i)); 
+	}
 
 </script>
