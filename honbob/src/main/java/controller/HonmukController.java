@@ -100,7 +100,61 @@ public class HonmukController {
 		}				
 		
 	}
-	
+	@RequestMapping("/registImage")
+	public String registImage() {
+		
+		RestaurantImageVO imageres = new RestaurantImageVO();
+		int random_1=(int) (Math.random()*5+1);
+		int random_2=(int) (Math.random()*25+1);		
+		List<RestaurantVO> resList = hmDetailService.getList();
+		int[] fullsize = new int[5];
+		boolean noDupl = false;
+		String food="";
+		for(int i = 0;i<resList.size();i++) {
+			System.out.println(resList.get(i).getRes_num());
+			
+			if(resList.get(i).getJapanfood()==1) {
+				food = "japan";
+			}else if(resList.get(i).getKoreafood()==1) {
+				food = "korea";
+			}else if(resList.get(i).getChinafood()==1) {
+				food = "China";
+			}else if(resList.get(i).getWesternfood()==1) {
+				food = "western";
+			}else if(resList.get(i).getEtcfood()==1) {
+				food = "etc";
+			}
+			
+			random_1=(int) (Math.random()*5+1);
+			System.out.println(random_1);
+			for(int j=0; j<random_1; j++) {
+				noDupl = true;
+				System.out.println(fullsize[j]);
+				fullsize[j] = (int) (Math.random()*25+1);
+				for(int k=0;k<j;k++) {
+					if(fullsize[j] ==fullsize[k]) {
+						j--;
+					}
+				}
+			}
+			for(int j = 0; j <random_1;j++) {
+				imageres.setRes_image_num(resList.get(i).getRes_num()*100+j);
+				imageres.setRes_image_name(food+fullsize[j]+".jpg");
+				imageres.setRes_num(resList.get(i).getRes_num());
+				if(j==0) {
+					imageres.setBest_image(1);
+				}else {
+					imageres.setBest_image(0);
+				}
+				hmDetailService.registImageVO(imageres);
+			}
+			
+			
+			
+		}
+		
+		return "";
+	}
 	@RequestMapping("/DetailView.do")
 	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,HttpServletRequest req) {
 		//조회수 올리기
@@ -114,6 +168,8 @@ public class HonmukController {
 		RestaurantVO restDetail = hmDetailService.getRestaurantById(res_num);
 		//별점 가져오기
 		Double res_grade = hmDetailService.getGrade(res_num);
+		//별점준 사람 수를 구해오기
+		int gradeCnt = hmDetailService.getGradeCnt(res_num);
 		//유저가 여기를 평가했는지 확인해야함 평가했으면 별점 안했으면 0으로 줘야할듯
 		//유저 번호 가져오기 나중에..
 		int userNo = 111;
@@ -127,11 +183,13 @@ public class HonmukController {
 		List<RestaurantVO> recomRest = hmDetailService.getRecommandRestuarant(restDetail);
 		//추천식당 3개의 사진을 가져오기
 		List<RestaurantImageVO> recomImageList = hmDetailService.getRecommandImage(recomRest);
+		//추천식당 3개의 별점을 가져오기
+		List<String> recomGradeList = hmDetailService.getRecommandGrade(recomRest);
 		//리뷰가져오기
 		List<ReviewVO> reviewList = hmDetailService.getReviewList(res_num);
 		reviewList = null;
 		int reviewcount = 0;
-		
+		restDetail.setGradecount(gradeCnt);
 		
 		
 		//모델에 넣기
@@ -143,6 +201,7 @@ public class HonmukController {
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("reviewcount", reviewcount);
 		model.addAttribute("recomImageList", recomImageList);
+		model.addAttribute("recomGradeList", recomGradeList);
 		return "detail/detailView";
 	}
 	//별점
