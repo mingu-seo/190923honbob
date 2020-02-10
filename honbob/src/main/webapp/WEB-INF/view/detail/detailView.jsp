@@ -176,7 +176,7 @@
 			<c:if test="${restaurantDetail.table2 == 1}"> 2인테이블 </c:if><br>
 			
 			<b>위도 : </b>${restaurantDetail.latitude}<br>
-			<b>경도 : </b>${restaurantDetail.longtitude}<br>
+			<b>경도 : </b>${restaurantDetail.longitude}<br>
 		</section>
 		<p class="middleSizeText">리뷰(${reviewcount })</p>
 		<hr id = "reviewTophr">
