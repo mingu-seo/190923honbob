@@ -555,7 +555,7 @@ RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
         <div class="header">            
             <div class="headerLeft">
                 <div class="logo">
-                	<img src="../images/logo.png">                                   
+                	<img src="images/logo.png">                                   
                 </div>
             </div>
             <form action="searchList.do" method="post" name="searchword" id="searchForm" >
@@ -588,7 +588,7 @@ RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
         <!--Banner-->
         <div class="bannerContainer">
             <div class="banner">
-            	<img src="../images/banner.png">
+            	<img src="images/banner.png">
             </div>
         </div>
         <!--Select-->
@@ -599,56 +599,56 @@ RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
 					
                     <div class="img">                    
                         <input type="checkbox" id="koreafood" name="koreafood" value="1" >
-                        <label for="koreafood" class="koreafood"><img id="img" src="../images/koreafood.jpg" style="cursor:pointer; "><img src="../images/koreafood_clicked.png" style="cursor:pointer"><h4>한식</h4></label>
+                        <label for="koreafood" class="koreafood"><img id="img" src="images/list/koreafood.jpg" style="cursor:pointer; "><img src="images/list/koreafood_clicked.png" style="cursor:pointer"><h4>한식</h4></label>
                     </div>
         
                     <div class="img">                    
                         <input type="checkbox" id="japanfood" name="japanfood" value="1" >
-                        <label for="japanfood" class="japanfood"><img id="img" src="../images/japanfood.jpg" style="cursor:pointer; "><img src="../images/japanfood_clicked.png" style="cursor:pointer"><h4>일식</h4></label>
+                        <label for="japanfood" class="japanfood"><img id="img" src="images/list/japanfood.jpg" style="cursor:pointer; "><img src="images/list/japanfood_clicked.png" style="cursor:pointer"><h4>일식</h4></label>
                     </div>
                 
                 
                     <div class="img">                    
                         <input type="checkbox" id="chinafood" name="chinafood" value="1" >
-                        <label for="chinafood" class="chinafood"><img id="img" src="../images/chinafood.jpg" style="cursor:pointer; "><img src="../images/chinafood_clicked.png" style="cursor:pointer"><h4>중식</h4></label>
+                        <label for="chinafood" class="chinafood"><img id="img" src="images/list/chinafood.jpg" style="cursor:pointer; "><img src="images/list/chinafood_clicked.png" style="cursor:pointer"><h4>중식</h4></label>
                     </div>
                     
                 
                      <div class="img">                    
                         <input type="checkbox" id="westernfood" name="westernfood" value="1" >
-                        <label for="westernfood" class="westernfood"><img id="img" src="../images/westernfood.jpeg" style="cursor:pointer; "><img src="../images/westernfood_clicked.jpeg" style="cursor:pointer"><h4>양식</h4></label>
+                        <label for="westernfood" class="westernfood"><img id="img" src="images/list/westernfood.jpeg" style="cursor:pointer; "><img src="images/list/westernfood_clicked.jpeg" style="cursor:pointer"><h4>양식</h4></label>
                     </div>
                     
                     <div class="img">                    
                         <input type="checkbox" id="etcfood" name="etcfood" value="1" >
-                        <label for="etcfood" class="etcfood"><img id="img" src="../images/etcfood.jpg" style="cursor:pointer; "><img src="../images/etcfood_clicked.png" style="cursor:pointer"><h4>기타</h4></label>
+                        <label for="etcfood" class="etcfood"><img id="img" src="images/list/etcfood.jpg" style="cursor:pointer; "><img src="images/list/etcfood_clicked.png" style="cursor:pointer"><h4>기타</h4></label>
                     </div>
 
                      <div class="img">                    
                         <input type="checkbox" id="table2" name="table2" value="1" >
-                        <label for="table2" class="table2"><img id="img" src="../images/table2.png" style="cursor:pointer; "><img src="../images/table2_clicked.png" style="cursor:pointer"><h4>2인테이블</h4></label>
+                        <label for="table2" class="table2"><img id="img" src="images/list/table2.png" style="cursor:pointer; "><img src="images/list/table2_clicked.png" style="cursor:pointer"><h4>2인테이블</h4></label>
                     </div>
                 
                 
                      <div class="img">                    
                         <input type="checkbox" id="calculator" name="calculator" value="1" >
-                        <label for="calculator" class="calculator"><img id="img" src="../images/calculator.jpg" style="cursor:pointer; "><img src="../images/calculator_clicked.png" style="cursor:pointer"><h4>무인계산기</h4></label>
+                        <label for="calculator" class="calculator"><img id="img" src="images/list/calculator.jpg" style="cursor:pointer; "><img src="images/list/calculator_clicked.png" style="cursor:pointer"><h4>무인계산기</h4></label>
                     </div>
                 
                      <div class="img">                    
                         <input type="checkbox" id="partition2" name="partition2" value="1" >
-                        <label for="partition2" class="partition2"><img id="img" src="../images/partition2.jpg" style="cursor:pointer; "><img src="../images/partition2_clicked.png" style="cursor:pointer"><h4>칸막이</h4></label>
+                        <label for="partition2" class="partition2"><img id="img" src="images/list/partition2.jpg" style="cursor:pointer; "><img src="images/list/partition2_clicked.png" style="cursor:pointer"><h4>칸막이</h4></label>
                     </div>
         
                      <div class="img">                    
                         <input type="checkbox" id="drink" name="drink" value="1" >
-                        <label for="drink" class="drink"><img id="img" src="../images/drink.png" style="cursor:pointer; "><img src="../images/drink_clicked.png" style="cursor:pointer"><h4>혼술가능</h4></label>
+                        <label for="drink" class="drink"><img id="img" src="images/list/drink.png" style="cursor:pointer; "><img src="images/list/drink_clicked.png" style="cursor:pointer"><h4>혼술가능</h4></label>
                     </div>
             
                 
                      <div class="img">                    
                         <input type="checkbox" id="park" name="park" value="1" >
-                        <label for="park" class="park"><img id="img" src="../images/park.png" style="cursor:pointer; "><img src="../images/park_clicked.png" style="cursor:pointer"><h4>주차가능</h4></label>
+                        <label for="park" class="park"><img id="img" src="images/list/park.png" style="cursor:pointer; "><img src="images/list/park_clicked.png" style="cursor:pointer"><h4>주차가능</h4></label>
                     </div>                                      
                 </div>
                 <div class="selectBottom">
