@@ -75,7 +75,7 @@ public class HonmukController {
 		RestaurantVO restDetail = hmDetailService.getRestaurantById(res_num);
 		//별점 가져오기
 		Double res_grade = hmDetailService.getGrade(res_num);
-		//유저가 여기를 평가했는지 확인해야함 평가했으면 별점 안했으면 -1로 줘야할듯
+		//유저가 여기를 평가했는지 확인해야함 평가했으면 별점 안했으면 0으로 줘야할듯
 		//유저 번호 가져오기 나중에..
 		int userNo = 111;
 		GradeVO gradevo = new GradeVO();

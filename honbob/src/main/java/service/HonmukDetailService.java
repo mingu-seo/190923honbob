@@ -91,7 +91,27 @@ public class HonmukDetailService {
 	//추천 식당
 	public List<RestaurantVO> getRecommandRestuarant(RestaurantVO restDetail) {
 		//주변식당 리스트 n개를 추출하고 그중에 가장 리뷰수혹은 조회수가 높은 식당을 가지고 오는 sql을 사용할 것.
-		return HonmukDao.getRecommnadRestaurant(restDetail);
+		//이용하여 4개의 리스트를 가져와서 중복을 제거하고 3개만을 줄것임
+		//탑4 리스트를 가지고 온다.
+		List<RestaurantVO> RecommandList = HonmukDao.getRecommnadRestaurant(restDetail);
+		//중복을 검사한다.
+		boolean dupl_res = false;
+		int count_dupl = 0;
+		for(int i = 0;i<RecommandList.size();i++) {
+			if(RecommandList.get(i).getRes_num()==restDetail.getRes_num()) {
+				dupl_res = true;
+				count_dupl = i;
+			}
+		}
+		//중복이 있을경우 - 중복된 경우의 수를 삭제한 리스트를 만든다.
+		if(dupl_res) {
+			RecommandList.remove(count_dupl);
+		}
+		//중복이 없을경우 - 그냥 4번째를 삭제한다.
+		else {
+			RecommandList.remove(3);
+		}
+		return RecommandList;
 	}
 	//식당 리뷰 가져오기
 	public List<ReviewVO> getReviewList(int res_num) {

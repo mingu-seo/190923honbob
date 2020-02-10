@@ -25,21 +25,21 @@ body{
 	padding: 10px 0;
 }
 #content_left{
-	width:70%;
+	width:75%;
 	float:left;
 }
 #content_right{
-	width:30%;
+	width:25%;
 	float:right;
 	background-color: #eeeeee;
 }
 #subject_text{
 	font-weight:bold;
-	font-size: 30px;
+	font-size: 38px;
 	line-height: 1.05;
 }
 #restaurant_grade_text{
-	font-size: 25px;
+	font-size: 28px;
 	color : #FE9A2E;
 	line-height: 1.05;
 }
@@ -109,4 +109,10 @@ body{
 	margin:3%;
 	background-color: white;
 	text-align: left;
+}
+#recom_subject{
+	font-size:15px;
+	margin-left: 10px;
+	margin-top: 10px;
+	font-weight: bold;
 }

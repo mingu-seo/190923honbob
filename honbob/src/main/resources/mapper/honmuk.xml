@@ -113,7 +113,7 @@
 				 or etcfood='1' 
 			</if>
 		</where>
-		order by readcount desc limit 3
+		order by readcount desc limit 4
 	</select>
 	<!-- 유저가 별점을 했는지 찾아본다 -->
 	<select id="getUserGrade" parameterType="vo.GradeVO" resultType="Integer">
