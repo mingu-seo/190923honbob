@@ -5,53 +5,93 @@
 <mapper namespace="Honmuk">
 	
 	<select id="searchList" parameterType="vo.RestaurantVO" resultType="vo.RestaurantVO">
-		select * from restaurantvo
-		<where>
-			<if test="keyword != null">
-				res_name like '%${keyword}%' or address like '%${keyword}%'
+	
+		<if test="latitude == 0 and longitude == 0">		
+	
+			select * from restaurantvo
+			<where>
+				<if test="keyword != null">
+					res_name like '%${keyword}%' or address like '%${keyword}%'
+				</if>
+			
+				<if test ="koreafood == 1 or japanfood == 1 or westernfood == 1 or chinafood == 1 or etcfood == 1">
+					(
+					
+					<if test="koreafood == 1">
+						koreafood='1' 
+					</if>
+					<if test="japanfood == 1">
+						<if test="koreafood == 1">
+							or
+						</if>
+						japanfood='1' 
+					</if>
+					<if test="westernfood == 1">
+						<if test="koreafood == 1 or japanfood == 1">
+							or
+						</if>
+						westernfood='1' 
+					</if>
+					<if test="chinafood == 1">
+						<if test="koreafood == 1 or japanfood == 1 or westernfood == 1">
+							or
+						</if>
+						chinafood='1' 
+					</if>
+					<if test="etcfood == 1">
+						<if test="koreafood == 1 or japanfood == 1 or westernfood == 1 or chinafood == 1">
+							or
+						</if>
+						etcfood='1'
+					</if>
+					
+					)		 
+			 	</if>
+			 	
+				<if test="drink == 1">
+					and drink='1' 
+				</if>
+				<if test="partition2 == 1">
+					and partition2='1' 
+				</if>
+				<if test="calculator == 1">
+					and calculator='1' 
+				</if>
+				<if test="park == 1">
+					and park='1' 
+				</if>
+				<if test="table2 == 1">
+					and table2='1' 
+				</if>
+			</where>		
+			
+			<if test="grade == 1">
+				order by grade desc
+			</if>
+			<if test="readcount == 1">
+				order by readcount desc
+			</if>
+			<if test="reviewcount == 1">
+				order by reviewcount desc
 			</if>
 		
-			<if test="koreafood == 1">
-				koreafood='1'
-			</if>
-			<if test="japanfood == 1">
-				 or japanfood='1'
-			</if>
-			<if test="westernfood == 1">
-				 or westernfood='1'
-			</if>
-			<if test="chinafood == 1">
-				 or chinafood='1'
-			</if>
-			<if test="etcfood == 1">
-				 or etcfood='1' 
-			</if>		 
-		 
-			<if test="drink == 1">
-				 or drink='1' 
-			</if>
-			<if test="partition2 == 1">
-				 or partition2='1' 
-			</if>
-			<if test="calculator == 1">
-				 or calculator='1' 
-			</if>
-			<if test="park == 1">
-				 or park='1' 
-			</if>
-			<if test="table2 == 1">
-				 or table2='1' 
-			</if>
-		</where>		
+		</if>
 		
-		<if test="grade == 1">
-			order by grade desc
-		</if>
-		<if test="readcount == 1">
-			order by readcount desc
-		</if>
-		<if test="reviewcount == 1">
-			order by reviewcount desc
+		<if test="latitude != 0 and longitude != 0">
+		<![CDATA[
+			SELECT *, ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${longitude}) ) + 
+			sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurantvo HAVING distance < 5 ORDER BY distance
+		]]>
+			<if test="grade == 1">
+				, grade desc
+			</if>
+			<if test="readcount == 1">
+				, readcount desc
+			</if>
+			<if test="reviewcount == 1">
+				, reviewcount desc
+			</if>
+		
 		</if>
 		
 		limit #{startIndex}, #{limit};
@@ -60,6 +100,9 @@
 	<select id="searchCount" resultType="int">
 		select count(*) from restaurantvo;
 	</select>
+	
+	
+	
 	<!-- 전체 식당 리스트 불러오기 -->
 	<select id="getList" resultType="vo.RestaurantVO">
 		select * from restaurant;

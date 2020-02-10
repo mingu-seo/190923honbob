@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import service.HonmukDetailService;
+import service.HonmukListService;
 import util.PageInfo;
 import vo.GradeVO;
 import vo.RestaurantImageVO;
@@ -27,13 +28,28 @@ public class HonmukController {
 	@Autowired
 	private HonmukDetailService hmDetailService;
 	
+	@Autowired
+	HonmukListService hmListService;
+	
 	//메인페이지에서 키워드로 검색시 경로
 	@RequestMapping("/searchList.do")
-	public String searchKeyword(Model model, RestaurantVO resVO, @RequestParam(name="page", required = false) String page,
-			HttpServletRequest request, @RequestParam(name="filter1", required = false) String filter1,
-			@RequestParam(name="keyword", required = false) String keyword) {
+	public String searchList(Model model, RestaurantVO resVO) {				
 		
-		//필터창 정렬순 지정
+		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
+			resVO.setGrade(1);
+		}
+		model.addAttribute("resVO", resVO);
+		
+		List<RestaurantVO> searchlist = hmListService.searchList(resVO); 		
+		model.addAttribute("searchlist", searchlist);	
+		
+		return "searchList";  
+	}	
+	
+	@RequestMapping("/listAjax.do")
+	public String listAjax(Model model, RestaurantVO resVO, @RequestParam(name="page", required = false) String page,
+			@RequestParam(name="filter1", required = false) String filter1) {
+			
 		if("grade".equals(filter1)) {
 			resVO.setGrade(1);
 		}else if("reviewcount".equals(filter1)) {
@@ -42,27 +58,32 @@ public class HonmukController {
 			resVO.setReadcount(1);
 		}
 		
-		//기본 검색값 별점순
 		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
 			resVO.setGrade(1);
 		}
 		
-		//하단부 페이징
+		
+		
 		Page Page = new Page();
-		int listCount = hmDetailService.count();
+		int listCount = hmListService.count();
 		PageInfo pageInfo = Page.page(page, listCount);
 		model.addAttribute("pageInfo", pageInfo);
 		
-		model.addAttribute("resVO", resVO);
+		List<RestaurantVO> searchlist = hmListService.searchList(resVO); 		
+		model.addAttribute("searchlist", searchlist);
 		
+		if(searchlist.size()==0) {			
+			model.addAttribute("msg", "식당 정보가 없습니다.");
+			model.addAttribute("url", "/Honmuk/searchList.do");			
+			return "include/alert";
+		}else {
+			return "include/listAjax";
+		}
+				
 		
-		//데이터로 검색결과 받는 경로		
-		List<RestaurantVO> searchlist = hmDetailService.searchList(resVO); 
-		model.addAttribute("searchlist", searchlist);	
-		
-		
-		return "searchList";
-	}
+	}		
+	
+	
 	@RequestMapping("/DetailView.do")
 	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,HttpServletRequest req) {
 		//조회수 올리기

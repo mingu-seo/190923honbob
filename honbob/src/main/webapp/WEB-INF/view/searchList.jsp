@@ -1,20 +1,11 @@
+<%@page import="util.PageInfo"%>
 <%@page import="java.util.List"%>
 <%@page import="vo.RestaurantVO"%>
-<%@page import="util.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	PageInfo pageInfo=(PageInfo)request.getAttribute("pageInfo");
-	int listCount=pageInfo.getListCount();
-	int nowPage=pageInfo.getPage();
-	int maxPage=pageInfo.getMaxPage();
-	int startPage=pageInfo.getStartPage();
-	int endPage=pageInfo.getEndPage();
-	
-%>
+
 <%RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO"); %>
-<%List<RestaurantVO> searchlist = (List<RestaurantVO>)request.getAttribute("searchlist");%>
 <html>
 <head>
     <title>밥먹자</title>
@@ -50,18 +41,19 @@
         }
         .Lcontent > .inner{
             background-color:#ffffff;
-            padding: 3% 20%;
+            width: 1000px;
+            margin: 3% auto;
+            padding: 0 0 0 80px;            
         }
         .Lcontent > .inner > .search-info{
             margin: 10px 15px ;
         }
         .Lcontent > .inner > .search-info > h1{
             float: left;
+            width: 770px;
         }
         .Lcontent > .inner > .search-info > .filter{
-            float: right;
-            margin-top: 10px;
-            margin-right: 10px;
+			line-height: 3;            
         }        
         .search-restaurants-list{
             width: 100%;
@@ -104,8 +96,22 @@
         .Rcontent > .map{
             height: 70%;
             background-color:#a5c2a7;
-            text-align:center;
-            line-height:500px;
+        }
+        .locationSearch {
+        	text-align:center;
+        	border: 2px solid #ff792a;
+            border-radius: 40px;
+            padding: 10px 10px;
+            color: white;
+            background-color: #ff792a;
+            font-size: 22px;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            left : 150px;
+            top : 600px;
+            z-index: 100;        
+            width: 200px;
         }
         .Rcontent > .chat{
             height: 30%;
@@ -127,7 +133,6 @@
             display: none;
             background: rgba(0,0,0,0.9);
             z-index: 10000;
-            overflow-y: scroll;
         }
         .popup-filter{
             width: 700px;
@@ -167,8 +172,8 @@
             display: none;
         }
         .icon img{
-            width: 90px;
-            height: 90px;
+            width: 70px;
+            height: 70px;
         }        
         .icon{
             width: 18%;
@@ -194,7 +199,7 @@
             background-color: rgb(211, 210, 210);
         }
         .popup-submit > .submit{
-            background-color: rgb(255, 174, 52);
+            background-color: #ff792a;
         }
         .filter-item >.order-wrap{
             text-align: center;
@@ -211,7 +216,7 @@
             font-size: 20px;
         }
         .checked{
-        	color: rgb(255, 174, 52);
+        	color: #ff792a;
         }
         .checked2{
         	display: inline-block;
@@ -219,8 +224,8 @@
             margin: 0 18px;            
             border-radius: 40px;
             padding: 15px 0px;
-            color: rgb(255, 174, 52);
-        	border: 2px solid #ffae34;
+            color: #ff792a;
+        	border: 2px solid #ff792a;
             font-size: 20px;
         }
         .filterArea{
@@ -231,60 +236,16 @@
         }
         #img{
 	    	position : absolute;
-	    }       
+	    }
+	    
     	
-    </style>
-    <style>
-    .wrap {
-    position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;
-    text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-    line-height: 1.5;
-    }
-    .wrap * {
-    padding: 0;margin: 0;
-    }
-    .wrap .info {
-    width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;
-    border-right: 1px solid #ccc;overflow: hidden;background: #fff; z-index:99;
-    }
-    .wrap .info:nth-child(1) {
-    border: 0;box-shadow: 0px 1px 2px #888;
-    }
-	.info .title{
-		position: absolute;
-		background-color: #fbe7b2;
-		width: 286px;
-		height: 43px;		
-	}
-    .info .body {
-    position: relative;overflow: hidden; left: 8px;
-    }
-    .info .desc {
-    position: relative;margin: 13px 0 0 90px;height: 90px;
-    }
-    .desc .ellipsis {
-    overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
-    font-size: 20px;
-    }
-    .desc .jibun {
-    font-size: 11px;color: #888;margin-top: -2px;
-    }
-    .info .img {
-    position: absolute;top: 20px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;
-    color: #888;overflow: hidden;
-    }
-    .info:after {
-    content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;
-    background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
-    }
-    .info .link {
-    color: #5085BB;
-    }           
-    </style>
+</style>
+
 <script>
 
 	$(function(){
-	    
+		listAjax();
+		
 		$('.darken-background').click(function(){
 	        hideFilter();
 	    });
@@ -313,133 +274,95 @@
 	    		$(this).parent().removeClass("checked"); 
 	    		$(this).next().children().first().css("opacity", "1");
 	    		} 
-	    });	    
-	    
+	    });
 	});
 	
+	function listAjax() {
+		
+		$.ajax({
+			type : 'get',
+			url : '/honbob/listAjax.do',
+			dataType : 'html',
+			data : $("#searchFilter").serialize(),
+			success : function(data){
+				$(".container").html(data);
+			},
+			error : function(){
+				console.log("에러")
+			},
+			async : true
+    	});
+		
+		hideFilter();
+	}
+	
+	function setPage(page) {
+		$("#page").val(page);		
+		listAjax();
+	}
+	
+	
     function showFilter(){               
-    		    	    	
         $('.darken-background').show();
-        $('.darken-background').css('top', $(window).scrollTop());
-
-        $('body').css('overflow:hidden');        
+        $('body').css('overflow:hidden');
         
     }
     
     function hideFilter(){
         $('.darken-background').hide();
-
-        $('body').css('overflow', '');
+        $('body').css('overflow', '');        
+       
     }   
         
+    function submitAction(){
+    	$("#page").val(1);
+    	$("#mapLevel").val(6);
+    	$("#latitude").val(0);
+    	$("#longitude").val(0);
+    	listAjax();
+    }
     
 </script>
 
 </head>
 
 <body>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=968f5cb093e2b0f76e796a0721504779&libraries=services"></script>
+
     <div class="stylewrap">
         <div class="header">
             HEADER
         </div>        
-        <div class="container">
-            <div class="Lcontent">
-                <div class="inner">
-                    <div class="search-info">
-                        <h1>검색장소 인기순 검색순위</h1>
-                        <div class="filter" onclick="showFilter()" style="cursor:pointer">
-                            <p>필터</p>
-                        </div>
-                    </div>
-                    <div class="search-restaurants-list">
-                        <div class="restaurants-list">
-                        
-                        	<c:forEach var = "res" items="${searchlist }" varStatus="status">
-                            	<div class="restaurants-item">
-                                   <div class="restaurants-thumb">
-                                   </div>
-                                   <div class="restaurants-info">
-                                       <a href="#"><h2>${res.res_name }</h2></a>
-                                       <strong class="grade"><img src="images/grade_icon.png" width="15" height="15">${res.grade }</strong>
-                                       <p><span>${res.addressCut } - ${res.category }${res.option }</span></p>
-                                       <p>
-                                           <span class="view_count"><img src="images/read_icon.png" width="15" height="15">${res.readcount }</span>
-                                           <span class="review_count"><img src="images/review_icon.jpg" width="15" height="15">${res.reviewcount }</span>
-                                       </p>                                        
-                                   </div>
-                             	</div>   
-                            </c:forEach>  
-                                                           
-                    	</div>
-                	</div>
-                </div>
-                    <p class="paging">
-	                    <%if(nowPage<=1){ %>
-							◀&nbsp;
-						<%}else{ %>
-							<a href="searchList.do?page=<%=nowPage-1 %>&koreafood=<%=resVO.getKoreafood()%>&japanfood=<%=resVO.getJapanfood()%>
-							&chinafood=<%=resVO.getChinafood()%>&westernfood=<%=resVO.getWesternfood()%>&etcfood=<%=resVO.getEtcfood()%>
-							&table2=<%=resVO.getTable2()%>&calculator=<%=resVO.getCalculator()%>&partition2=<%=resVO.getPartition2()%>
-							&park=<%=resVO.getPark()%>&drink=<%=resVO.getDrink()%>&filter1=<% if(resVO.getGrade()==1){%>grade<%
-								}else if(resVO.getReadcount()==1){%>readcount<%}else if(resVO.getReviewcount()==1){%>reviewcount<%}%>">◀</a>&nbsp;
-							<%} %>
-							
-						<%for (int a=startPage; a<=endPage; a++){
-							if(a==nowPage){%>
-							<%=a %>
-							<%}else{ %>
-							
-								<a href="searchList.do?page=<%=a %>&koreafood=<%=resVO.getKoreafood()%>&japanfood=<%=resVO.getJapanfood()%>
-							&chinafood=<%=resVO.getChinafood()%>&westernfood=<%=resVO.getWesternfood()%>&etcfood=<%=resVO.getEtcfood()%>
-							&table2=<%=resVO.getTable2()%>&calculator=<%=resVO.getCalculator()%>&partition2=<%=resVO.getPartition2()%>
-							&park=<%=resVO.getPark()%>&drink=<%=resVO.getDrink()%>&filter1=<% if(resVO.getGrade()==1){%>grade<%
-								}else if(resVO.getReadcount()==1){%>readcount<%}else if(resVO.getReviewcount()==1){%>reviewcount<%}%>"><%=a %>
-								</a>&nbsp;
-							<%} %>
-						<%} %>
-						
-						<%if(nowPage>=maxPage){ %>
-							▶
-						<%}else{ %>
-							<a href="searchList.do?page=<%=nowPage+1 %>&koreafood=<%=resVO.getKoreafood()%>&japanfood=<%=resVO.getJapanfood()%>
-							&chinafood=<%=resVO.getChinafood()%>&westernfood=<%=resVO.getWesternfood()%>&etcfood=<%=resVO.getEtcfood()%>
-							&table2=<%=resVO.getTable2()%>&calculator=<%=resVO.getCalculator()%>&partition2=<%=resVO.getPartition2()%>
-							&park=<%=resVO.getPark()%>&drink=<%=resVO.getDrink()%>&filter1=<% if(resVO.getGrade()==1){%>grade<%
-								}else if(resVO.getReadcount()==1){%>readcount<%}else if(resVO.getReviewcount()==1){%>reviewcount<%}%>">▶</a>
-						<%} %>                                     
-                    </p>
-            </div>
-            <div class="Rcontent">
-	            <div class="map">
-	                <div id="map" style="width:100%;height:700px;"></div>
-	            </div>
-	            <div class="chat">
-	                    chat
-	            </div>
-            </div>                
-        </div>
+        <div class="container">            
             
+            
+        </div>            
     </div>
         <div class="footer">
             FOOTER
         </div>
         <div class="darken-background">
-        <form name="searchFilter" action="searchList.do">
+        <form name="searchFilter" id="searchFilter" action="searchList.do">
+        <input type="hidden" name="page" id="page" value="1">
+        <input type="hidden" name="latitude" id="latitude" value="0">
+        <input type="hidden" name="longitude" id="longitude" value="0">
+        <input type="hidden" name="mapLevel" id="mapLevel" value="6">
              <div class="popup-filter">
                  <div class="inner">
                      <div class="filter-item">
                          <label class="filter-title">검색필터</label>
                          <div class="order-wrap">
-                            <div class="filterArea <% if(resVO.getGrade()==1){%>checked2<%}else{%>order-icon<% }%>">
-                                <input type="radio" name="filter1" value="grade" id="grade" <% if(resVO.getGrade()==1){%>checked="checked"<%}%>>
+                            <div class="filterArea checked2">
+                                <input type="radio" name="filter1" value="grade" id="grade">
                                 <label for="grade">별점순</label>
                             </div>
-                            <div class="filterArea <% if(resVO.getReadcount()==1){%>checked2<%}else{%>order-icon<% }%>">
-                                <input type="radio" name="filter1" value="readcount" id="readcount" <% if(resVO.getReadcount()==1){%>checked="checked"<%}%>>
+                            <div class="filterArea order-icon">
+                                <input type="radio" name="filter1" value="readcount" id="readcount" >
                                 <label for="readcount">조회순</label>
                             </div>
-                            <div class="filterArea <% if(resVO.getReviewcount()==1){%>checked2<%}else{%>order-icon<% }%>">
-                                <input type="radio" name="filter1" value="reviewcount" id="reviewcount" <% if(resVO.getReviewcount()==1){%>checked="checked"<%}%>>
+                            <div class="filterArea order-icon">
+                                <input type="radio" name="filter1" value="reviewcount" id="reviewcount" >
                                 <label for="reviewcount">리뷰순</label>
                             </div>
                          </div>                        
@@ -448,48 +371,58 @@
                          <label class="filter-title">음식종류</label>
                          <span class="option">중복 선택 가능</span>
                          <div class="category-wrap">
-                             <div class="icon <% if(resVO.getKoreafood()==1){%>checked<%}%>">
-                                <input type="checkbox" id="koreafood" name="koreafood" value="1" <% if(resVO.getKoreafood()==1){%>checked="checked"<%}%>>
-                                <label for="koreafood" class="koreafood"><img id="img" src="images/koreafood.jpg" style="cursor:pointer; <% if(resVO.getKoreafood()==1){%>opacity:0<%}%>"><img src="images/koreafood_clicked.png" style="cursor:pointer"><h4>한식</h4></label>
+                             <div class="icon">
+                                <input type="checkbox" id="koreafood" name="koreafood" value="1">
+                                <label for="koreafood" class="koreafood"><img id="img" src="images/list/koreafood.jpg" style="cursor:pointer;">
+                                	<img src="images/list/koreafood_clicked.png" style="cursor:pointer"><h4>한식</h4></label>
                             </div>
-                            <div class="icon <% if(resVO.getJapanfood()==1){%>checked<%}%>">
-                                <input type="checkbox" id="japanfood" name="japanfood" value="1" <% if(resVO.getJapanfood()==1){%>checked="checked"<%}%>>
-                                <label for="japanfood" class="japanfood"><img id="img" src="images/japanfood.jpg" style="cursor:pointer; <% if(resVO.getJapanfood()==1){%>opacity:0<%}%>"><img src="images/japanfood_clicked.png" style="cursor:pointer"><h4>일식</h4></label>
+                            <div class="icon">
+                                <input type="checkbox" id="japanfood" name="japanfood" value="1">
+                                <label for="japanfood" class="japanfood"><img id="img" src="images/list/japanfood.jpg" style="cursor:pointer;">
+                               		<img src="images/list/japanfood_clicked.png" style="cursor:pointer"><h4>일식</h4></label>
                             </div>
-                            <div class="icon <% if(resVO.getChinafood()==1){%>checked<%}%>">
-                                <input type="checkbox" id="chinafood" name="chinafood" value="1" <% if(resVO.getChinafood()==1){%>checked="checked"<%}%>>
-                                <label for="chinafood" class="chinafood"><img id="img" src="images/chinafood.jpg" style="cursor:pointer; <% if(resVO.getChinafood()==1){%>opacity:0<%}%>"><img src="images/chinafood_clicked.png" style="cursor:pointer"><h4>중식</h4></label>
+                            <div class="icon">
+                                <input type="checkbox" id="chinafood" name="chinafood" value="1">
+                                <label for="chinafood" class="chinafood"><img id="img" src="images/list/chinafood.jpg" style="cursor:pointer;">
+                                	<img src="images/list/chinafood_clicked.png" style="cursor:pointer"><h4>중식</h4></label>
                             </div>
-                            <div class="icon <% if(resVO.getWesternfood()==1){%>checked<%}%>">
-                                <input type="checkbox" id="westernfood" name="westernfood" value="1" <% if(resVO.getWesternfood()==1){%>checked="checked"<%}%>>
-                                <label for="westernfood" class="westernfood"><img id="img" src="images/westernfood.jpeg" style="cursor:pointer; <% if(resVO.getWesternfood()==1){%>opacity:0<%}%>"><img src="images/westernfood_clicked.jpeg" style="cursor:pointer"><h4>양식</h4></label>
+                            <div class="icon">
+                                <input type="checkbox" id="westernfood" name="westernfood" value="1">
+                                <label for="westernfood" class="westernfood"><img id="img" src="images/list/westernfood.jpeg" style="cursor:pointer;">
+                                	<img src="images/list/westernfood_clicked.jpeg" style="cursor:pointer"><h4>양식</h4></label>
                             </div>
-                            <div class="icon <% if(resVO.getEtcfood()==1){%>checked<%}%>">
-                                <input type="checkbox" id="etcfood" name="etcfood" value="1" <% if(resVO.getEtcfood()==1){%>checked="checked"<%}%>>
-                                <label for="etcfood" class="etcfood"><img id="img" src="images/etcfood.jpg" style="cursor:pointer; <% if(resVO.getEtcfood()==1){%>opacity:0<%}%>"><img src="images/etcfood_clicked.png" style="cursor:pointer"><h4>기타</h4></label>
+                            <div class="icon">
+                                <input type="checkbox" id="etcfood" name="etcfood" value="1">
+                                <label for="etcfood" class="etcfood"><img id="img" src="images/list/etcfood.jpg" style="cursor:pointer;">
+                                	<img src="images/list/etcfood_clicked.png" style="cursor:pointer"><h4>기타</h4></label>
                             </div>                                                            
                          </div>
                          <label class="filter-title">식당옵션</label>
                          <div class="category-wrap2">
-                         	<div class="icon <% if(resVO.getTable2()==1){%>checked<%}%>">
-                                <input type="checkbox" id="table2" name="table2" value="1" <% if(resVO.getTable2()==1){%>checked="checked"<%}%>>
-                                <label for="table2" class="table2"><img id="img" src="images/table2.png" style="cursor:pointer; <% if(resVO.getTable2()==1){%>opacity:0<%}%>"><img src="images/table2_clicked.png" style="cursor:pointer"><h4>2인테이블</h4></label>
+                         	<div class="icon">
+                                <input type="checkbox" id="table2" name="table2" value="1">
+                                <label for="table2" class="table2"><img id="img" src="images/list/table2.png" style="cursor:pointer;">
+                                	<img src="images/list/table2_clicked.png" style="cursor:pointer"><h4>2인테이블</h4></label>
                             </div>
-                            <div class="icon <% if(resVO.getCalculator()==1){%>checked<%}%>">
-                                <input type="checkbox" id="calculator" name="calculator" value="1" <% if(resVO.getCalculator()==1){%>checked="checked"<%}%>>
-                                <label for="calculator" class="calculator"><img id="img" src="images/calculator.jpg" style="cursor:pointer; <% if(resVO.getCalculator()==1){%>opacity:0<%}%>"><img src="images/calculator_clicked.png" style="cursor:pointer"><h4>무인계산기</h4></label>
+                            <div class="icon">
+                                <input type="checkbox" id="calculator" name="calculator" value="1">
+                                <label for="calculator" class="calculator"><img id="img" src="images/list/calculator.jpg" style="cursor:pointer;">
+                                	<img src="images/list/calculator_clicked.png" style="cursor:pointer"><h4>무인계산기</h4></label>
                             </div>
-                            <div class="icon <% if(resVO.getPartition2()==1){%>checked<%}%>">
-                                <input type="checkbox" id="partition2" name="partition2" value="1" <% if(resVO.getPartition2()==1){%>checked="checked"<%}%>>
-                                <label for="partition2" class="partition2"><img id="img" src="images/partition2.jpg" style="cursor:pointer; <% if(resVO.getPartition2()==1){%>opacity:0<%}%>"><img src="images/partition2_clicked.png" style="cursor:pointer"><h4>칸막이</h4></label>
+                            <div class="icon">
+                                <input type="checkbox" id="partition2" name="partition2" value="1">
+                                <label for="partition2" class="partition2"><img id="img" src="images/list/partition2.jpg" style="cursor:pointer;">
+                                	<img src="images/list/partition2_clicked.png" style="cursor:pointer"><h4>칸막이</h4></label>
                             </div>
-                            <div class="icon <% if(resVO.getDrink()==1){%>checked<%}%>">
-                                <input type="checkbox" id="drink" name="drink" value="1" <% if(resVO.getDrink()==1){%>checked="checked"<%}%>>
-                                <label for="drink" class="drink"><img id="img" src="images/drink.png" style="cursor:pointer; <% if(resVO.getDrink()==1){%>opacity:0<%}%>"><img src="images/drink_clicked.png" style="cursor:pointer"><h4>혼술가능</h4></label>
+                            <div class="icon">
+                                <input type="checkbox" id="drink" name="drink" value="1">
+                                <label for="drink" class="drink"><img id="img" src="images/list/drink.png" style="cursor:pointer;">
+                                	<img src="images/list/drink_clicked.png" style="cursor:pointer"><h4>혼술가능</h4></label>
                             </div>
-                            <div class="icon <% if(resVO.getPark()==1){%>checked<%}%>">
-                                <input type="checkbox" id="park" name="park" value="1" <% if(resVO.getPark()==1){%>checked="checked"<%}%>>
-                                <label for="park" class="park"><img id="img" src="images/park.png" style="cursor:pointer; <% if(resVO.getPark()==1){%>opacity:0<%}%>"><img src="images/park_clicked.png" style="cursor:pointer"><h4>주차가능</h4></label>
+                            <div class="icon">
+                                <input type="checkbox" id="park" name="park" value="1">
+                                <label for="park" class="park"><img id="img" src="images/list/park.png" style="cursor:pointer;">
+                                	<img src="images/list/park_clicked.png" style="cursor:pointer"><h4>주차가능</h4></label>
                             </div>
                          </div>                        
                      </div>
@@ -498,131 +431,35 @@
                      <div class="cancle" onclick="hideFilter()">
                          취소
                      </div>
-                     <div class="submit" onClick="document.forms['searchFilter'].submit();">
+                     <div class="submit" onClick="submitAction();">
                          적용
                      </div>
                  </div>
              </div>
              </form>
          </div>
-    </div>
-    
+<div id="map" style="display : none;"></div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=968f5cb093e2b0f76e796a0721504779&libraries=services"></script>
 <script>
+	
 	
 	var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 		mapOption = { 
 		    center: new kakao.maps.LatLng(33.451475, 126.570528), // 지도의 중심좌표
-		    level: 4 // 지도의 확대 레벨
+		    level: 6 // 지도의 확대 레벨
 	}; 
 	
-	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다	
 	
-	var geocoder = new kakao.maps.services.Geocoder();
-	
-	
-	var locations = [];
-	var res_name = [];
-	var grade = [];
-	var addressCut = [];
-	var category = [];
-	var readcount = [];
-	var reviewcount = [];	
-	var markericon = [];
-	
-	<c:forEach items="${searchlist}" var="list">		
-		locations.push("${list.address}");
-		res_name.push("${list.res_name}");
-		grade.push("${list.grade}");
-		addressCut.push("${list.addressCut}");
-		category.push("${list.category}");
-		readcount.push("${list.readcount}");
-		reviewcount.push("${list.reviewcount}");		
+	function locationSearch(){
+		var center = map.getCenter(); 
 		
-		<c:if test="${list.koreafood==1}">markericon.push("images/koreafood_border.png")</c:if>
-		<c:if test="${list.japanfood==1}">markericon.push("images/japanfood_border.png")</c:if>
-		<c:if test="${list.chinafood==1}">markericon.push("images/chinafood_border.png")</c:if>
-		<c:if test="${list.westernfood==1}">markericon.push("images/westernfood_border.png")</c:if>
-		<c:if test="${list.etcfood==1}">markericon.push("images/etcfood_border.png")</c:if>
+		$("#latitude").val(center.getLat());
+		$("#longitude").val(center.getLng());
 		
-	</c:forEach>
-	
-	
-	var content;	
-	var arrIdx = 0;
-	
-	
-	locations.forEach(function(element){		
-		geocoder.addressSearch(element, function(result, status) {			
-			
-		    // 정상적으로 검색이 완료됐으면 
-		     if (status === kakao.maps.services.Status.OK) {
-	
-		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	
-		        
-		        var icon = new kakao.maps.MarkerImage(markericon[arrIdx],
-		    	        new kakao.maps.Size(42, 42));
-		        
-		        // 결과값으로 받은 위치를 마커로 표시합니다
-		        var marker = new kakao.maps.Marker({
-		            map: map,
-		            position: coords,
-		            image : icon
-		        });
-		
-		        
-				//마커 위에 커스텀오버레이를 표시합니다
-				//마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다\
-				
-				var overlay = new kakao.maps.CustomOverlay({
-					content: content,
-					map: map,
-					position: marker.getPosition()       
-				});	
-				
-				overlay.setPosition(marker.getPosition());
-				overlay.setContent('<div class="wrap">' + 
-				        '    <div class="info">' + 
-				        '        <div class="title">' + 
-				        '        </div>' + 
-				        '        <div class="body">' + 
-				        '            <div class="img">' +
-				        '                <img src="http://cfile181.uf.daum.net/image/250649365602043421936D" width="75" height="73">' +
-				        '           </div>' + 
-				        '            <div class="desc">' + 
-				        '                <div class="ellipsis">'+res_name[arrIdx]+'</div>' + 
-				        '                <div class="marker-grade"><img src="images/grade_icon.png" width="15" height="15">'+grade[arrIdx]+' </div>' + 
-				        '                <div class="jibun ellipsis">'+addressCut[arrIdx]+' - '+category[arrIdx]+'</div>' + 
-				        '                <div><img src="images/read_icon.png" width="15" height="15">'+readcount[arrIdx]+
-				        '					  <img src="images/review_icon.jpg" width="15" height="15"> '+reviewcount[arrIdx]+
-				        '				 </div>' + 
-				        '            </div>' + 
-				        '        </div>' + 
-				        '    </div>' +    
-				        '</div>');
-				
-				overlay.setMap(null);
-				
-				
-				//마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-			        
-		    	kakao.maps.event.addListener(marker, 'click', function() {
-		    		overlay.setMap(null);
-		    		overlay.setMap(map);
-		        });
-				        
-		    	kakao.maps.event.addListener(map, 'click', function() {
-		    		overlay.setMap(null);
-		        });
-		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-		        map.setCenter(coords);
-   
-		    } 
-			arrIdx++;
-		});  
-	});
-
+		$("#mapLevel").val(2);
+		listAjax();    	
+    }
 </script>
 </body>
 </html>
