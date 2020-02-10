@@ -63,10 +63,10 @@ public class UserVO {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-	public int getPwdQuestion() {
+	public String getPwdQuestion() {
 		return pwdQuestion;
 	}
-	public void setPwdQuestion(int pwdQuestion) {
+	public void setPwdQuestion(String pwdQuestion) {
 		this.pwdQuestion = pwdQuestion;
 	}
 	public String getPwdAnswer() {
@@ -75,10 +75,10 @@ public class UserVO {
 	public void setPwdAnswer(String pwdAnswer) {
 		this.pwdAnswer = pwdAnswer;
 	}
-	public String getUserJoinDate() {
+	public Date getUserJoinDate() {
 		return userJoinDate;
 	}
-	public void setUserJoinDate(String userJoinDate) {
+	public void setUserJoinDate(Date userJoinDate) {
 		this.userJoinDate = userJoinDate;
 	}
 	public String getUserImage() {

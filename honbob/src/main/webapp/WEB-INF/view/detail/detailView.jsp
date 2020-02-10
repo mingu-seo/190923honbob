@@ -132,7 +132,7 @@
 			<img class="detail_count_picture" src="images/detail/picture_review.jpg"> &nbsp
 			<span class="detail_count_text">${restaurantDetail.reviewcount}</span> &nbsp &nbsp
 			<img class="detail_count_picture" src="images/detail/picture_like.jpg"> &nbsp
-			<span class="detail_count_text">${restaurantDetail.reviewcount}</span>
+			<span class="detail_count_text">${restaurantDetail.gradecount}</span>
 		</div>
 	</div>
 	<div id="subject_right_side">
@@ -176,7 +176,7 @@
 			<c:if test="${restaurantDetail.table2 == 1}"> 2인테이블 </c:if><br>
 			
 			<b>위도 : </b>${restaurantDetail.latitude}<br>
-			<b>경도 : </b>${restaurantDetail.longtitude}<br>
+			<b>경도 : </b>${restaurantDetail.longitude}<br>
 		</section>
 		<p class="middleSizeText">리뷰(${reviewcount })</p>
 		<hr id = "reviewTophr">
@@ -185,7 +185,7 @@
 		</c:if>
 	</div>
 	<div id="content_right">
-		<p>추천 식당 리스트</p>
+		<p id = "recom_subject">추천 식당 리스트</p>
 		<c:forEach var="recom" items="${recomList }" varStatus="status">
 		<a href="DetailView.do?res_num=${recom.res_num }">
 			<div class="recom_res">

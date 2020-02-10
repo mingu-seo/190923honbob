@@ -4,6 +4,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import vo.UserVO;
+
 @Repository
 public class HonmukUserDAO {
 
@@ -44,10 +46,6 @@ public class HonmukUserDAO {
 	
 	public int userDelete(UserVO vo) {
 		return sqlSession.delete("user.userDelete",vo);
-	}
-	
-	public int adminLogin(AdminVO vo) {
-		return sqlSession.selectOne("admin.login",vo);
 	}
 	
 	public int imageUpdate(UserVO vo) {
