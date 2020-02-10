@@ -13,7 +13,7 @@ if (sess != null) userNo = sess.getUserNo();
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/dog/css/myPage.css">
+<link rel="stylesheet" href="/honbob/css/user/myPage.css">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"> </script>
 	<script type = "text/javascript">
@@ -91,6 +91,6 @@ if (sess != null) userNo = sess.getUserNo();
 		</form>
 		</div>
 	</div>
-	<script src="/dog/js/myPage.js"></script> 
+	<script src="/honbob/js/user/myPage.js"></script> 
 </body>
 </html>

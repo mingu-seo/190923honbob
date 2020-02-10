@@ -15,7 +15,7 @@ if (sess != null) userNo = sess.getUserNo();
 </head>
 <body>
 <% if (session.getAttribute("Session") == null) { %>
-<a href="" onclick='window.open("http://localhost:8080/dog/honbab/loginForm.do","_blank","height=547,width=470, status=yes,toolbar=no,menubar=no,location=no");return false'>로그인</a>
+<a href="" onclick='window.open("http://localhost:8080/honbob/loginForm.do","_blank","height=547,width=470, status=yes,toolbar=no,menubar=no,location=no");return false'>로그인</a>
 
 
 <% } else { %>

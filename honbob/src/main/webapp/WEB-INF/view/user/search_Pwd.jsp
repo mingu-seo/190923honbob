@@ -16,7 +16,7 @@ if (sess != null) userNo = sess.getUserNo();
     <meta charset="utf-8">
     <title>Ryan Login</title>
     
-    <link rel="stylesheet" href="/dog/css/style.css">
+    <link rel="stylesheet" href="/honbob/css/user/style.css">
 </head>
 <script src="https://code.jquery.com/jquery-3.4.1.js"> </script>
 	<script type = "text/javascript">
@@ -48,7 +48,7 @@ if (sess != null) userNo = sess.getUserNo();
 				} else {
 				con = true;
 				$.ajax({
-					url : "/dog/honbab/qwdAnswerCheck.do",
+					url : "/honbob/qwdAnswerCheck.do",
 					data : {pwdAnswer:$("#qwdAnswer").val()},
 					type : "POST",
 					async : false,
@@ -79,9 +79,9 @@ if (sess != null) userNo = sess.getUserNo();
 	$(function() {
 		$("#pwdSearch").click(function() {
 				$.ajax({
-					url : "/dog/honbab/pwdSearch.do",
+					url : "/honbab/pwdSearch.do",
 					data : {
-						userId:$("#pwdSearch").val()
+						pwdSearch:$("#pwdSearch").val()
 					},
 					type : "POST",
 					async : false,
@@ -136,6 +136,6 @@ if (sess != null) userNo = sess.getUserNo();
 		<a href = "pwdSearch.do" id = "pwdSearch"> 등록된 이메일로 임시 비밀번호 받기 </a><br>
 		<a href = "loginForm.do"> 로그인 </a>
 	<% } %>
-    <script src="/dog/js/script.js"></script>
+    <script src="/honbob/js/user/script.js"></script>
 </body>
 </html>

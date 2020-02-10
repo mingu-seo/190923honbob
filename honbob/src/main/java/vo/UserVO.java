@@ -14,7 +14,7 @@ public class UserVO {
 	//비밀번호
 	private String userPassword;
 	//비번확인질문
-	private String pwdQuestion;
+	private int pwdQuestion;
 	//비번 확인 답변
 	private String pwdAnswer;
 	//회원가입 날짜
@@ -63,10 +63,10 @@ public class UserVO {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-	public String getPwdQuestion() {
+	public int getPwdQuestion() {
 		return pwdQuestion;
 	}
-	public void setPwdQuestion(String pwdQuestion) {
+	public void setPwdQuestion(int pwdQuestion) {
 		this.pwdQuestion = pwdQuestion;
 	}
 	public String getPwdAnswer() {

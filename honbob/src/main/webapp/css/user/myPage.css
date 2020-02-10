@@ -32,7 +32,8 @@
 
     .menu-title {
         display: block;
-        height: 10px; line-height: 10px;
+        height: 10px; 
+        line-height: 10px;
         text-align: center;
         padding: 15px 10px;
         color: #2E64FE;   
@@ -45,10 +46,9 @@
     }
     
     #container {
-        width: 800px; height: 600px;
-		margin: 180px auto;
-        line-height: 250px;
-        text-align:center;
+        width: 900px; height: 700px;
+		margin: 180px 180px;
+        line-height: 400px;
     }
     
     #info {
@@ -57,7 +57,7 @@
     
     table {
 	    text-align: left;
-	    line-height : 60px;
+	    line-height : 80px;
 	    width: 100%;
     }
     

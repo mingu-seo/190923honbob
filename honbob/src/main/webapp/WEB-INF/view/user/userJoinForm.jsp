@@ -12,7 +12,7 @@
 <head>
 
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/dog/css/Join.css">
+<link rel="stylesheet" href="/honbob/css/user/Join.css">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"> </script>
 	<script type = "text/javascript">
@@ -28,7 +28,7 @@
 			}
 		var con = true;
 		$.ajax({
-			url : "/dog/honbab/idCheck.do",
+			url : "/honbob/idCheck.do",
 			data : {userId:$("#id").val()},
 			type : "POST",
 			async : false,
@@ -84,7 +84,7 @@
 			} else { 
 			var con = true;
 			$.ajax({
-				url : "/dog/honbab/emailPwdCheck.do",
+				url : "/honbob/emailPwdCheck.do",
 				data : {emailPwdNumber:$("#emailPwdNumber").val()},
 				type : "POST",
 				async : false,
@@ -119,7 +119,7 @@
 				alert("아이디를 입력해 주세요");
 			} else {
 				$.ajax({
-					url : "/dog/honbab/idCheck.do",
+					url : "/honbob/idCheck.do",
 					data : {userId:$("#id").val()},
 					type : "POST",
 					async : false,
@@ -144,14 +144,14 @@
 				alert("이메일을 입력해 주세요");
 			} else {
 				$.ajax({
-					url : "/dog/honbab/emailCheck.do",
+					url : "/honbob/emailCheck.do",
 					data : {userEmail:$("#email").val()},
 					type : "POST",
 					async : false,
 					success : function(data) {
 						if (data.trim() == "0") {
 							// 이메일로 인증번호 전송
-							alert("등록된 이메일로 인증번호가 전송되었습니다.");
+							alert("입력한 이메일로 인증번호가 전송되었습니다.");
 							return false;
 						} else {
 							alert("이미 등록된 이메일입니다.");
