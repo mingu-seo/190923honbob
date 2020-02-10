@@ -127,6 +127,7 @@ public class TestController {
 			@RequestParam("pwd") String pwd) throws IOException {
 		// DB 확인
 		TestVO vo = tService.loginCheck(mail, pwd);
+
 		if (vo == null) {
 			// 로그인실패
 			response.setCharacterEncoding("UTF-8");

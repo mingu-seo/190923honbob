@@ -1,0 +1,103 @@
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    a {           
+    	text-decoration: none; 
+    	color: #2E64FE;  
+    }
+    
+    a.click {
+    	pointer-events: none;
+    }
+
+    li { 
+    	list-style: none; 
+    }
+    
+	#main-navigation {
+        padding-bottom: 50px;
+    }
+
+    .menulIST {
+        position: relative;
+        float: left;
+        width: 140px;
+    }
+
+    .menulIST:hover {
+        
+    }
+
+    .menu-title {
+        display: block;
+        height: 10px; line-height: 10px;
+        text-align: center;
+        padding: 15px 10px;
+        color: #2E64FE;   
+                
+    }
+    
+    .menu-title:hover {
+   		background-color: #A9F5A9;
+   		opacity: 0.9;
+    }
+    
+    #container {
+        width: 800px; height: 600px;
+		margin: 180px auto;
+        line-height: 250px;
+        text-align:center;
+    }
+    
+    #info {
+   		width: 100%;
+    }
+    
+    table {
+	    text-align: left;
+	    line-height : 60px;
+	    width: 100%;
+    }
+    
+    td {
+    	position: relative;
+    	right: 20px;
+    }
+    
+    #myPage {
+    	border-bottom: 1px solid #c8c8c8;
+    	position: relative;
+    	width: 102.5%;
+    	line-height: 60px;
+    	text-align:left;
+    	left: -20px; 
+    	bottom: 40px;
+    	color: #5858FA;	
+    }
+    
+    #myInfo {
+		text-align:left;
+		border-bottom: 1px solid #444444;
+		line-height: 30px;
+		padding-top: 20px;
+    }
+    
+    td, th {
+    	border-bottom: 1px solid #c8c8c8;
+    }
+    
+    .pwd {
+    	height: 20px;
+    }
+    
+    .button {
+   		background: #A4A4A4;
+   		height: 23px;
+   		width: 50px;
+    }
+    
+    .button:hover {
+    	cursor: pointer;
+    }

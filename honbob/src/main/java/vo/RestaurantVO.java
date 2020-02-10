@@ -14,7 +14,7 @@ public class RestaurantVO {
 	//위도
 	private double latitude;
 	//경도
-	private double longtitude;
+	private double longitude;
 	//리뷰한사람
 	private int reviewcount;
 	//별점한 사람
@@ -212,11 +212,11 @@ public class RestaurantVO {
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
-	public double getLongtitude() {
-		return longtitude;
+	public double getLongitude() {
+		return longitude;
 	}
-	public void setLongtitude(double longtitude) {
-		this.longtitude = longtitude;
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 	public int getReviewcount() {
 		return reviewcount;
