@@ -1,6 +1,5 @@
 package controller;
 
-<<<<<<< HEAD
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -9,42 +8,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-=======
->>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob.git
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-<<<<<<< HEAD
 
 import service.HonmukDetailService;
 import service.HonmukListService;
-=======
-<<<<<<< HEAD
+
 import org.springframework.web.multipart.MultipartFile;
 
 import honbab.AdminVO;
 import honbab.hmUserService;
 import honbab.UserVO;
 import mail.SendMail;
-=======
->>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob.git
+
 import service.HonmukDetailService;
 import service.HonmukMainPageService;
 import util.Page;
->>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob
 import util.PageInfo;
 import vo.GradeVO;
 import vo.RestaurantImageVO;
 import vo.RestaurantVO;
 import vo.ReviewVO;
-<<<<<<< HEAD
 import util.Page;
 import util.PageInfo;
 import vo.RestaurantVO;
-=======
->>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob.git
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -64,13 +55,7 @@ public class HonmukController {
 	
 	//메인페이지에서 키워드로 검색시 경로
 	@RequestMapping("/searchList.do")
-<<<<<<< HEAD
 	public String searchList(Model model, RestaurantVO resVO) {				
-=======
-	public String searchKeyword(Model model, RestaurantVO resVO, @RequestParam(name="page", required = false) String page,
-								HttpServletRequest request, @RequestParam(name="filter1", required = false) String filter1,
-								@RequestParam(name="keyword", required = false) String keyword) {
->>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob
 		
 		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
 			resVO.setGrade(1);
@@ -97,9 +82,7 @@ public class HonmukController {
 		
 		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
 			resVO.setGrade(1);
-		}
-		
-		
+		}		
 		
 		Page Page = new Page();
 		int listCount = hmListService.count();
@@ -115,22 +98,10 @@ public class HonmukController {
 			return "include/alert";
 		}else {
 			return "include/listAjax";
-		}
-				
+		}				
 		
-<<<<<<< HEAD
-	}		
-	
-	
-=======
-		//데이터로 검색결과 받는 경로		
-		List<RestaurantVO> searchlist = hmDetailService.searchList(resVO);
-		model.addAttribute("searchlist", searchlist);	
-		
-		
-		return "searchList";
 	}
->>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob
+	
 	@RequestMapping("/DetailView.do")
 	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,HttpServletRequest req) {
 		//조회수 올리기
@@ -352,7 +323,7 @@ public class HonmukController {
 	
 	
 	// 이메일 중복확인 // 이메일 인증번호 전송
-	@RequestMapping(/emailCheck.do")
+	@RequestMapping("/emailCheck.do")
 	public String emailCheck(Model model, @RequestParam("userEmail") String userEmail, HttpSession session) throws Exception {
 		int cnt = hmUserService.emailCheck(userEmail);
 		model.addAttribute("value",cnt);

@@ -90,7 +90,6 @@
 	    <artifactId>cos</artifactId>
 	    <version>05Nov2002</version>
 	</dependency>
-<<<<<<< HEAD
 	
 	<!-- 이메일로 메일 전송  -->
 	<dependency>
@@ -99,7 +98,6 @@
 	    <version>1.4.7</version>
 	</dependency>
 	
-=======
 	  <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 	  <dependency>
 		  <groupId>org.projectlombok</groupId>
@@ -115,7 +113,6 @@
 		  <scope>provided</scope>
 	  </dependency>
 
->>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob.git
   </dependencies>
 
   <build>
