@@ -7,7 +7,7 @@
 	
 		<if test="latitude == 0 and longitude == 0">		
 	
-			select * from restaurantvo
+			select * from restaurant
 			<where>
 				<if test="keyword != null">
 					res_name like '%${keyword}%' or address like '%${keyword}%'
@@ -79,7 +79,7 @@
 		<if test="latitude != 0 and longitude != 0">
 		<![CDATA[
 			SELECT *, ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${longitude}) ) + 
-			sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurantvo HAVING distance < 5 ORDER BY distance
+			sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant HAVING distance < 5 ORDER BY distance
 		]]>
 			<if test="grade == 1">
 				, grade desc
@@ -97,7 +97,7 @@
 	</select>
 		
 	<select id="searchCount" resultType="int">
-		select count(*) from restaurantvo;
+		select count(*) from restaurant;
 	</select>
 	
 	

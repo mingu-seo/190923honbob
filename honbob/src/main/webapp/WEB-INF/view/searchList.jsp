@@ -237,7 +237,13 @@
         #img{
 	    	position : absolute;
 	    }
-	    
+	    a:link 
+	    { 
+	    	color: black; text-decoration: none;
+	    }
+ 		a:hover {
+ 			color: #ff792a; text-decoration: underline;
+ 		}
     	
 </style>
 
