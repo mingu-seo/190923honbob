@@ -234,7 +234,8 @@ $(function(){
 		        '    </div>' +    
 		        '</div>');
 		
-		overlay.setMap(null);
+		map.setCenter(markerPosition);		
+		overlay.setMap(null);		
 		
 		markers.push(marker);
 		overlays.push(overlay);
