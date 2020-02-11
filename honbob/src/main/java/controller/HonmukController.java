@@ -234,7 +234,15 @@ public class HonmukController {
 			int updateGrade = hmDetailService.updateGrade(gradevo);
 			System.out.println("update");
 		}
+		
+		//새롭게 적용된 별점과 카운트를 넘겨준다.
+		int current_grade_count = hmDetailService.getGradeCnt(res_num);
+		Double current_res_grade = hmDetailService.getGrade(res_num);
+		
 		model.addAttribute("star_count", star_count);
+		model.addAttribute("current_grade_count", current_grade_count);
+		model.addAttribute("current_res_grade", current_res_grade);
+		
 		return "detail/detailAjax";
 	}
 	
