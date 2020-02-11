@@ -84,7 +84,7 @@ if (sess != null) userNo = sess.getUserNo();
 			<tr><th> 변경 비밀번호 </th>
 			<td><input type = "password" name = "userPassword1" id = "userPassword1" class = "pwd"></td></tr>
 			<tr><th> 비밀번호 확인 </th>
-			<td><input type = "password" name = "userPassword2" id = "userPassword2" class = "pwd"> <input type= "submit" class = "button" value = "변경"></td></tr>
+			<td><input type = "password" id = "userPassword2" class = "pwd"> <input type= "submit" class = "button" value = "변경"></td></tr>
 			<tr><th> 회원가입 날짜 </th>
 			<td><%=sess.getUserJoinDate() %></td></tr>
 		</table>

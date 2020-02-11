@@ -355,12 +355,11 @@ public class HonmukController {
 	@RequestMapping("/pwdSearch.do")
 	public String pwdSearch(@RequestParam("userEmail") String userEmail, UserVO vo) throws Exception {
 		String pwdNum = hmUserService.emailPass();
-		System.out.println(userEmail);
 		int r = hmUserService.pwdUpdate(pwdNum);
 		SendMail.sendEmail("duwkdutns2@naver.com", userEmail, "안녕하세요^^. [밥먹자] 임시 비밀번호 발급 입니다.", " 회원가입 이메일 인증번호 : "+ pwdNum);
 		return "user/ajax/return";
+
 	}
-	
 	
 	
 	// 회원가입
@@ -402,8 +401,6 @@ public class HonmukController {
 		int cnt = hmUserService.emailCheck(userEmail);
 		model.addAttribute("value",cnt);
 	
-		System.out.println(cnt);
-		
 		if ( cnt != 0 ) {
 			return "user/ajax/return";
 		} else if ( cnt == 0 ) {

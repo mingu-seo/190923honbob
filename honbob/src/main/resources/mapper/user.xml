@@ -4,48 +4,48 @@
 <mapper namespace="user">
 	
 	<select id = "login" parameterType = "vo.UserVO" resultType = "vo.UserVO">
-		SELECT * FROM user WHERE userId = #{userId} AND userPassword = md5(#{userPassword})
+		SELECT * FROM honmuk.user WHERE userId = #{userId} AND userPassword = md5(#{userPassword})
 	</select>
 
 	<insert id = "userJoin" parameterType = "vo.UserVO">
-		INSERT INTO user (userId, userName, userEmail, userPassword, pwdQuestion, pwdAnswer, userJoinDate, userImage)
+		INSERT INTO honmuk.user (userId, userName, userEmail, userPassword, pwdQuestion, pwdAnswer, userJoinDate, userImage)
 			    VALUES (#{userId}, #{userName}, #{userEmail}, md5(#{userPassword}), #{pwdQuestion}, #{pwdAnswer}, now(), null)
 	</insert>
 
 	<select id = "search_id" parameterType = "vo.UserVO" resultType = "vo.UserVO">
-		SELECT userId FROM user WHERE userName = #{userName} AND userEmail = #{userEmail}
+		SELECT userId honmuk.FROM user WHERE userName = #{userName} AND userEmail = #{userEmail}
 	</select>
 	
 	<select id = "search_pwd" parameterType = "vo.UserVO" resultType = "vo.UserVO">
-		SELECT * FROM user WHERE userId = #{userId} AND userEmail = #{userEmail} AND pwdQuestion = #{pwdQuestion} AND pwdAnswer = #{pwdAnswer}
+		SELECT * FROM honmuk.user WHERE userId = #{userId} AND userEmail = #{userEmail} AND pwdQuestion = #{pwdQuestion} AND pwdAnswer = #{pwdAnswer}
 	</select>
 	
 	<update id = "pwdChange" parameterType = "vo.UserVO" >
-		UPDATE user SET userPassword = md5(#{password1}) WHERE userNo = #{userNo} AND userPassword = md5(#{userPassword})
+		UPDATE honmuk.user SET userPassword = md5(#{password1}) WHERE userNo = #{userNo} AND userPassword = md5(#{userPassword})
 	</update>
 	
 	<update id = "pwdUpdate" parameterType = "String">
-		UPDATE user SET userPassword = md5(#{pwdNum}) WHERE userNo = #{userNo}
+		UPDATE honmuk.user SET userPassword = md5(#{pwdNum}) WHERE userNo = #{userNo}
 	</update>
 	
 	<select id = "userInfoView" parameterType = "Integer" resultType = "vo.UserVO">
-		SELECT * FROM user WHERE userNo = #{userNo}
+		SELECT * FROM honmuk.user WHERE userNo = #{userNo}
 	</select>
 	
 	<select id = "idCheck" parameterType = "String" resultType = "Integer">
-		SELECT count(*) FROM user WHERE userId = #{userId}
+		SELECT count(*) FROM honmuk.user WHERE userId = #{userId}
 	</select>
 	
 	<select id = "emailCheck" parameterType = "String" resultType = "Integer">
-		SELECT count(*) FROM user WHERE userEmail = #{userEmail}
+		SELECT count(*) FROM honmuk.user WHERE userEmail = #{userEmail}
 	</select>
 	
 	<delete id = "userDelete" parameterType = "vo.UserVO">
-		DELETE FROM user WHERE userNo = #{userNo} AND userName = #{userName} AND userId = #{userId} AND userPassword = md5(#{userPassword})
+		DELETE FROM honmuk.user WHERE userNo = #{userNo} AND userName = #{userName} AND userId = #{userId} AND userPassword = md5(#{userPassword})
 	</delete>
 
 	<update id = "imageUpdate" parameterType = "vo.UserVO">
-			UPDATE user SET userNo = #{userNo}
+			UPDATE honmuk.user SET userNo = #{userNo}
 		<if test = "userImage != null and userImage != ''">
 		,userImage = #{userImage}
 		</if>
