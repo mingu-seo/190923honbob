@@ -20,15 +20,7 @@
         }
         .stylewrap {
             margin:0 auto;
-        }
-        .header {
-            background-color:#273443;
-            height:100px;
-            width:100%;
-            color:#ffffff;
-            text-align:center;
-            line-height:100px;
-        }        
+        }           
         .container {
             position: relative;
             overflow: hidden;
@@ -36,14 +28,14 @@
             height:auto;
         }
         .Lcontent {
-            width:75%;
+            width:74%;
             float:left;
         }
         .Lcontent > .inner{
             background-color:#ffffff;
             width: 1000px;
             margin: 3% auto;
-            padding: 0 0 0 80px;            
+            padding: 0 0 0 120px;            
         }
         .Lcontent > .inner > .search-info{
             margin: 10px 15px ;
@@ -69,7 +61,6 @@
             margin: 10px 15px ;
         }
         .restaurants-thumb{
-            border: 1px solid black;
             width: 385px;
             height: 250px;
         }
@@ -89,7 +80,7 @@
             margin: 5px 8px;
         }
         .Rcontent {
-            width:25%;
+            width:26%;
             height:1000px;
             float:right;
         }
@@ -118,14 +109,7 @@
             background-color:#c2a5a5;
             text-align:center;
             line-height:200px;
-        }
-        .footer {
-            width:100%;
-            background-color:#d1c3a7;
-            height:80px;
-            text-align:center;
-            line-height: 80px;
-        }
+        }        
         .darken-background{
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -241,6 +225,10 @@
 	    { 
 	    	color: black; text-decoration: none;
 	    }
+	    a:visited {
+		    text-decoration: none; 
+		    color: #333333;
+	    }
  		a:hover {
  			color: #ff792a; text-decoration: underline;
  		}
@@ -337,17 +325,14 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=968f5cb093e2b0f76e796a0721504779&libraries=services"></script>
 
     <div class="stylewrap">
-        <div class="header">
-            HEADER
-        </div>        
+		<jsp:include page="header.jsp"></jsp:include>
+      
         <div class="container">            
             
             
         </div>            
     </div>
-        <div class="footer">
-            FOOTER
-        </div>
+        <jsp:include page="footer.jsp"></jsp:include>
         <div class="darken-background">
         <form name="searchFilter" id="searchFilter" action="searchList.do">
         <input type="hidden" name="page" id="page" value="1">

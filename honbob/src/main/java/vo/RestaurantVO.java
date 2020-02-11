@@ -54,8 +54,18 @@ public class RestaurantVO {
 	private String addressCut;
 	private String category;
 	private String option;
+	
+	private String res_image_name;
 		
 	
+	public String getRes_image_name() {
+		return res_image_name;
+	}
+
+	public void setRes_image_name(String res_image_name) {
+		this.res_image_name = res_image_name;
+	}
+
 	public String getOption() {
 		return option;
 	}

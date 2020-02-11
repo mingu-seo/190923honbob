@@ -3,16 +3,20 @@
 
 <!-- Mybatis 사용 -->
 <mapper namespace="Honmuk">
+	<!-- 검색결과 식당리스트 불러오기 -->
 	<select id="searchList" parameterType="vo.RestaurantVO" resultType="vo.RestaurantVO">
 	
+		<!-- 위치가 입력되지 않았을때 -->
 		<if test="latitude == 0 and longitude == 0">		
 	
-			select * from restaurant
+			select a.*, b.res_image_name from restaurant a inner join restaurantimage b on a.res_num = b.res_num
 			<where>
+				<!-- 키워드가 입력되었을때 -->
 				<if test="keyword != null">
 					res_name like '%${keyword}%' or address like '%${keyword}%'
 				</if>
 			
+				<!-- 카테고리 설정 -->
 				<if test ="koreafood == 1 or japanfood == 1 or westernfood == 1 or chinafood == 1 or etcfood == 1">
 					(
 					
@@ -47,6 +51,7 @@
 					)		 
 			 	</if>
 			 	
+			 	and b.best_image='1' 
 				<if test="drink == 1">
 					and drink='1' 
 				</if>
@@ -62,8 +67,9 @@
 				<if test="table2 == 1">
 					and table2='1' 
 				</if>
+				
 			</where>		
-			
+				
 			<if test="grade == 1">
 				order by grade desc
 			</if>
@@ -76,6 +82,7 @@
 		
 		</if>
 		
+		<!-- 위도경도가 입력되었을때 -->
 		<if test="latitude != 0 and longitude != 0">
 		<![CDATA[
 			SELECT *, ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${longitude}) ) + 
@@ -94,13 +101,12 @@
 		</if>
 		
 		limit #{startIndex}, #{limit};
-	</select>
+	</select>	
 		
 	<select id="searchCount" resultType="int">
 		select count(*) from restaurant;
-	</select>
-	
-	
+	</select>	
+
 	
 	<!-- 전체 식당 리스트 불러오기 -->
 	<select id="getList" resultType="vo.RestaurantVO">
