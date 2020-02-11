@@ -14,6 +14,8 @@ RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<link rel="stylesheet" href="css/header/style.css"/>
+<script src="js/header/header.js"></script>
 
     <script>    
     
@@ -287,7 +289,7 @@ RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
         <!--Banner-->
         <div class="bannerContainer">
             <div class="banner">
-            	<img src="images/banner.png">
+            	<img src="images/main/banner.png">
             </div>
         </div>
         <!--Select-->
@@ -361,10 +363,10 @@ RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
             </form>
             </div>
         </div> 
-        <!--Review-->
+        <!--Review-->        
         <div class="review">
             <p class="subject">실시간 리뷰</p>                      
-            <div class="list">
+            <div class="list">            
             <%
             for(int i=0; i<reviewList.size(); i++){
             %>                
@@ -391,9 +393,8 @@ RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
                         <div class="btn2" style="cursor: pointer; float: right;">나도 평가하기</div>
                     </div>
                 </div>
-			<%}%>
-                
-            </div>
+			<%}%>                
+            </div>             
         </div>
         <%@include file="footer.jsp" %>
         

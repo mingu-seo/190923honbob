@@ -5,37 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-		.footer{
-        	margin-top:20px;
-        	margin-bottom:20px;
-            position: relative;
-            height: 145px;
-            font-size: 13px;
-            line-height: 20px;
-        }        
-        .footer>.size>.info{
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            color: #57575c;
-        }
-
-        .footer>.size>.sns{
-            position: absolute;
-            top: 30px;
-            right: 20px;
-            font-size: 0px;
-        }
-
-        .footer>.size>.sns a{
-            width: 15px;
-            height: 15px;
-            padding: 0px 8px;
-            
-        }
-
-</style>
+<link rel="stylesheet" href="css/footer/style.css"/>
 </head>
 <body>
 
