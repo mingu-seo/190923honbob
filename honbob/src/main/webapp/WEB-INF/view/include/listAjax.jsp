@@ -32,19 +32,19 @@ $(function(){
     }
 </style>
 <style>
-    .wrap {
+    .mapwrap {
     position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;
     text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
     line-height: 1.5;
     }
-    .wrap * {
+    .mapwrap * {
     padding: 0;margin: 0;
     }
-    .wrap .info {
+    .mapwrap .info {
     width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;
     border-right: 1px solid #ccc;overflow: hidden;background: #fff; z-index:99;
     }
-    .wrap .info:nth-child(1) {
+    .mapwrap .info:nth-child(1) {
     border: 0;box-shadow: 0px 1px 2px #888;
     }
 	.info .title{
@@ -98,7 +98,8 @@ $(function(){
                 <div class="restaurants-list">
                 	<c:forEach var = "res" items="${searchlist }" varStatus="status">
 						<div class="restaurants-item">
-						   <div class="restaurants-thumb">
+						   <div class="restaurants-thumb" onclick="location.href='DetailView.do?res_num=${res.res_num }'" style="cursor:pointer">
+						   	<img src="images/food/${res.res_image_name }" width="385px" height="250px">
 						   </div>
 						   <div class="restaurants-info">
 						       <a href="DetailView.do?res_num=${res.res_num }"><h2>${res.res_name }</h2></a>
@@ -167,6 +168,7 @@ $(function(){
 	var readcount = [];
 	var reviewcount = [];	
 	var markericon = [];
+	var thumbnail = [];
 	
 	<c:forEach items="${searchlist}" var="list">		
 		latitude.push("${list.latitude}");
@@ -177,7 +179,8 @@ $(function(){
 		addressCut.push("${list.addressCut}");
 		category.push("${list.category}");
 		readcount.push("${list.readcount}");
-		reviewcount.push("${list.reviewcount}");		
+		reviewcount.push("${list.reviewcount}");
+		thumbnail.push("${list.res_image_name}")
 		
 		<c:if test="${list.koreafood==1}">markericon.push("images/list/koreafood_border.png")</c:if>
 		<c:if test="${list.japanfood==1}">markericon.push("images/list/japanfood_border.png")</c:if>
@@ -213,14 +216,14 @@ $(function(){
 		});	
 		
 		overlay.setPosition(new kakao.maps.LatLng(element, longitude[arrIdx]));
-		overlay.setContent('<div class="wrap">' + 
+		overlay.setContent('<div class="mapwrap">' + 
 		        '    <div class="info">' + 
 		        '        <div class="title">' + 
 	            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
 		        '        </div>' + 
 		        '        <div class="body">' + 
 		        '            <div class="img">' +
-		        '                <img src="" width="75" height="73">' +
+		        '                <img src="images/food/'+thumbnail[arrIdx]+'" width="75" height="73">' +
 		        '           </div>' + 
 		        '            <div class="desc">' + 
 		        '                <div class="ellipsis"><a href="DetailView.do?res_num='+res_num[arrIdx]+'">'+res_name[arrIdx]+'</a></div>' + 

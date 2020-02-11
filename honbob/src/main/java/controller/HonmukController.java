@@ -52,45 +52,45 @@ public class HonmukController {
 	@Autowired
 	HonmukListService hmListService;
 	
-	//메인페이지에서 키워드로 검색시 경로
+//식당 리스트 mapping-----------------------------------------------------------------------------------------------------------
+	
+	//기본 페이지 호출 경로
 	@RequestMapping("/searchList.do")
-	public String searchList(Model model, RestaurantVO resVO) {				
-		
-		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
-			resVO.setGrade(1);
-		}
-		model.addAttribute("resVO", resVO);
-		
-		List<RestaurantVO> searchlist = hmListService.searchList(resVO); 		
-		model.addAttribute("searchlist", searchlist);	
+	public String searchList() {		
 		
 		return "searchList";  
 	}	
 	
+	//내부영역 식당리스트 결과 ajax로 뿌리는 경로
 	@RequestMapping("/listAjax.do")
 	public String listAjax(Model model, RestaurantVO resVO, @RequestParam(name="page", required = false) String page,
 			@RequestParam(name="filter1", required = false) String filter1) {
 			
+		//초기 검색시 별점순으로
+		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
+			resVO.setGrade(1);
+		}
+		
+		//카테고리 별점순,리뷰순,조회순 선택한 것으로 설정
 		if("grade".equals(filter1)) {
 			resVO.setGrade(1);
 		}else if("reviewcount".equals(filter1)) {
 			resVO.setReviewcount(1);
 		}else if("readcount".equals(filter1)) {
 			resVO.setReadcount(1);
-		}
-		
-		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
-			resVO.setGrade(1);
 		}		
-		
+				
+		//하단부 페이징 관련
 		Page Page = new Page();
 		int listCount = hmListService.count();
 		PageInfo pageInfo = Page.page(page, listCount);
 		model.addAttribute("pageInfo", pageInfo);
 		
+		//검색결과를 받아옴
 		List<RestaurantVO> searchlist = hmListService.searchList(resVO); 		
 		model.addAttribute("searchlist", searchlist);
 		
+		//검색결과가 없을시 안내문
 		if(searchlist.size()==0) {			
 			model.addAttribute("msg", "식당 정보가 없습니다.");
 			model.addAttribute("url", "/Honmuk/searchList.do");			
@@ -99,7 +99,10 @@ public class HonmukController {
 			return "include/listAjax";
 		}				
 		
-	}
+	}	
+//----------------------------------------------------------------------------------------------------------------------
+	
+	
 	@RequestMapping("/registImage")
 	public String registImage() {
 		
