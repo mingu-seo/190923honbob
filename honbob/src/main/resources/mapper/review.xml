@@ -10,7 +10,7 @@
 	</select>
 
 <insert id="insertReview" parameterType="vo.review.ReviewVO">
-INSERT INTO `honmuck`.`review` ('id', `subject`, `content`, `registdate`, `count`, `Restaurant_menu_res_num`, `user_userNo`)
+INSERT INTO `honmuk`.`review` ('id', `subject`, `content`, `registdate`, `count`, `Restaurant_menu_res_num`, `user_userNo`)
 VALUES (null, ${subject}, ${content}, ${registdate}, ${count}, ${Restaurant_menu_res_num}, ${user_userNo});
 </insert>
 
@@ -19,13 +19,13 @@ VALUES (null, ${subject}, ${content}, ${registdate}, ${count}, ${Restaurant_menu
 	</select>
 
 	<update id="updateReview" parameterType="vo.review.ReviewEditRequest">
-		UPDATE `honmuck`.`review`
+		UPDATE `honmuk`.`review`
 		SET `subject` = #{subject}, `content` = #{content}
 		WHERE (`id` = #{id});
 	</update>
 
 	<delete id="deleteReview" parameterType="int">
-		DELETE FROM `honmuck`.`review` WHERE (`id` = #{id});
+		DELETE FROM `honmuk`.`review` WHERE (`id` = #{id});
 	</delete>
 
 	<select id="countReviews" resultType="int">

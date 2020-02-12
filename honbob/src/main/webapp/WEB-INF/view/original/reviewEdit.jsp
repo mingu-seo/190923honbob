@@ -68,7 +68,7 @@
                 <!-- canvas -->
                 <div id="canvas">
                     <!-- S T A R T :: headerArea-->
-                    <%@ include file="/WEB-INF/view/review/top.jsp" %>
+                    <%@ include file="/WEB-INF/view/original/top.jsp" %>
                     <!-- E N D :: headerArea-->
                     <!-- S T A R T :: containerArea-->
                     <div id="container">

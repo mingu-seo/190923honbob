@@ -1,0 +1,219 @@
+* {
+            margin:0;
+            padding:0;
+            text-decoration:none;
+        }
+        .stylewrap {
+            margin:0 auto;
+        }           
+        .container {
+            position: relative;
+            overflow: hidden;
+            width:100%;
+            height:auto;
+        }
+        .Lcontent {
+            width:74%;
+            float:left;
+        }
+        .Lcontent > .inner{
+            background-color:#ffffff;
+            width: 1000px;
+            margin: 3% auto;
+            padding: 0 0 0 120px;            
+        }
+        .Lcontent > .inner > .search-info{
+            margin: 10px 15px ;
+        }
+        .Lcontent > .inner > .search-info > h1{
+            float: left;
+            width: 770px;
+        }
+        .Lcontent > .inner > .search-info > .filter{
+			line-height: 3;            
+        }        
+        .search-restaurants-list{
+            width: 100%;
+            overflow: hidden;
+        }
+        .restaurants-list{
+            list-style-type: none;
+            width: 900px;
+        }
+        .restaurants-item{
+            float: left;
+            display: block;
+            margin: 10px 15px ;
+        }
+        .restaurants-thumb{
+            width: 385px;
+            height: 250px;
+        }
+        .restaurants-info p:nth-child(3) span{
+        	white-space : nowrap;
+	    	overflow : hidden;
+	    	text-overflow: ellipsis;
+	    	display: block;
+	    	width: 385px;
+    	}
+        .paging{
+            font-size: xx-large; 
+            text-align: center;       
+            margin-bottom : 20px;
+        }
+        .paging > a{
+            margin: 5px 8px;
+        }
+        .Rcontent {
+            width:26%;
+            height:1000px;
+            float:right;
+        }
+        .Rcontent > .map{
+            height: 70%;
+            background-color:#a5c2a7;
+        }
+        .locationSearch {
+        	text-align:center;
+        	border: 2px solid #ff792a;
+            border-radius: 40px;
+            padding: 10px 10px;
+            color: white;
+            background-color: #ff792a;
+            font-size: 22px;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            left : 150px;
+            top : 600px;
+            z-index: 100;        
+            width: 200px;
+        }
+        .Rcontent > .chat{
+            height: 30%;
+            background-color:#c2a5a5;
+            text-align:center;
+            line-height:200px;
+        }        
+        .darken-background{
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 100%;
+            display: none;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+        }
+        .popup-filter{
+            width: 700px;
+            margin: 20px auto; 
+            padding: 15px;
+            border: 1px solid #333333;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 5px 5px rgba(34, 25, 25, 0.4);
+        }
+
+        .filter-item{
+            margin: 30px 15px;
+            padding-bottom: 10px;
+            width: auto;
+            border-bottom: 1px solid rgb(185, 183, 183);
+        }
+        .filter-item > .filter-title{
+            font-size: 25px;
+            text-align: left;
+        }
+        .filter-item > span{
+            font-size: 15px;
+            float: right;
+            top: 15px;
+        }
+        .filter-item > .category-wrap{
+            margin: 15px 15px 30px 15px;
+            text-align: center;
+            padding-bottom: 15px;
+        }
+        .filter-item > .category-wrap2{
+            margin: 15px;
+            text-align: center;
+        }
+        .filter-item input{
+            display: none;
+        }
+        .icon img{
+            width: 70px;
+            height: 70px;
+        }        
+        .icon{
+            width: 18%;
+            display: inline-block;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .popup-submit{
+            text-align: center;
+        }
+        .popup-submit > div{
+            display: inline-block;
+            width: 40%;
+            margin: 20px auto; 
+            border: 1px solid #ffffff;
+            border-radius: 40px;
+            padding: 20px 0px;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+        }
+        .popup-submit > .cancle{
+            background-color: rgb(211, 210, 210);
+        }
+        .popup-submit > .submit{
+            background-color: #ff792a;
+        }
+        .filter-item >.order-wrap{
+            text-align: center;
+            margin: 20px auto;             
+        }
+        .order-wrap > .order-icon{
+            display: inline-block;
+            width: 25%;
+            margin: 0 18px;            
+            border-radius: 40px;
+            padding: 15px 0px;
+            border: 2px solid #9b9b9b;
+            color: rgb(165, 165, 165);
+            font-size: 20px;
+        }
+        .checked{
+        	color: #ff792a;
+        }
+        .checked2{
+        	display: inline-block;
+            width: 25%;
+            margin: 0 18px;            
+            border-radius: 40px;
+            padding: 15px 0px;
+            color: #ff792a;
+        	border: 2px solid #ff792a;
+            font-size: 20px;
+        }
+        .filterArea{
+        	cursor: pointer;
+        }
+        .filterArea label{
+        	cursor: pointer;
+        }
+        #img{
+	    	position : absolute;
+	    }
+	    a:link 
+	    { 
+	    	color: black; text-decoration: none;
+	    }
+	    a:visited {
+		    text-decoration: none; 
+		    color: #333333;
+	    }
+ 		a:hover {
+ 			color: #ff792a; text-decoration: underline;
+ 		}

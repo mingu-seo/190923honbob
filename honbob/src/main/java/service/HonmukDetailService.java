@@ -16,40 +16,8 @@ import vo.review.ReviewVO;
 public class HonmukDetailService {
 
 	@Autowired
-	HonmukDetailDAO HonmukDao;
+	HonmukDetailDAO HonmukDao;	
 	
-	public List<RestaurantVO> searchList(RestaurantVO resVO){		
-		
-		List<RestaurantVO> addressCut = HonmukDao.searchList(resVO);
-		
-		for(int i=0; i<addressCut.size(); i++) {
-			String address[] = addressCut.get(i).getAddress().split(" ");
-			addressCut.get(i).setAddressCut(address[1]);
-			
-			String category = "";
-			if(addressCut.get(i).getKoreafood()==1) category = category+"한식";
-			if(addressCut.get(i).getJapanfood()==1) category = category+"일식";
-			if(addressCut.get(i).getChinafood()==1) category = category+"중식";
-			if(addressCut.get(i).getWesternfood()==1) category = category+"양식";
-			if(addressCut.get(i).getEtcfood()==1) category = category+"기타";
-			
-			String option = "";
-			if(addressCut.get(i).getPark()==1) option = option+" / 주차가능";
-			if(addressCut.get(i).getPartition2()==1) option = option+" / 칸막이";
-			if(addressCut.get(i).getDrink()==1) option = option+" / 혼술";
-			if(addressCut.get(i).getTable2()==1) option = option+" / 2인테이블";
-			if(addressCut.get(i).getCalculator()==1) option = option+" / 무인계산기";
-			
-			addressCut.get(i).setCategory(category);
-			addressCut.get(i).setOption(option);
-			
-		}		
-		return addressCut;
-	}
-	
-	public int count() {
-		return HonmukDao.count();
-	}
 	//리스트 가져오기
 	public List<RestaurantVO> getList() {
 		return HonmukDao.getList();
@@ -91,7 +59,27 @@ public class HonmukDetailService {
 	//추천 식당
 	public List<RestaurantVO> getRecommandRestuarant(RestaurantVO restDetail) {
 		//주변식당 리스트 n개를 추출하고 그중에 가장 리뷰수혹은 조회수가 높은 식당을 가지고 오는 sql을 사용할 것.
-		return HonmukDao.getRecommnadRestaurant(restDetail);
+		//이용하여 4개의 리스트를 가져와서 중복을 제거하고 3개만을 줄것임
+		//탑4 리스트를 가지고 온다.
+		List<RestaurantVO> RecommandList = HonmukDao.getRecommnadRestaurant(restDetail);
+		//중복을 검사한다.
+		boolean dupl_res = false;
+		int count_dupl = 0;
+		for(int i = 0;i<RecommandList.size();i++) {
+			if(RecommandList.get(i).getRes_num()==restDetail.getRes_num()) {
+				dupl_res = true;
+				count_dupl = i;
+			}
+		}
+		//중복이 있을경우 - 중복된 경우의 수를 삭제한 리스트를 만든다.
+		if(dupl_res) {
+			RecommandList.remove(count_dupl);
+		}
+		//중복이 없을경우 - 그냥 4번째를 삭제한다.
+		else {
+			RecommandList.remove(3);
+		}
+		return RecommandList;
 	}
 	//식당 리뷰 가져오기
 	public List<ReviewVO> getReviewList(int res_num) {
@@ -126,6 +114,33 @@ public class HonmukDetailService {
 		}
 		
 		return recomImageList;
+	}
+
+	public List<String> getRecommandGrade(List<RestaurantVO> recomRest) {
+		List<String> recomGradeList = new ArrayList<String>();
+		
+		for(int i=0;i<recomRest.size();i++) {
+			//별점 합
+			int gradeSum = 0;
+			//별점 한사람수
+			int gradeCnt = HonmukDao.getGradeCnt(recomRest.get(i).getRes_num());
+			if(gradeCnt == 0) {
+				gradeCnt = 1;
+			}else {
+				gradeSum = HonmukDao.getGradeSum(recomRest.get(i).getRes_num());
+			}
+			
+			//별점 계산
+			
+			recomGradeList.add(String.format("%.1f", (double)gradeSum/(double)gradeCnt));
+			
+		}
+		
+		return recomGradeList;
+	}
+
+	public int getGradeCnt(int res_num) {
+		return HonmukDao.getGradeCnt(res_num);
 	}
 	
 	//리뷰 가져오기

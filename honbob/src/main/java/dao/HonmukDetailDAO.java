@@ -15,16 +15,8 @@ import vo.review.ReviewVO;
 public class HonmukDetailDAO {
 
 	@Autowired
-	SqlSessionTemplate sqlSession;	
+	SqlSessionTemplate sqlSession;		
 	
-	public List<RestaurantVO> searchList(RestaurantVO resVO){		
-		return sqlSession.selectList("Honmuk.searchList", resVO);
-	}  
-	
-	public int count() {
-		return sqlSession.selectOne("Honmuk.searchCount");
-	}
-
 	public List<RestaurantVO> getList() {
 		
 		return sqlSession.selectList("Honmuk.getList");

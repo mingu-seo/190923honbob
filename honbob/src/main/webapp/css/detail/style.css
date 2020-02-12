@@ -13,33 +13,39 @@ a{
 body{
     background: white;
 }
-#content_subject{
+#detail_content_body{
 	width:1200px;
+	margin:0 auto;
+	margin-top: 30px;
+	overflow: hidden;
+}
+#content_subject{
+	width:100%;
 	height:70px;
 	margin:0 auto;
 	padding: 10px 0;
 }
 #content_main{
-	width:1200px;
+	width:100%;
 	margin:0 auto;
 	padding: 10px 0;
 }
 #content_left{
-	width:70%;
+	width:75%;
 	float:left;
 }
 #content_right{
-	width:30%;
+	width:25%;
 	float:right;
 	background-color: #eeeeee;
 }
 #subject_text{
 	font-weight:bold;
-	font-size: 30px;
+	font-size: 38px;
 	line-height: 1.05;
 }
 #restaurant_grade_text{
-	font-size: 25px;
+	font-size: 28px;
 	color : #FE9A2E;
 	line-height: 1.05;
 }
@@ -95,6 +101,7 @@ body{
 	line-height: 2.5;
 	font-size:17px;
 	padding-left: 20px;
+	padding-right: 20px;
 }
 #subject_right_side{
 	margin-right: 100px;
@@ -109,4 +116,21 @@ body{
 	margin:3%;
 	background-color: white;
 	text-align: left;
+}
+#recom_subject{
+	font-size:15px;
+	margin-left: 10px;
+	margin-top: 10px;
+	font-weight: bold;
+}
+.recom_grade_txt{
+	font-size: 23px;
+	color : #FE9A2E;
+	line-height: 1.2;
+}
+.recom_subject_txt{
+	font-size: 16px;
+}
+.recom_content_txt{
+	padding:15px;
 }

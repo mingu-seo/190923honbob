@@ -1,0 +1,29 @@
+		.footer{
+        	margin-top:20px;
+        	padding-bottom:20px;
+            position: relative;
+            height: 145px;
+            font-size: 13px;
+            line-height: 20px;
+            background-color: #f4f7f6;
+        }        
+        .footer>.size>.info{
+            position: absolute;
+            top: 10px;
+            left: 20%;
+            color: #57575c;
+        }
+
+        .footer>.size>.sns{
+            position: absolute;
+            top: 30px;
+            right: 20%;
+            font-size: 0px;
+        }
+
+        .footer>.size>.sns a{
+            width: 15px;
+            height: 15px;
+            padding: 0px 8px;
+            
+        }

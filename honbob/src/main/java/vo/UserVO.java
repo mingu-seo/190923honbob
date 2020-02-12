@@ -19,11 +19,19 @@ public class UserVO {
 	private String pwdAnswer;
 	//회원가입 날짜
 	private Date userJoinDate;
-	//관리자 번호
-	private int admin;
 	//프로필 사진
 	private String userImage;
+
+	//비밀번호 확인 및 비밀번호 변경
+	private String password1;
 	
+	
+	public String getPassword1() {
+		return password1;
+	}
+	public void setPassword1(String password1) {
+		this.password1 = password1;
+	}
 	
 	public int getUserNo() {
 		return userNo;
@@ -73,12 +81,6 @@ public class UserVO {
 	public void setUserJoinDate(Date userJoinDate) {
 		this.userJoinDate = userJoinDate;
 	}
-	public int getAdmin() {
-		return admin;
-	}
-	public void setAdmin(int admin) {
-		this.admin = admin;
-	}
 	public String getUserImage() {
 		return userImage;
 	}
@@ -87,3 +89,5 @@ public class UserVO {
 	}
 
 }
+
+

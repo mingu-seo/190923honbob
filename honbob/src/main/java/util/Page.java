@@ -12,12 +12,17 @@ public class Page {
 		if(page != null) {
 			vo.setPage(Integer.parseInt(page));
 		}
-		int p = vo.getPage();
+		int p = vo.getPage();		
+		
 		int limit = vo.getLimit();
 
 		int maxPage = listCount/limit;
-		int startPage = (p-1)/limit*limit+1;		
+		int startPage = (p-1)/limit*limit+1;
 		int endPage = startPage+10-1;
+		
+		if(listCount % limit != 0) {
+			maxPage += 1;
+		}
 		
 		if(endPage>maxPage) endPage=maxPage;
 		
