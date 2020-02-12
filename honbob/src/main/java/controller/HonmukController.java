@@ -56,7 +56,8 @@ public class HonmukController {
 	
 	//기본 페이지 호출 경로
 	@RequestMapping("/searchList.do")
-	public String searchList() {		
+	public String searchList(HttpServletRequest req, RestaurantVO resVO) {
+		req.setAttribute("resVO", resVO);
 		
 		return "searchList";  
 	}	
@@ -79,21 +80,22 @@ public class HonmukController {
 		}else if("readcount".equals(filter1)) {
 			resVO.setReadcount(1);
 		}		
-				
-		//하단부 페이징 관련
-		Page Page = new Page();
-		int listCount = hmListService.count();
-		PageInfo pageInfo = Page.page(page, listCount);
-		model.addAttribute("pageInfo", pageInfo);
+		
 		
 		//검색결과를 받아옴
 		List<RestaurantVO> searchlist = hmListService.searchList(resVO); 		
 		model.addAttribute("searchlist", searchlist);
 		
+		//하단부 페이징 관련
+		Page Page = new Page();
+		int listCount = hmListService.count(resVO);
+		PageInfo pageInfo = Page.page(page, listCount);	
+		model.addAttribute("pageInfo", pageInfo);		
+		
 		//검색결과가 없을시 안내문
 		if(searchlist.size()==0) {			
 			model.addAttribute("msg", "식당 정보가 없습니다.");
-			model.addAttribute("url", "/Honmuk/searchList.do");			
+			model.addAttribute("url", "/honbob/searchList.do");
 			return "include/alert";
 		}else {
 			return "include/listAjax";

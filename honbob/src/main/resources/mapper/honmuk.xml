@@ -12,12 +12,15 @@
 			select a.*, b.res_image_name from restaurant a inner join restaurantimage b on a.res_num = b.res_num
 			<where>
 				<!-- 키워드가 입력되었을때 -->
-				<if test="keyword != null">
-					res_name like '%${keyword}%' or address like '%${keyword}%'
+				<if test="keyword != null and keyword != ''">
+					res_name like '%${keyword}%'
 				</if>
 			
 				<!-- 카테고리 설정 -->
 				<if test ="koreafood == 1 or japanfood == 1 or westernfood == 1 or chinafood == 1 or etcfood == 1">
+				<if test="keyword != null and keyword != ''">
+					and
+				</if>
 					(
 					
 					<if test="koreafood == 1">
@@ -48,10 +51,10 @@
 						etcfood='1'
 					</if>
 					
-					)		 
+					) 
 			 	</if>
-			 	
-			 	and b.best_image='1' 
+			 	 and b.best_image='1'
+			 	  
 				<if test="drink == 1">
 					and drink='1' 
 				</if>
@@ -85,8 +88,73 @@
 		<!-- 위도경도가 입력되었을때 -->
 		<if test="latitude != 0 and longitude != 0">
 		<![CDATA[
-			SELECT *, ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${longitude}) ) + 
-			sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant HAVING distance < 5 ORDER BY distance
+			SELECT a.* , b.res_image_name, ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude )
+			 - radians(${longitude}) ) + sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) ) AS distance ]]> 
+			 FROM restaurant a inner join restaurantimage b on a.res_num = b.res_num 
+			 <where>
+				<!-- 키워드가 입력되었을때 -->
+				<if test="keyword != null and keyword != ''">
+					res_name like '%${keyword}%'
+				</if>
+			
+				<!-- 카테고리 설정 -->
+				<if test ="koreafood == 1 or japanfood == 1 or westernfood == 1 or chinafood == 1 or etcfood == 1">
+				<if test="keyword != null and keyword != ''">
+					and
+				</if>
+					(
+					
+					<if test="koreafood == 1">
+						koreafood='1' 
+					</if>
+					<if test="japanfood == 1">
+						<if test="koreafood == 1">
+							or
+						</if>
+						japanfood='1' 
+					</if>
+					<if test="westernfood == 1">
+						<if test="koreafood == 1 or japanfood == 1">
+							or
+						</if>
+						westernfood='1' 
+					</if>
+					<if test="chinafood == 1">
+						<if test="koreafood == 1 or japanfood == 1 or westernfood == 1">
+							or
+						</if>
+						chinafood='1' 
+					</if>
+					<if test="etcfood == 1">
+						<if test="koreafood == 1 or japanfood == 1 or westernfood == 1 or chinafood == 1">
+							or
+						</if>
+						etcfood='1'
+					</if>
+					
+					) 
+			 	</if>
+			 	 and b.best_image='1'
+			 	  
+				<if test="drink == 1">
+					and drink='1' 
+				</if>
+				<if test="partition2 == 1">
+					and partition2='1' 
+				</if>
+				<if test="calculator == 1">
+					and calculator='1' 
+				</if>
+				<if test="park == 1">
+					and park='1' 
+				</if>
+				<if test="table2 == 1">
+					and table2='1' 
+				</if>
+				
+			</where>			  
+			 <![CDATA[
+		HAVING distance < 2 order by distance 
 		]]>
 			<if test="grade == 1">
 				, grade desc
@@ -103,9 +171,153 @@
 		limit #{startIndex}, #{limit};
 	</select>	
 		
-	<select id="searchCount" resultType="int">
-		select count(*) from restaurant;
-	</select>	
+	<select id="searchCount" parameterType="vo.RestaurantVO" resultType="Integer">
+	
+		<if test="latitude == 0 and longitude == 0">		
+	
+			select count(*) from restaurant 
+			<where>
+				<!-- 키워드가 입력되었을때 -->
+				<if test="keyword != null and keyword != ''">
+					res_name like '%${keyword}%'
+				</if>
+			
+				<!-- 카테고리 설정 -->
+				<if test ="koreafood == 1 or japanfood == 1 or westernfood == 1 or chinafood == 1 or etcfood == 1">
+				<if test="keyword != null and keyword != ''">
+					and
+				</if>
+					(
+					
+					<if test="koreafood == 1">
+						koreafood='1' 
+					</if>
+					<if test="japanfood == 1">
+						<if test="koreafood == 1">
+							or
+						</if>
+						japanfood='1' 
+					</if>
+					<if test="westernfood == 1">
+						<if test="koreafood == 1 or japanfood == 1">
+							or
+						</if>
+						westernfood='1' 
+					</if>
+					<if test="chinafood == 1">
+						<if test="koreafood == 1 or japanfood == 1 or westernfood == 1">
+							or
+						</if>
+						chinafood='1' 
+					</if>
+					<if test="etcfood == 1">
+						<if test="koreafood == 1 or japanfood == 1 or westernfood == 1 or chinafood == 1">
+							or
+						</if>
+						etcfood='1'
+					</if>
+					
+					) 
+			 	</if>
+			 	  
+				<if test="drink == 1">
+					and drink='1' 
+				</if>
+				<if test="partition2 == 1">
+					and partition2='1' 
+				</if>
+				<if test="calculator == 1">
+					and calculator='1' 
+				</if>
+				<if test="park == 1">
+					and park='1' 
+				</if>
+				<if test="table2 == 1">
+					and table2='1' 
+				</if>
+				
+			</where>		
+		
+		</if>
+		
+		<!-- 위도경도가 입력되었을때 -->
+		<if test="latitude != 0 and longitude != 0">
+		<![CDATA[
+			select count(*) from(
+				SELECT *, ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude )
+				 - radians(${longitude}) ) + sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant 
+				 ]]>
+				 
+			<where>
+				<!-- 키워드가 입력되었을때 -->
+				<if test="keyword != null and keyword != ''">
+					res_name like '%${keyword}%'
+				</if>
+			
+				<!-- 카테고리 설정 -->
+				<if test ="koreafood == 1 or japanfood == 1 or westernfood == 1 or chinafood == 1 or etcfood == 1">
+				<if test="keyword != null and keyword != ''">
+					and
+				</if>
+					(
+					
+					<if test="koreafood == 1">
+						koreafood='1' 
+					</if>
+					<if test="japanfood == 1">
+						<if test="koreafood == 1">
+							or
+						</if>
+						japanfood='1' 
+					</if>
+					<if test="westernfood == 1">
+						<if test="koreafood == 1 or japanfood == 1">
+							or
+						</if>
+						westernfood='1' 
+					</if>
+					<if test="chinafood == 1">
+						<if test="koreafood == 1 or japanfood == 1 or westernfood == 1">
+							or
+						</if>
+						chinafood='1' 
+					</if>
+					<if test="etcfood == 1">
+						<if test="koreafood == 1 or japanfood == 1 or westernfood == 1 or chinafood == 1">
+							or
+						</if>
+						etcfood='1'
+					</if>
+					
+					) 
+			 	</if>
+			 	  
+				<if test="drink == 1">
+					and drink='1' 
+				</if>
+				<if test="partition2 == 1">
+					and partition2='1' 
+				</if>
+				<if test="calculator == 1">
+					and calculator='1' 
+				</if>
+				<if test="park == 1">
+					and park='1' 
+				</if>
+				<if test="table2 == 1">
+					and table2='1' 
+				</if>
+				
+			</where>
+			<![CDATA[			  
+				 HAVING distance < 2 
+			]]>
+			) as a
+					
+		
+		</if>
+		
+	</select>
 
 	
 	<!-- 전체 식당 리스트 불러오기 -->

@@ -14,77 +14,8 @@
 %>
 <meta name="viewport" charset="utf-8" content="user-scalable=no, initial-scale=1, maximum-scale=1">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script>
-$(function(){
-	$(".locationSearch").hover(function(){
-    	$(this).css({'color':'#ff792a', 'background-color':'white'});
-    }, function(){
-    	$(this).css({'color':'white', 'background-color':'#ff792a'});
-    });
-})
-
-	$(".pagePointer").css({"color":"#ff792a", "text-decoration" : "underline" });
-
-</script>
-<style>
-	.pagePointer{
-    	padding: 0 13 0 13;
-    }
-</style>
-<style>
-    .mapwrap {
-    position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;
-    text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-    line-height: 1.5;
-    }
-    .mapwrap * {
-    padding: 0;margin: 0;
-    }
-    .mapwrap .info {
-    width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;
-    border-right: 1px solid #ccc;overflow: hidden;background: #fff; z-index:99;
-    }
-    .mapwrap .info:nth-child(1) {
-    border: 0;box-shadow: 0px 1px 2px #888;
-    }
-	.info .title{
-		position: absolute;
-		background-color: #fbe7b2;
-		width: 286px;
-		height: 43px;		
-	}
-    .info .body {
-    position: relative;overflow: hidden; left: 8px;
-    }
-    .info .desc {
-    position: relative;margin: 13px 0 0 90px;height: 90px;
-    }
-    .desc .ellipsis {
-    overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
-    font-size: 20px;
-    }
-    .desc .jibun {
-    font-size: 11px;color: #888;margin-top: -2px;
-    }
-    .info .img {
-    position: absolute;top: 20px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;
-    color: #888;overflow: hidden;
-    }
-    .info:after {
-    content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;
-    background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
-    }
-    .info .link {
-    color: #5085BB;
-    }
-    .info .close {
-    position: absolute; top: 10px; right: 10px; color: #888; width: 17px; height: 17px; z-index : 1000;
-    background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
-    }
-    .info .close:hover {
-    cursor: pointer;
-    }     
-</style>
+<script src="js/list/ajaxScript.js"></script>
+<link rel="stylesheet" href="css/list/ajaxStyle.css"/>
 
 	<div class="Lcontent">
     	<div class="inner">
@@ -122,7 +53,7 @@ $(function(){
 				<a href="javascript:setPage('<%=nowPage-1 %>');">◀</a>&nbsp;
 			<%} %>
 		
-			<%for (int a=startPage; a<=endPage; a++){
+			<%for(int a=startPage; a<=endPage; a++){
 				if(a==nowPage){%>
 					<a href="javascript:setPage('<%=a %>');" class="pagePointer"><%=a %></a>&nbsp;
 				<%}else{ %>
@@ -153,7 +84,7 @@ $(function(){
 		mapOption = { 
 		    center: new kakao.maps.LatLng(37.497928, 127.027583), // 지도의 중심좌표
 		    level: mapLevel // 지도의 확대 레벨
-	}; 
+		}; 
 	
 	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다	
 	
@@ -198,17 +129,17 @@ $(function(){
 	latitude.forEach(function(element){
 		
 		var icon = new kakao.maps.MarkerImage(markericon[arrIdx],
-    	        new kakao.maps.Size(42, 42));        
-        
-        var markerPosition = new kakao.maps.LatLng(element, longitude[arrIdx]);	
-        
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: markerPosition,
-            image : icon
-        });
+		        new kakao.maps.Size(42, 42));        
+	    
+	    var markerPosition = new kakao.maps.LatLng(element, longitude[arrIdx]);	
+	    
+	    var marker = new kakao.maps.Marker({
+	        map: map,
+	        position: markerPosition,
+	        image : icon
+	    });
 		
-        
+	    
 		var overlay = new kakao.maps.CustomOverlay({
 			content: "",
 			map: map,
@@ -263,7 +194,7 @@ $(function(){
 	    };
 	};
 	
-	for (var i=0, ii=markers.length; i<ii; i++) {
+	for(var i=0, ii=markers.length; i<ii; i++) {
 		kakao.maps.event.addListener(markers[i], 'click', getClickHandler(i)); 
 	}
 

@@ -19,13 +19,13 @@
                 </div>
             </div>
             <form action="searchList.do" method="post" name="searchword" id="searchForm" >
-            <input type="hidden" name="latitude" id="search_lat" value="">
-            <input type="hidden" name="longitude" id="search_long" value="">
+            <input type="hidden" name="latitude" id="search_lat" value="0">
+            <input type="hidden" name="longitude" id="search_long" value="0">
             <div class="search">
 	            <div class="gps">
 	            	<input type="button" onclick="getLocation()" class="gpsBtn" name="gps" style="cursor:pointer;">
 	            </div>
-                <input class="searchInput" placeholder="음식이나 식당 검색" type="text" name="sword">
+                <input class="searchInput" placeholder="음식이나 식당 검색" type="text" name="keyword" value="${param.keyword }">
                                              
             </div>
             </form>
