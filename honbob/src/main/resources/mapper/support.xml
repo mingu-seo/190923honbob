@@ -8,7 +8,7 @@
 		select *
 		from support
 		where user_userNo = #{id}
-		ORDER BY registdate DESC LIMIT 8;
+		ORDER BY id DESC LIMIT 8;
 	</select>
 
 	<select id="getSupport" parameterType="int" resultType="vo.support.SupportVO">

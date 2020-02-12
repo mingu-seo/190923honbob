@@ -12,7 +12,7 @@ import util.PageInfo;
 import vo.GradeVO;
 import vo.RestaurantImageVO;
 import vo.RestaurantVO;
-import vo.ReviewVO;
+import vo.review.ReviewVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

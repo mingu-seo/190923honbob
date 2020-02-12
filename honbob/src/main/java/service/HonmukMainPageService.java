@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.HonmukMainPageDAO;
-import vo.ReviewVO;
+import vo.review.ReviewVO;
 
 @Service
 public class HonmukMainPageService {

@@ -49,6 +49,15 @@ public class SupportController {
         return mav;
     }
 
+    @RequestMapping(path = "/supportDelete/{supportDocumentId}", method = RequestMethod.POST)
+    public ModelAndView supportDelete(@PathVariable int supportDocumentId) {
+        ModelAndView mav = new ModelAndView();
+        supportService.deleteSupport(supportDocumentId);
+        String pageName = "redirect:/supportList";
+        mav.setViewName(pageName);
+        return mav;
+    }
+
     @RequestMapping(path = "/supportEdit/{supportDocumentId}", method = RequestMethod.GET)
     public ModelAndView supportEdit(@PathVariable int supportDocumentId) {
         ModelAndView mav = new ModelAndView();
@@ -65,15 +74,17 @@ public class SupportController {
         // DB UPDATE
         supportService.updateSupport(requestVo);
 
-
         // AFTER DB UPDATE
-        String pageName = "support/supportList";
+        mav.addObject("message", "정상적으로 변경되었습니다.");
+        mav.addObject("url", "/supportList");
+        //String pageName = "redirect:/supportList";
+        String pageName = "common/alert";
         mav.setViewName(pageName);
         return mav;
     }
 
     @RequestMapping(path = "/supportWrite", method = RequestMethod.GET)
-    public ModelAndView supportWritePage() {
+    public ModelAndView supportWrite() {
         ModelAndView mav = new ModelAndView();
         String pageName = "support/supportWrite";
         mav.setViewName(pageName);
@@ -87,8 +98,9 @@ public class SupportController {
         supportService.insertSupport(vo);
         System.out.println(vo);
         ////
-        String pageName = "support/supportList";
+        String pageName = "redirect:/supportList";
         mav.setViewName(pageName);
         return mav;
     }
 }
+

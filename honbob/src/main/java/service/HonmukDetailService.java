@@ -10,7 +10,7 @@ import dao.HonmukDetailDAO;
 import vo.GradeVO;
 import vo.RestaurantImageVO;
 import vo.RestaurantVO;
-import vo.ReviewVO;
+import vo.review.ReviewVO;
 
 @Service
 public class HonmukDetailService {
