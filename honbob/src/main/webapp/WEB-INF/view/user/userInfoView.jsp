@@ -4,16 +4,15 @@
 <%
 	UserVO vo = (UserVO) request.getAttribute("vo");
 %>
-<%
-	UserVO sess = (UserVO)session.getAttribute("Session");
-int userNo = 0;
-if (sess != null) userNo = sess.getUserNo();
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/dog/css/myPage.css">
+<link rel="stylesheet" href="/honbob/css/user/myPage.css">
+<style type = "text/css">
+
+	
+</style>
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"> </script>
 	<script type = "text/javascript">
@@ -22,25 +21,26 @@ if (sess != null) userNo = sess.getUserNo();
 				alert("현재 비밀번호를 입력해 주세요. ");
 				return false;
 				}
-			if ($("#password1").val() == "") {
+			if ($("#userPassword1").val() == "") {
 				alert("변경 비밀번호를 입력해 주세요. ");
 				return false;
 				}
-			if ($("#password2").val() == "") {
+			if ($("#userPassword2").val() == "") {
 				alert("비밀번호 확인을 입력해 주세요. ");
 				return false;
 				}
-			if ($("#password1").val() != $("#password2").val()) {
+			if ($("#userPassword1").val() != $("#userPassword2").val()) {
 				alert("비밀번호 확인이 일치하지 않습니다. ");
 				return false;
 				}
 		}
-		
-	
+
+
+
 	</script>
 </head>
 <body>
-	
+	<%@ include file = "../header.jsp" %>
 	<div id = "container">
 		<div id = "myPage">
 			<h2> 마이페이지 </h2>
@@ -48,13 +48,16 @@ if (sess != null) userNo = sess.getUserNo();
         <nav id = "main-navigation">
                 <ul class = "menu">
                     <li class = "menulIST">
-                        <h4><span class = "menu-title"><a href = "userInfoView.do">회원정보 수정</a></span></h4><hr>
+                        <span class = "menu-title"><a href = "profileForm.do"><h4>프로필 수정</h4></a></span><hr>
                     </li>
                     <li class = "menulIST">
-                        <h4><span class = "menu-title"><a href = "myWriteList.do">나의 게시글</a></span></h4><hr>
+                        <span class = "menu-title menu-title-active"><h4>회원정보</h4></span><hr>
                     </li>
                     <li class = "menulIST">
-                        <h4><span class = "menu-title"><a href = "myQnA.do">나의 QnA</a></span></h4><hr>
+                        <span class = "menu-title"><a href = "myReview.do"><h4>나의 리뷰글</h4></a></span><hr>
+                    </li>
+                    <li class = "menulIST">
+                        <h4><span class = "menu-title"><a href = "myQnA.do"><h4>나의 QnA</h4></a></span></h4><hr>
                     </li>
                     <li class = "menulIST">
                         <h4><span class = "menu-title"><a href = ""> 준비중 </a></span></h4><hr>
@@ -73,24 +76,27 @@ if (sess != null) userNo = sess.getUserNo();
 		<form action = "pwdChange.do" method = "post" onsubmit="return check();">
 		<table>
 			<input type = "hidden" name = "userNo" value = "<%=userNo%>">
-			<tr><th> 이름 </th>
-			<td><%=sess.getUserName() %></td></tr>
-			<tr><th> 아이디 </th>
-			<td><%=sess.getUserId() %></td></tr>
-			<tr><th> 이메일 </th>
-			<td><%=sess.getUserEmail() %></td></tr>
-			<tr><th> 현재 비밀번호 </th>
-			<td><input type = "password" name = "userPassword" id = "userPassword" class = "pwd"></td></tr>
-			<tr><th> 변경 비밀번호 </th>
-			<td><input type = "password" name = "userPassword1" id = "userPassword1" class = "pwd"></td></tr>
-			<tr><th> 비밀번호 확인 </th>
-			<td><input type = "password" name = "userPassword2" id = "userPassword2" class = "pwd"> <input type= "submit" class = "button" value = "변경"></td></tr>
-			<tr><th> 회원가입 날짜 </th>
-			<td><%=sess.getUserJoinDate() %></td></tr>
+			<tr><th> &nbsp;&nbsp; 별명</th>
+			<td>&nbsp;&nbsp;&nbsp;<%=sess.getUserName() %></td></tr>
+			<tr><th> &nbsp;&nbsp; 아이디 </th>
+			<td>&nbsp;&nbsp;&nbsp;<%=sess.getUserId() %></td></tr>
+			<tr><th> &nbsp;&nbsp; 이메일 </th>
+			<td>&nbsp;&nbsp;&nbsp;<%=sess.getUserEmail() %></td></tr>
+			<tr><th> &nbsp;&nbsp; 비밀번호 변경 </th>
+			<td>&nbsp;&nbsp;&nbsp;<input type = "button" value = "수정" class = "textbtn" ></td></tr>
+			<tr class="pwdch"><th> &nbsp;&nbsp; 현재 비밀번호 </th>
+			<td>&nbsp;&nbsp;&nbsp;<input type = "password" name = "userPassword" id = "userPassword" class = "pwd"></td></tr>
+			<tr class="pwdch"><th> &nbsp;&nbsp; 변경 비밀번호 </th>
+			<td>&nbsp;&nbsp;&nbsp;<input type = "password" name = "password1" id = "userPassword1" class = "pwd"></td></tr>
+			<tr class="pwdch"><th> &nbsp;&nbsp; 비밀번호 확인 </th>
+			<td>&nbsp;&nbsp;&nbsp;<input type = "password" id = "userPassword2" class = "pwd"> <input type= "submit" class = "button" value = "변경"></td></tr>
+			<tr><th> &nbsp;&nbsp; 회원가입 날짜 </th>
+			<td>&nbsp;&nbsp;&nbsp;<%=sess.getUserJoinDate() %></td></tr>
 		</table>
 		</form>
 		</div>
 	</div>
-	<script src="/dog/js/myPage.js"></script> 
+	<script src="/honbob/js/user/myPage.js"></script> 
+	<%@ include file = "../footer.jsp" %>
 </body>
 </html>

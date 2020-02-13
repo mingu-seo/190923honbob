@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <title>Login</title>
     
-    <link rel="stylesheet" href="/dog/css/style.css">
+    <link rel="stylesheet" href="/honbob/css/user/style.css">
 </head>
 <script src="https://code.jquery.com/jquery-3.4.1.js"> </script>
 	<script type = "text/javascript">
@@ -31,7 +31,7 @@
             <g class="ears">
                 <path d="M46,32 L46,30 C46,16 26,16 26,30 L26,32" fill="#e0a243" stroke="#000" stroke-width="2.5" stroke-linecap="round" transform="rotate(-10,38,24)" />
                 <path d="M74,32 L74,30 C74,16 94,16 94,30 L94,32" fill="#e0a243" stroke="#000" stroke-width="2.5" stroke-linecap="round" transform="rotate(10,82,24)" />
-            </g> <a href = "adminLoginForm.do">
+            </g>
             <circle cx="60" cy="60" r="40" fill="#e0a243" stroke="#000" stroke-width="2.5" />
             <g class="eyes">
                 <!-- left eye and eyebrow-->
@@ -54,7 +54,7 @@
 	 			<input type = "submit" value = "Login">
 	 		<br>
 	 			<span><a href = "search_Id.do">아이디 찾기</a> / <a href = "search_Pwd.do"> 비밀번호 찾기</a> 
-	 			<a href="" onclick='window.open("http://localhost:8080/dog/honbab/userJoinForm.do");return false'>회원가입</a></span>
+	 			<a href="" onclick='window.open("http://localhost:8080/honbob/userJoinForm.do");return false'>회원가입</a></span>
  		</form>
  		<% } else if ((session.getAttribute("Session") != null)) { %>
  		<script language="javascript" type="text/javascript">
@@ -64,6 +64,6 @@
     		}, 1000);
 		</script>
  		<% } %>
-    <script src="/dog/js/script.js"></script>
+    <script src="/honbob/js/user/script.js"></script>
 </body>
 </html>

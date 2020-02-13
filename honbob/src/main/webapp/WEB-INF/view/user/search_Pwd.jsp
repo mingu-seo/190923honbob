@@ -16,7 +16,7 @@ if (sess != null) userNo = sess.getUserNo();
     <meta charset="utf-8">
     <title>Ryan Login</title>
     
-    <link rel="stylesheet" href="/dog/css/style.css">
+    <link rel="stylesheet" href="/honbob/css/user/style.css">
 </head>
 <script src="https://code.jquery.com/jquery-3.4.1.js"> </script>
 	<script type = "text/javascript">
@@ -35,29 +35,29 @@ if (sess != null) userNo = sess.getUserNo();
 				alert("이메일 형식이 잘못되었습니다.");
 				return false;
 			}
-			if ($("#qwdQuestion").val() == 0) {
+			if ($("#pwdQuestion").val() == 0) {
 				alert("비밀번호 찾기 질문을 선택해 주세요.");
-				$("#qwdQuestion").focus();
+				$("#pwdQuestion").focus();
 				return false;
 			}
 			var con = true;
-		 	if ($("#qwdAnswer").val().trim() == "") {
+		 	if ($("#pwdAnswer").val().trim() == "") {
 				alert("비밀번호 찾기 답변을 입력해 주세요");
-				$("#qwdAnswer").focus();
+				$("#pwdAnswer").focus();
 				return false;
 				} else {
 				con = true;
 				$.ajax({
-					url : "/dog/honbab/qwdAnswerCheck.do",
-					data : {pwdAnswer:$("#qwdAnswer").val()},
+					url : "/honbob/pwdAnswerCheck.do",
+					data : {pwdQuestion:$("#pwdQuestion").val(), pwdAnswer:$("#pwdAnswer").val()},
 					type : "POST",
 					async : false,
 					success : function(data) {
 						if (data.trim() == "1") {
 						} else {
 							alert("질문에 대한 답변이 맞지 않습니다.");
-							$("#qwdAnswer").val("");
-							$("#qwdAnswer").focus();
+							$("#pwdAnswer").val("");
+							$("#pwdAnswer").focus();
 							con = false;
 							}
 						}
@@ -79,9 +79,9 @@ if (sess != null) userNo = sess.getUserNo();
 	$(function() {
 		$("#pwdSearch").click(function() {
 				$.ajax({
-					url : "/dog/honbab/pwdSearch.do",
+					url : "/honbab/pwdSearch.do",
 					data : {
-						userId:$("#pwdSearch").val()
+						pwdSearch:$("#pwdSearch").val()
 					},
 					type : "POST",
 					async : false,
@@ -121,21 +121,24 @@ if (sess != null) userNo = sess.getUserNo();
 	<% if ( search == null) { %>
 			<input type = "text" name = "userId" id = "userId"  placeholder = "ID">
 			<input type = "text" name = "userEmail" id = "userEmail"  placeholder = "email@doname.com">
-			<select name = "pwdQuestion" id = "qwdQuestion">
+			<select name = "pwdQuestion" id = "pwdQuestion">
 				<option value="0">질문을 선택해 주세요</option>							
 				<option value="1">키우는 애완동물 이름은?</option>
 				<option value="2">어릴적 별명은?</option>
 				<option value="3">가장 친한 친구 이름은?</option>
 			</select>
-			<input type = "text" name = "pwdAnswer" id = "qwdAnswer" maxlength="15" placeholder = "비밀번호 찾기 답변">
+			<input type = "text" name = "pwdAnswer" id = "pwdAnswer" maxlength="15" placeholder = "비밀번호 찾기 답변">
 			<input type = "submit" value = "비밀번호 찾기"> <br>
 			
 			<span><a href = "loginForm.do"> 로그인 </a> / <a href = "search_Id.do"> 아이디 찾기 </a></span>
 		</form>
 	<% } else { %>
-		<a href = "pwdSearch.do" id = "pwdSearch"> 등록된 이메일로 임시 비밀번호 받기 </a><br>
+	<%
+		UserVO uvo = (UserVO)session.getAttribute("userEmail");
+	%>
+		<a href = "pwdSearch.do?userEmail=<%=uvo.getUserEmail() %>" id = "pwdSearch"> 등록된 이메일로 임시 비밀번호 받기 </a><br>
 		<a href = "loginForm.do"> 로그인 </a>
 	<% } %>
-    <script src="/dog/js/script.js"></script>
+    <script src="/honbob/js/user/script.js"></script>
 </body>
 </html>
