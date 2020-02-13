@@ -10,7 +10,8 @@
 	int nowPage=pageInfo.getPage();
 	int maxPage=pageInfo.getMaxPage();
 	int startPage=pageInfo.getStartPage();
-	int endPage=pageInfo.getEndPage();	
+	int endPage=pageInfo.getEndPage();		
+	
 %>
 <meta name="viewport" charset="utf-8" content="user-scalable=no, initial-scale=1, maximum-scale=1">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -73,7 +74,9 @@
          	<div id="map" style="width:100%;height:700px;"><div class="locationSearch" onclick="locationSearch()">이 위치로 검색</div></div>	                
      	</div>
     	<div class="visit_res">
-             chat
+             <c:forEach var="visit" items="${visitList }" varStatus="status">
+             	${visit.res_name }
+             </c:forEach>
     	</div>
     </div>
 

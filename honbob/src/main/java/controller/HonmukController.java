@@ -1,8 +1,10 @@
 package controller;
 
+
 import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 
 import mail.SendMail;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,7 +64,7 @@ public class HonmukController {
 	//내부영역 식당리스트 결과 ajax로 뿌리는 경로
 	@RequestMapping("/listAjax.do")
 	public String listAjax(Model model, RestaurantVO resVO, @RequestParam(name="page", required = false) String page,
-			@RequestParam(name="filter1", required = false) String filter1) {
+			@RequestParam(name="filter1", required = false) String filter1, HttpSession session) {
 			
 		//초기 검색시 별점순으로
 		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
@@ -76,6 +79,11 @@ public class HonmukController {
 		}else if("readcount".equals(filter1)) {
 			resVO.setReadcount(1);
 		}		
+		
+		//방문 리스트 데이터 받아오기
+		String visit_num = (String)session.getAttribute("visit_num");
+		List<RestaurantVO> visitList = hmListService.visitList(visit_num);
+		model.addAttribute("visitList", visitList);
 		
 		
 		//검색결과를 받아옴
@@ -157,7 +165,8 @@ public class HonmukController {
 		return "";
 	}
 	@RequestMapping("/DetailView.do")
-	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,HttpServletRequest req) {
+	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,HttpServletRequest req,
+			HttpSession session) {
 		//조회수 올리기
 		int upCount = hmDetailService.upViewCount(res_num);
 		if(upCount==1) {
@@ -191,6 +200,25 @@ public class HonmukController {
 		reviewList = null;
 		int reviewcount = 0;
 		restDetail.setGradecount(gradeCnt);
+		
+		
+		//최근 방문 식당 res_num 세션 저장			
+		String visit_res[] = new String[5];		
+		for(int i=0; i<visit_res.length; i++) {
+			if(visit_res[i]==null) {
+				visit_res[i] = Integer.toString(res_num);
+				break;
+			}else if(i==visit_res.length-1) {
+				visit_res[0] = visit_res[1];
+				visit_res[1] = visit_res[2];
+				visit_res[2] = visit_res[3];
+				visit_res[3] = visit_res[4];
+				visit_res[4] = Integer.toString(res_num);
+			}
+		}
+		session = req.getSession();
+		session.setAttribute("visit_num", visit_res);
+		
 		
 		
 		//모델에 넣기
@@ -500,12 +528,12 @@ public class HonmukController {
 		return "user/myQnA";
 	}
 	
-	// 나의 리뷰글(마이페이지)
+	/*// 나의 리뷰글(마이페이지)
 	@RequestMapping("/myReview.do")
 	public String myReview(Model model,ReviewVO vo, HttpSession sess) {
 		int r = hmUserService.myReviewList();
 		return "user/myReview";
-	}
+	}*/
 	
 	// 회원탈퇴
 	@RequestMapping("/userInfoDeleteForm.do")

@@ -15,7 +15,6 @@ if (sess != null) userNo = sess.getUserNo();
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<<<<<<< HEAD
 <script>
 	$(function() {
         $('.btn').click(function() { 
@@ -274,10 +273,10 @@ if (sess != null) userNo = sess.getUserNo();
         }
 
 </style>
-=======
+
 <link rel="stylesheet" href="css/header/style.css"/>
 <script src="js/header/header.js"></script>
->>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob.git
+
 </head>
 <body>
 	<div class="wrap">
@@ -307,17 +306,15 @@ if (sess != null) userNo = sess.getUserNo();
                 <div onclick="history.back();" class="page_cover"></div>
                 <div id="menu">
                     <div onclick="history.back();" class="close"></div>
-<<<<<<< HEAD
                     <div class="user" style=" cursor: pointer;" onclick=''>로그인을 해주세요.</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>                    
-=======
                     <div class="user" style=" cursor: pointer;" onclick="location.href='';">로그인을 해주세요.</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">게시판</div>                                   
->>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob.git
+
                 </div>
             </div>            
         </div>
