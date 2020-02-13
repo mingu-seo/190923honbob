@@ -248,29 +248,7 @@ if (sess != null) userNo = sess.getUserNo();
             left:140%;
         }
         
-        #menu.open>.list{
-            font-size: 15px;
-            top:150px;
-            margin: 15px;
-            position: relative;
-            text-align: center;
-            width:200px;
-            height:100px;
-            border: 1px solid #222228;
-            background-color: orange;
-        }
-
-        #menu.open>.user{
-            font-size: 15px;
-            top:50px;
-            margin:15px;
-            position: relative;
-            text-align: center;
-            width:200px;
-            height: 100px;
-            border-bottom: 1px solid #222222;
-            z-index: 9999;
-        }
+        
 
 </style>
 
@@ -298,7 +276,7 @@ if (sess != null) userNo = sess.getUserNo();
                                              
             </div>
             </form>
-            <div class="headerRight">
+             <div class="headerRight">
                 <div class="mypage" style=" cursor: pointer;" onclick="location.href='';">                    
                 </div>                                                                          
                 <div class="btn">
@@ -306,19 +284,11 @@ if (sess != null) userNo = sess.getUserNo();
                 <div onclick="history.back();" class="page_cover"></div>
                 <div id="menu">
                     <div onclick="history.back();" class="close"></div>
-
-                    <div class="user" style=" cursor: pointer;" onclick=''>로그인을 해주세요.</div>
-                    <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
-                    <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
-                    <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
-                    <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>                    
-=======
                     <div class="user" style=" cursor: pointer;" onclick="location.href='';">로그인을 해주세요.</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">게시판</div>                                   
-
                 </div>
-            </div>            
+            </div>                  
         </div>
         
 		<% if (session.getAttribute("Session") == null) { %>
