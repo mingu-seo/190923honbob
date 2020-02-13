@@ -3,7 +3,7 @@
 const ryan = document.querySelector('#ryan');
 const face = document.querySelectorAll('.ears, .eyes, .muzzle');
 const email = document.querySelector('input[type="text"]');
-const password = document.querySelector('input[type="password"]');
+const password = document.querySelector('input[type="password"], input[name="userEmail');
 const fauxInput = document.createElement('div');
 const span = document.createElement('span');
 let timer = null;

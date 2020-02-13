@@ -16,7 +16,7 @@
 	<script type = "text/javascript">
 		function check() {
 			if ($("#userName").val().trim() == "") {
-				alert("이름 입력해 주세요");
+				alert("별명 입력해 주세요");
 				$("#userName").focus();
 				return false;
 			}

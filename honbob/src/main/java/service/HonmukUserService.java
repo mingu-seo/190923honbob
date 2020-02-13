@@ -1,9 +1,10 @@
 package service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,10 +52,12 @@ public class HonmukUserService {
 	
 	// 사진 변경(마이페이지)
 	public int imageUpdate(UserVO vo, MultipartFile file, HttpServletRequest req) {
-		FileUtil fu = new FileUtil();
-		fu.fileUpload(file,req.getRealPath("/images/"));
-		vo.setUserImage(fu.fileName);
 		return honmukUserDAO.imageUpdate(vo);
+	}
+	
+	// 별명 변경(마이페이지)
+	public int nameUpdate(UserVO vo) {
+		return honmukUserDAO.nameUpdate(vo);
 	}
 	
 	// 아이디 중복 체크(회원가입)
@@ -64,7 +67,7 @@ public class HonmukUserService {
 	
 	// 이메일 중복 체크(회원가입)
 	public int emailCheck (String userEmail) {
-		return honmukUserDAO.idCheck(userEmail);
+		return honmukUserDAO.emailCheck(userEmail);
 	}
 	
 	// 이메일 중복 체크(회원가입)
@@ -100,13 +103,19 @@ public class HonmukUserService {
 	}
 	
 	// 질문과 질문에 대한 답 체크(비밀번호 찾기)
-	public int qwdAnswerCheck(String pwdAnswer) {
-		return honmukUserDAO.qwdAnswerCheck(pwdAnswer);
+	public int qwdAnswerCheck(String pwdQuestion, String pwdAnswer) {
+		Map map = new HashMap();
+		map.put("pwdQuestion", pwdQuestion);
+		map.put("pwdAnswer", pwdAnswer);
+		return honmukUserDAO.qwdAnswerCheck(map);
 	}
 	
 	// 비밀번호 변경(비밀번호 찾기)
-	public int pwdUpdate(String pwdNum) {
-		return honmukUserDAO.pwdUpdate(pwdNum);
+	public int pwdUpdate(String userEmail, String pwdNum) {
+		UserVO uv = new UserVO();
+		uv.setUserEmail(userEmail);
+		uv.setUserPassword(pwdNum);
+		return honmukUserDAO.pwdUpdate(uv);
 	}
 
 }

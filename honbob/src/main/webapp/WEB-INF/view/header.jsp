@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="vo.UserVO"%>
+<%
+	UserVO sess = (UserVO)session.getAttribute("Session");
+int userNo = 0;
+if (sess != null) userNo = sess.getUserNo();
+%>
+<%
+	session.setMaxInactiveInterval(60*30);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -260,6 +269,7 @@
             width:200px;
             height: 100px;
             border-bottom: 1px solid #222222;
+            z-index: 9999;
         }
 
 </style>
@@ -292,7 +302,7 @@
                 <div onclick="history.back();" class="page_cover"></div>
                 <div id="menu">
                     <div onclick="history.back();" class="close"></div>
-                    <div class="user" style=" cursor: pointer;" onclick="location.href='';">로그인을 해주세요.</div>
+                    <div class="user" style=" cursor: pointer;" onclick=''>로그인을 해주세요.</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
@@ -300,7 +310,12 @@
                 </div>
             </div>            
         </div>
-	
+        
+		<% if (session.getAttribute("Session") == null) { %>
+			<div class="user" style=" cursor: pointer;" onclick='window.open("http://localhost:8080/honbob/loginForm.do","_blank","height=600,width=470, status=yes,toolbar=no,menubar=no,location=no");return false'>로그인을 해주세요.</div>
+        <% } else { %>
+			<a href = "logOut.do"> 로그아웃 </a>
+		<% } %>
 	
 	</div>
 

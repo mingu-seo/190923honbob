@@ -3,7 +3,6 @@
     <%@page import="vo.UserVO"%>
 	<%
 	UserVO sess = (UserVO)session.getAttribute("Session");
-	UserVO value = (UserVO)session.getAttribute("value");
 	int userNo = 0;
 	if (sess != null) userNo = sess.getUserNo();
 	%>
@@ -61,7 +60,7 @@
 			return false;
 			}
 		if ($("#name").val().trim() == "") {
-			alert("이름을 입력해 주세요");
+			alert("별명을 입력해 주세요");
 			$("#name").focus();
 			return false;
 			}
@@ -147,10 +146,11 @@
 					url : "/honbob/emailCheck.do",
 					data : {userEmail:$("#email").val()},
 					type : "POST",
-					async : false,
+					async : true,
 					success : function(data) {
 						if (data.trim() == "0") {
 							// 이메일로 인증번호 전송
+							$('#emailChecking').show(); 
 							alert("입력한 이메일로 인증번호가 전송되었습니다.");
 							return false;
 						} else {
@@ -165,6 +165,9 @@
 		});
 	});
 
+	$(function() {
+		$("#emailChecking").hide();
+	});
 
 
 	
@@ -195,15 +198,15 @@
 		<input type = "password" name = "password1" id = "password1" minlength="10" maxlength="30" class = "input1" placeholder="비밀번호 확인.">
 	</div>
 	<div class = "input">
-		<h4><label for = "name"> 이름 </label></h4>
-		<input type = "text" name = "userName" id = "name" minlength="2" maxlength="5" class = "input1" placeholder="이름을 입력해 주세요.">
+		<h4><label for = "name"> 별명 </label></h4>
+		<input type = "text" name = "userName" id = "name" minlength="2" maxlength="5" class = "input1" placeholder="닉네임을 입력해 주세요.">
 	</div>
 	<div class = "input">
 		<h4><label for = "email"> 이메일 </label></h4>
 		<input type = "text" name = "userEmail" id = "email" maxlength="40" class = "input2" placeholder="이메일을 입력해 주세요.">
 		<input type = "button" class = "button" id = "emailCheck" value = "인증번호">
 	</div>
-	<div class = "input">
+	<div class = "input" id = "emailChecking">
 		<h4><label for = "emailCheck"> 인증번호 확인 </label></h4>
 		<input type = "text" name = "emailPwdNumber" id = "emailPwdNumber" maxlength="30" class = "input1" placeholder="인증번호 확인">
 	</div>

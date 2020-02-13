@@ -24,8 +24,8 @@
 		UPDATE honmuk.user SET userPassword = md5(#{password1}) WHERE userNo = #{userNo} AND userPassword = md5(#{userPassword})
 	</update>
 	
-	<update id = "pwdUpdate" parameterType = "String">
-		UPDATE honmuk.user SET userPassword = md5(#{pwdNum}) WHERE userNo = #{userNo}
+	<update id = "pwdUpdate" parameterType = "vo.UserVO">
+		UPDATE honmuk.user SET userPassword = md5(#{userPassword}) WHERE userEmail = #{userEmail}
 	</update>
 	
 	<select id = "userInfoView" parameterType = "Integer" resultType = "vo.UserVO">
@@ -51,8 +51,12 @@
 		</if>
 		WHERE userNo = #{userNo}
 	</update>
+	
+	<update id = "nameUpdate" parameterType = "vo.UserVO" >
+		UPDATE honmuk.user SET userName = #{userName} WHERE userNo = #{userNo}
+	</update>
 
-	<select id = "qwdAnswerCheck" parameterType = "String" resultType = "Integer">
+	<select id = "qwdAnswerCheck" parameterType = "java.util.Map" resultType = "Integer">
 		SELECT count(*) FROM user WHERE pwdQuestion = #{pwdQuestion} AND pwdAnswer = #{pwdAnswer}
 	</select>
 	

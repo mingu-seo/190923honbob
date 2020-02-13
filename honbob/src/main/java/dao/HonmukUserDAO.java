@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -40,6 +42,12 @@ public class HonmukUserDAO {
 	public int imageUpdate(UserVO vo) {
 		return sqlSession.update("user.imageUpdate",vo);
 	}
+	
+	// 별명 변경(마이페이지)
+	public int nameUpdate(UserVO vo) {
+		return sqlSession.update("user.nameUpdate",vo);
+	}
+	
 	// 아이디 중복 체크(회원가입)
 	public int idCheck(String userId) {
 		return sqlSession.selectOne("user.idCheck",userId);
@@ -53,11 +61,11 @@ public class HonmukUserDAO {
 		return sqlSession.delete("user.userDelete",vo);
 	}
 	// 질문과 질문에 대한 답 체크(비밀번호 찾기)
-	public int qwdAnswerCheck(String pwdAnswer) {
-		return sqlSession.selectOne("user.qwdAnswerCheck",pwdAnswer);
+	public int qwdAnswerCheck(Map map) {
+		return sqlSession.selectOne("user.qwdAnswerCheck",map);
 	}
 	// 비밀번호 변경(비밀번호 찾기)
-	public int pwdUpdate (String pwdNum) {
-		return sqlSession.update("user.pwdUpdate",pwdNum);
+	public int pwdUpdate (UserVO vo) {
+		return sqlSession.update("user.pwdUpdate",vo);
 	}
 }

@@ -24,6 +24,7 @@
         position: relative;
         float: left;
         width: 140px;
+    
     }
 
     .menulIST:hover {
@@ -39,15 +40,14 @@
         color: #2E64FE;   
                 
     }
-    
-    .menu-title:hover {
-   		background-color: #A9F5A9;
+    .menu-title-active, .menu-title:hover {
+    	background-color: #A9F5A9;
    		opacity: 0.9;
     }
     
     #container {
-        width: 900px; height: 700px;
-		margin: 180px 180px;
+        width: 900px; height: 100%;
+		margin: 100px auto;
         line-height: 400px;
     }
     
@@ -61,10 +61,7 @@
 	    width: 100%;
     }
     
-    td {
-    	position: relative;
-    	right: 20px;
-    }
+    
     
     #myPage {
     	border-bottom: 1px solid #c8c8c8;
@@ -88,6 +85,16 @@
     	border-bottom: 1px solid #c8c8c8;
     }
     
+    th {
+  		width : 170px;
+  		background-color: #E6E6E6;
+    }
+    
+    td {
+    	position: relative;
+		right: 2px;
+    }
+    
     .pwd {
     	height: 20px;
     }
@@ -98,6 +105,40 @@
    		width: 50px;
     }
     
-    .button:hover {
+    .button:hover, h4{
     	cursor: pointer;
+    }
+
+    #image {
+    	width: 180px;
+    	height: 170px;
+    	border: 1px solid #E6E6E6;
+    	margin-top: 50px;
+    	border-radius: 50%;
+    }
+    
+    #bobmukEmail {
+    	border: 1px solid black;	
+    }
+    
+    .names {
+    	text-align: center;
+    	height: 50px;
+    	line-height: 50px; 
+    }
+    
+    .name1 {
+    	width: 15%;
+    }
+    
+    .name2 {
+    	width: 55%;
+    }
+    
+    .name3 {
+    	width: 10%;
+    }
+    
+    .name4 {
+    	width: 20%;
     }

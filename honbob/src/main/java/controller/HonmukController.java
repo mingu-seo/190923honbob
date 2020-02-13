@@ -26,6 +26,7 @@ import mail.SendMail;
 import service.HonmukDetailService;
 import service.HonmukMainPageService;
 import service.HonmukUserService;
+import util.FileUtil;
 import util.Page;
 import util.PageInfo;
 import vo.GradeVO;
@@ -287,7 +288,7 @@ public class HonmukController {
 	public String logout(HttpSession session, @RequestParam(name="url", required=false) String url) {
 		session.invalidate();
 		// 로그아웃한 페이지로 다시 돌아간다.
-		return "redirect:"+url.substring(8);
+		return "redirect:/mainPage.do";
 	}
 	
 	
@@ -344,8 +345,8 @@ public class HonmukController {
 	
 	// 비밀번호 질문,대답 체크
 	@RequestMapping("/qwdAnswerCheck.do")
-	public String qwdAnswerCheck(Model model,@RequestParam("pwdAnswer") String pwdAnswer) {
-		int r = hmUserService.qwdAnswerCheck(pwdAnswer);
+	public String qwdAnswerCheck(Model model,@RequestParam("pwdQuestion") String pwdQuestion,@RequestParam("pwdAnswer") String pwdAnswer) {
+		int r = hmUserService.qwdAnswerCheck(pwdQuestion, pwdAnswer);
 		model.addAttribute("value",r);
 		return "user/ajax/return";
 	}
@@ -353,10 +354,14 @@ public class HonmukController {
 	
 	// 이메일로 임시비밀번호 전송
 	@RequestMapping("/pwdSearch.do")
-	public String pwdSearch(@RequestParam("userEmail") String userEmail, UserVO vo) throws Exception {
+	public String pwdSearch(Model model, @RequestParam("userEmail") String userEmail, UserVO vo) throws Exception {
+		// 랜덤 12자리 받아오기
 		String pwdNum = hmUserService.emailPass();
-		int r = hmUserService.pwdUpdate(pwdNum);
+		// 12자리로 비밀번호 변경 후
+		int r = hmUserService.pwdUpdate(userEmail, pwdNum);
+		// 이메일로 임시 비밀번호 전송
 		SendMail.sendEmail("duwkdutns2@naver.com", userEmail, "안녕하세요^^. [밥먹자] 임시 비밀번호 발급 입니다.", " 회원가입 이메일 인증번호 : "+ pwdNum);
+		model.addAttribute("value",r);
 		return "user/ajax/return";
 
 	}
@@ -454,6 +459,47 @@ public class HonmukController {
 		}
 	
 	
+	// 프로필 수정 페이지 (마이페이지)
+	@RequestMapping("/profileForm.do")
+	public String profileForm(Model model, HttpSession sess,UserVO vo) {
+		// 세션에 있는 userNo로 테이블에서 조회해서 model
+		UserVO uv = (UserVO)sess.getAttribute("Session");
+		UserVO user = hmUserService.userInfoView(uv.getUserNo());
+		model.addAttribute("vo",user);
+		return "user/profileForm";
+	}
+	
+	// 프로필 사진 or 별명 수정
+	@RequestMapping("profileFormUpdate.do")
+	public String profileFormUpdate(UserVO vo, @RequestParam("userImage_tmp") MultipartFile file, HttpServletRequest req) {
+		// 프로필 사진 수정
+		FileUtil fu = new FileUtil();
+		fu.fileUpload(file,req.getRealPath("/images/"));
+		vo.setUserImage(fu.fileName);
+		
+		if (vo.getUserImage() != null) {
+			hmUserService.imageUpdate(vo,file,req);
+		}
+		// 프로필 별명 수정
+		if (vo.getUserName() != null) {
+			hmUserService.nameUpdate(vo);
+		}
+			return "redirect:/profileForm.do";
+	}
+	
+	// 나의 QnA 질문과 답변 리스트
+	@RequestMapping("/myQnA.do")
+	public String myQnAList() {
+		return "user/myQnA";
+	}
+	
+	// 나의 리뷰글(마이페이지)
+	@RequestMapping("/myReview.do")
+	public String myReview(Model model,ReviewVO vo, HttpSession sess) {
+		int r = hmUserService.myReviewList();
+		return "user/myReview";
+	}
+	
 	// 회원탈퇴
 	@RequestMapping("/userInfoDeleteForm.do")
 	public String userInfoDeleteForm() {
@@ -482,12 +528,11 @@ public class HonmukController {
 		return null;
 	}
 	
-	
-	// 프로필 변경
-	@RequestMapping("/userImageUpdate.do")
-	public String imageUpdate(UserVO vo, @RequestParam("userImage_tmp") MultipartFile file, HttpServletRequest req) {
-		hmUserService.imageUpdate(vo,file,req);
-		return "redirect:/myPage.do";			
+	// 만드는중
+	@RequestMapping("/bobmukEmail.do")
+	public String bobmukEmail() {
+		return "user/bobmukEmail";
 	}
+	
 
 }

@@ -1,5 +1,6 @@
 package vo;
 
+import java.io.File;
 import java.sql.Date;
 
 public class UserVO {
@@ -22,10 +23,11 @@ public class UserVO {
 	//프로필 사진
 	private String userImage;
 
+	
 	//비밀번호 확인 및 비밀번호 변경
 	private String password1;
 	
-	
+
 	public String getPassword1() {
 		return password1;
 	}

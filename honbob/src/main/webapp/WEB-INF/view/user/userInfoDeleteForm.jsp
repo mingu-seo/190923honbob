@@ -17,7 +17,7 @@ if (sess != null) userNo = sess.getUserNo();
 	<input type = "hidden" name = "userNo" value = "<%=userNo%>">
 	<table>
 		<tr>
-			<th> 이름 </th>
+			<th> 닉네임 </th>
 			<td><input type = "text" name = "userName"></td>
 		</tr>
 		<tr>
