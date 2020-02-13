@@ -8,10 +8,9 @@ var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 	
 	function locationSearch(){
 		var center = map.getCenter(); 
-		
+		$("#page").val(1);
 		$("#latitude").val(center.getLat());
 		$("#longitude").val(center.getLng());
 		
-		$("#mapLevel").val(2);
 		listAjax();    	
     }
