@@ -22,6 +22,7 @@ public class SupportController {
         this.supportService = supportService;
     }
 
+    //문의 목록 (내가 작성한 문의만 노출)
     @RequestMapping(path = "/supportList", method = RequestMethod.GET)
     public ModelAndView supportList(HttpServletRequest request) {
 //        HttpSession session = request.getSession();
@@ -39,6 +40,7 @@ public class SupportController {
 
     }
 
+    //문의 상세보기
     @RequestMapping(path = "/supportDetail/{supportDocumentId}", method = RequestMethod.GET)
     public ModelAndView supportDetail(@PathVariable int supportDocumentId) {
         ModelAndView mav = new ModelAndView();
@@ -49,6 +51,17 @@ public class SupportController {
         return mav;
     }
 
+    //문의 삭제
+    @RequestMapping(path = "/supportDelete/{supportDocumentId}", method = RequestMethod.POST)
+    public ModelAndView supportDelete(@PathVariable int supportDocumentId) {
+        ModelAndView mav = new ModelAndView();
+        supportService.deleteSupport(supportDocumentId);
+        String pageName = "redirect:/supportList";
+        mav.setViewName(pageName);
+        return mav;
+    }
+
+    //문의 수정폼 불러오기
     @RequestMapping(path = "/supportEdit/{supportDocumentId}", method = RequestMethod.GET)
     public ModelAndView supportEdit(@PathVariable int supportDocumentId) {
         ModelAndView mav = new ModelAndView();
@@ -59,27 +72,32 @@ public class SupportController {
         return mav;
     }
 
+    //문의 수정내용 DB저장
     @RequestMapping(path = "/supportEdit", method = RequestMethod.POST)
     public ModelAndView supportEdit(SupportEditRequest requestVo) {
         ModelAndView mav = new ModelAndView();
         // DB UPDATE
         supportService.updateSupport(requestVo);
 
-
         // AFTER DB UPDATE
-        String pageName = "support/supportList";
+        mav.addObject("message", "정상적으로 변경되었습니다.");
+        mav.addObject("url", "/supportList");
+        //String pageName = "redirect:/supportList";
+        String pageName = "common/alert";
         mav.setViewName(pageName);
         return mav;
     }
 
+    //문의 작성폼 불러오기
     @RequestMapping(path = "/supportWrite", method = RequestMethod.GET)
-    public ModelAndView supportWritePage() {
+    public ModelAndView supportWrite() {
         ModelAndView mav = new ModelAndView();
         String pageName = "support/supportWrite";
         mav.setViewName(pageName);
         return mav;
     }
 
+    //문의 작성내용 DB저장
     @RequestMapping(path = "/supportWrite", method = RequestMethod.POST)
     public ModelAndView supportWrite(SupportVO vo) {
         ModelAndView mav = new ModelAndView();
@@ -87,8 +105,9 @@ public class SupportController {
         supportService.insertSupport(vo);
         System.out.println(vo);
         ////
-        String pageName = "support/supportList";
+        String pageName = "redirect:/supportList";
         mav.setViewName(pageName);
         return mav;
     }
 }
+

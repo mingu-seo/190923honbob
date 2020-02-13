@@ -395,7 +395,7 @@
 	<!-- 리뷰 리스트 가져오기 -->
 	
 	<!-- 메인페이지에서 최신리뷰 6개 가져오기 -->
-	<select id="mainReview" resultType="vo.ReviewVO" parameterType="vo.ReviewVO">	
+	<select id="mainReview" resultType="vo.review.ReviewVO" parameterType="vo.review.ReviewVO">
 			SELECT * FROM review WHERE registdate LIMIT 0,6
 	</select>
 	

@@ -29,4 +29,7 @@ public class SupportDAO {
     public void updateSupport(SupportEditRequest requestVo) {
         sqlSession.update("Support.updateSupport", requestVo);
     }
+
+    public void deleteSupport(int supportDocumentId) { int result = sqlSession.delete("Support.deleteSupport", supportDocumentId);
+    }
 }

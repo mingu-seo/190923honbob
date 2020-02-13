@@ -26,9 +26,10 @@
         <div class="col-md-3" style="
     max-width: 157px;
 ">
-            <div class="optionButtons">
-                <button type="button" class="btn btn-warning">리뷰 작성하기</button>
+            <div class="optionButtons WriteForm">
+                <button id="writePageBtn" type="button" class="btn btn-warning">리뷰 작성</button>
             </div>
+
         </div>
         <div class="col-md-9">
             <div class="row">
@@ -102,7 +103,8 @@
                         <h8 class="card-title">4.8</h8>
                         <p class="card-text">${reviewItem.subject} / ${reviewItem.subject}</p>
                         <p class="card-text update">2020-01-03</p>
-                        <a href="#" class="btn btn-primary reviewbutton">리뷰 보기</a>
+
+                        <a href="/reviewDetail/${reviewItem.id}" id="viewPageBtn" class="btn btn-primary reviewbutton">리뷰 보기</a>
                         <a href="#" class="btn btn-primary restrnbutton">식당 가기</a>
                     </div>
                 </div>
@@ -118,11 +120,15 @@
                         <li class="page-item disabled">
                             <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&lt;&lt;</a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                        <c:forEach begin="1" end="${totalPages}" varStatus="loop">
+                            <c:if test="${loop.index eq currentPage}">
+                                <li class="page-item active"><a class="page-link" href="/reviewList?page=${loop.index}">${loop.index}</a></li>
+                            </c:if>
+                            <c:if test="${loop.index ne currentPage}">
+                                <li class="page-item"><a class="page-link" href="/reviewList?page=${loop.index}">${loop.index}</a></li>
+                            </c:if>
+                        </c:forEach>
                         <li class="page-item">
                             <a class="page-link" href="#">&gt;&gt;</a>
                         </li>
@@ -133,7 +139,15 @@
 
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#writePageBtn').click(
+            function(e) {
+                window.location.href = "http://localhost:8080/reviewWrite";
+            }
+        );
 
-
-
-</body></html>
+    });
+</script>
+</body>
+</html>

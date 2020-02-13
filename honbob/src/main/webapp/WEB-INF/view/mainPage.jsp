@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="vo.ReviewVO" %>
+<%@ page import="vo.review.ReviewVO" %>
 <%@ page import="vo.RestaurantVO"%>
 <%@ page import="java.util.List"%>
 

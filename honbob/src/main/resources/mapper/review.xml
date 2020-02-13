@@ -4,22 +4,33 @@
 <!-- Mybatis 사용 -->
 <mapper namespace="Review">
 	
-	<select id="getReviews" resultType="vo.ReviewVO">
-		select * from review ORDER BY registdate DESC LIMIT 8;
+	<select id="getReviews" parameterType="util.PagingOption" resultType="vo.review.ReviewVO">
+		select * from review
+		LIMIT ${currentItemStartNumber}, ${itemsPerPage};
 	</select>
 
-	<select id="getReviewDetail" resultType="vo.ReviewVO">
-		select * from review where id=11;
+<insert id="insertReview" parameterType="vo.review.ReviewVO">
+INSERT INTO `honmuk`.`review` ('id', `subject`, `content`, `registdate`, `count`, `Restaurant_menu_res_num`, `user_userNo`)
+VALUES (null, ${subject}, ${content}, ${registdate}, ${count}, ${Restaurant_menu_res_num}, ${user_userNo});
+</insert>
+
+	<select id="getReview" parameterType="int" resultType="vo.review.ReviewVO">
+		select * from review where id = #{id};
 	</select>
 
-	<select id="getReviewDelete" resultType="vo.ReviewVO">
-		select * from review where id=11;
-	</select>
+	<update id="updateReview" parameterType="vo.review.ReviewEditRequest">
+		UPDATE `honmuk`.`review`
+		SET `subject` = #{subject}, `content` = #{content}
+		WHERE (`id` = #{id});
+	</update>
 
+	<delete id="deleteReview" parameterType="int">
+		DELETE FROM `honmuk`.`review` WHERE (`id` = #{id});
+	</delete>
 
-
-	<select id="searchCount" resultType="int">
-		select count(*) from restaurantvo;
+	<select id="countReviews" resultType="int">
+		select count(*) from review;
 	</select>
 
 </mapper>
+
