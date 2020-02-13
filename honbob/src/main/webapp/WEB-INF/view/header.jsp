@@ -246,31 +246,8 @@ if (sess != null) userNo = sess.getUserNo();
             border: none;
             position:absolute;
             left:140%;
-        }
+        }        
         
-        #menu.open>.list{
-            font-size: 15px;
-            top:150px;
-            margin: 15px;
-            position: relative;
-            text-align: center;
-            width:200px;
-            height:100px;
-            border: 1px solid #222228;
-            background-color: orange;
-        }
-
-        #menu.open>.user{
-            font-size: 15px;
-            top:50px;
-            margin:15px;
-            position: relative;
-            text-align: center;
-            width:200px;
-            height: 100px;
-            border-bottom: 1px solid #222222;
-            z-index: 9999;
-        }
 
 </style>
 
