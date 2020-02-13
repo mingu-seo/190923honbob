@@ -25,6 +25,7 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
+    //리뷰 목록
     @RequestMapping(path="/reviewList", method=RequestMethod.GET)
     public ModelAndView reviewList(@RequestParam(required = false) Integer page) {
         System.out.println("page: " + page);
@@ -44,6 +45,7 @@ public class ReviewController {
         return mav;
     }
 
+    //리뷰 작성폼 불러오기
     @RequestMapping(path ="/reviewWrite", method = RequestMethod.GET)
     public ModelAndView reviewWrite(){
         ModelAndView mav = new ModelAndView();
@@ -52,6 +54,7 @@ public class ReviewController {
         return mav;
     }
 
+    //리뷰 작성내용 DB저장
     @RequestMapping(path = "/reviewWrite", method = RequestMethod.POST)
     public ModelAndView reviewWrite(ReviewVO vo) {
         ModelAndView mav = new ModelAndView();
@@ -61,6 +64,7 @@ public class ReviewController {
         return mav;
     }
 
+    //리뷰 상세보기
     @RequestMapping(path = "/reviewDetail/{reviewDocumentId}", method = RequestMethod.GET)
     public ModelAndView reviewDetail(@PathVariable int reviewDocumentId) {
         ModelAndView mav = new ModelAndView();
@@ -70,6 +74,8 @@ public class ReviewController {
         mav.addObject("review", reviewVO);
         return mav;
     }
+
+    //리뷰 수정폼 불러오기
     @RequestMapping(path = "/reviewEdit/{reviewDocumentId}", method = RequestMethod.GET)
     public ModelAndView reviewEdit(@PathVariable int reviewDocumentId) {
         ModelAndView mav = new ModelAndView();
@@ -79,6 +85,8 @@ public class ReviewController {
         mav.addObject("review", review);
         return mav;
     }
+
+    //리뷰 수정내용 DB저장
     @RequestMapping(path = "/reviewEdit", method = RequestMethod.POST)
     public ModelAndView reviewEdit(ReviewEditRequest requestVo) {
         ModelAndView mav = new ModelAndView();
@@ -90,6 +98,8 @@ public class ReviewController {
         mav.setViewName(pageName);
         return mav;
     }
+
+    //리뷰 삭제
     @RequestMapping(path = "/reviewDelete/{reviewDocumentId}", method = RequestMethod.POST)
     public ModelAndView reviewDelete(@PathVariable int reviewDocumentId) {
         ModelAndView mav = new ModelAndView();
