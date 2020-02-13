@@ -8,9 +8,32 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <style>
+        .optionButtons.question{
+            float: right;
+        }
+    </style>
+
 </head>
 <body>
-<h4>자주하는 질문</h4>
+<div class="container">
+    <div class="row">
+        <p></p>
+    </div>
+    <div class="row">
+        <h4>&nbsp;&nbsp;자주하는 질문</h4>
+        <div class="col-md-3" style="
+    max-width: 157px;
+">
+            <div class="optionButtons question">
+                <button id="writePageBtn" type="button" class="btn btn-warning">질문하기</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <p></p>
+    </div>
 <div class="accordion" id="accordionExample">
     <div class="card">
         <div class="card-header" id="headingOne">
@@ -59,6 +82,9 @@
     </div>
 </div>
 
+    <div class="row">
+        <p></p>
+    </div>
 <div class="support/board">
 <table class="table">
     <thead class="thead-dark">
@@ -79,7 +105,7 @@
             </a>
         </td>
         <td>${supportPreview.registdate}</td>
-        <td>답변여부는 어떻게 쓰는가?</td>
+        <td>처리중</td>
     </tr>
     </tbody>
     </c:forEach>
@@ -91,8 +117,8 @@
             <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><<</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active" aria-current="page">
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item" aria-current="page">
                 <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
             </li>
             <li class="page-item"><a class="page-link" href="#">3</a></li>
@@ -101,6 +127,18 @@
             </li>
         </ul>
     </nav>
+</div>
+
+    <script>
+        $(document).ready(function() {
+            $('#writePageBtn').click(
+                function(e) {
+                    window.location.href = "http://localhost:8080/supportWrite";
+                }
+            );
+
+        });
+    </script>
 </div>
 </body>
 </html>

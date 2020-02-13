@@ -44,8 +44,8 @@ public class HonmukListService {
 		return addressCut;
 	}
 	
-	public int count() {
-		return HonmukDao.count();
+	public int count(RestaurantVO resVO) {
+		return HonmukDao.count(resVO);
 	}		
 
 

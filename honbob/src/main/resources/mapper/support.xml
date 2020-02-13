@@ -8,7 +8,7 @@
 		select *
 		from support
 		where user_userNo = #{id}
-		ORDER BY registdate DESC LIMIT 8;
+		ORDER BY id DESC LIMIT 8;
 	</select>
 
 	<select id="getSupport" parameterType="int" resultType="vo.support.SupportVO">
@@ -16,17 +16,17 @@
 	</select>
 
 	<delete id="deleteSupport" parameterType="int">
-		DELETE FROM `honmuck`.`support` WHERE (`id` = #{id});
+		DELETE FROM `honmuk`.`support` WHERE (`id` = #{id});
 	</delete>
 
 	<update id="updateSupport" parameterType="vo.support.SupportEditRequest">
-		UPDATE `honmuck`.`support`
+		UPDATE `honmuk`.`support`
 		SET `subject` = #{subject}, `content` = #{content}
 		WHERE (`id` = #{id});
 	</update>
 
 	<insert id="insertSupport" parameterType="vo.support.SupportVO">
-		INSERT INTO `honmuck`.`support`
+		INSERT INTO `honmuk`.`support`
 			(`id`, `subject`, `content`, `registdate`, `lock`, `sendemail`, `user_userNo`)
 		VALUES (NULL, #{subject}, #{content}, #{registdate}, #{lock}, #{sendemail}, #{user_userId});
 	</insert>

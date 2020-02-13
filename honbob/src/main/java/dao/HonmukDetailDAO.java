@@ -9,22 +9,14 @@ import org.springframework.stereotype.Repository;
 import vo.GradeVO;
 import vo.RestaurantImageVO;
 import vo.RestaurantVO;
-import vo.ReviewVO;
+import vo.review.ReviewVO;
 
 @Repository
 public class HonmukDetailDAO {
 
 	@Autowired
-	SqlSessionTemplate sqlSession;	
+	SqlSessionTemplate sqlSession;		
 	
-	public List<RestaurantVO> searchList(RestaurantVO resVO){		
-		return sqlSession.selectList("Honmuk.searchList", resVO);
-	}  
-	
-	public int count() {
-		return sqlSession.selectOne("Honmuk.searchCount");
-	}
-
 	public List<RestaurantVO> getList() {
 		
 		return sqlSession.selectList("Honmuk.getList");

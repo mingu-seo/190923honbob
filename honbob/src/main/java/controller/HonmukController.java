@@ -1,5 +1,6 @@
 package controller;
 
+<<<<<<< HEAD
 import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,20 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
+=======
+import mail.SendMail;
+>>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob.git
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.multipart.MultipartFile;
 import service.HonmukDetailService;
 import service.HonmukListService;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import mail.SendMail;
-
-import service.HonmukDetailService;
 import service.HonmukMainPageService;
 import service.HonmukUserService;
 import util.FileUtil;
@@ -32,76 +30,80 @@ import util.PageInfo;
 import vo.GradeVO;
 import vo.RestaurantImageVO;
 import vo.RestaurantVO;
-import vo.ReviewVO;
 import vo.UserVO;
-import util.Page;
-import util.PageInfo;
-import vo.RestaurantVO;
+import vo.review.ReviewVO;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 @Controller
 public class HonmukController {
-	
 	@Autowired
 	private HonmukDetailService hmDetailService;
 	@Autowired
 	private HonmukMainPageService hmMainService;
 	@Autowired
 	private HonmukUserService hmUserService;
-	
 	@Autowired
 	HonmukListService hmListService;
 	
-	//메인페이지에서 키워드로 검색시 경로
+//식당 리스트 mapping-----------------------------------------------------------------------------------------------------------
+	
+	//기본 페이지 호출 경로
 	@RequestMapping("/searchList.do")
-	public String searchList(Model model, RestaurantVO resVO) {				
-		
-		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
-			resVO.setGrade(1);
-		}
-		model.addAttribute("resVO", resVO);
-		
-		List<RestaurantVO> searchlist = hmListService.searchList(resVO); 		
-		model.addAttribute("searchlist", searchlist);	
+	public String searchList(HttpServletRequest req, RestaurantVO resVO) {
+		req.setAttribute("resVO", resVO);
 		
 		return "searchList";  
 	}	
 	
+	//내부영역 식당리스트 결과 ajax로 뿌리는 경로
 	@RequestMapping("/listAjax.do")
 	public String listAjax(Model model, RestaurantVO resVO, @RequestParam(name="page", required = false) String page,
 			@RequestParam(name="filter1", required = false) String filter1) {
 			
+		//초기 검색시 별점순으로
+		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
+			resVO.setGrade(1);
+		}
+		
+		//카테고리 별점순,리뷰순,조회순 선택한 것으로 설정
 		if("grade".equals(filter1)) {
 			resVO.setGrade(1);
 		}else if("reviewcount".equals(filter1)) {
 			resVO.setReviewcount(1);
 		}else if("readcount".equals(filter1)) {
 			resVO.setReadcount(1);
-		}
-		
-		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
-			resVO.setGrade(1);
 		}		
 		
-		Page Page = new Page();
-		int listCount = hmListService.count();
-		PageInfo pageInfo = Page.page(page, listCount);
-		model.addAttribute("pageInfo", pageInfo);
 		
+		//검색결과를 받아옴
 		List<RestaurantVO> searchlist = hmListService.searchList(resVO); 		
 		model.addAttribute("searchlist", searchlist);
 		
+		//하단부 페이징 관련
+		Page Page = new Page();
+		int listCount = hmListService.count(resVO);
+		PageInfo pageInfo = Page.page(page, listCount);	
+		model.addAttribute("pageInfo", pageInfo);		
+		
+		//검색결과가 없을시 안내문
 		if(searchlist.size()==0) {			
 			model.addAttribute("msg", "식당 정보가 없습니다.");
-			model.addAttribute("url", "/Honmuk/searchList.do");			
+			model.addAttribute("url", "/honbob/searchList.do");
 			return "include/alert";
 		}else {
 			return "include/listAjax";
 		}				
 		
-	}
+	}	
+//----------------------------------------------------------------------------------------------------------------------
+	
+	
 	@RequestMapping("/registImage")
 	public String registImage() {
 		
@@ -236,7 +238,15 @@ public class HonmukController {
 			int updateGrade = hmDetailService.updateGrade(gradevo);
 			System.out.println("update");
 		}
+		
+		//새롭게 적용된 별점과 카운트를 넘겨준다.
+		int current_grade_count = hmDetailService.getGradeCnt(res_num);
+		Double current_res_grade = hmDetailService.getGrade(res_num);
+		
 		model.addAttribute("star_count", star_count);
+		model.addAttribute("current_grade_count", current_grade_count);
+		model.addAttribute("current_res_grade", current_res_grade);
+		
 		return "detail/detailAjax";
 	}
 	

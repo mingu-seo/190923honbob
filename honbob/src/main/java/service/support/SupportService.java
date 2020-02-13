@@ -34,4 +34,8 @@ public class SupportService {
     public void updateSupport(SupportEditRequest requestVo) {
         supportDao.updateSupport(requestVo);
     }
+
+    public void deleteSupport(int supportDocumentId) {
+        supportDao.deleteSupport(supportDocumentId);
+    }
 }

@@ -18,8 +18,8 @@ public class HonmukListDAO {
 		return sqlSession.selectList("Honmuk.searchList", resVO); 
 	}  
 	
-	public int count() {
-		return sqlSession.selectOne("Honmuk.searchCount");
+	public int count(RestaurantVO resVO) {
+		return sqlSession.selectOne("Honmuk.searchCount", resVO);
 	}
-
+	
 }

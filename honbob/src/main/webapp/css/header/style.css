@@ -1,0 +1,201 @@
+		* {
+            margin:0;
+            padding:0;
+        }
+        .wrap {
+            width: 100%;
+            margin:0 auto;            
+        }
+        .header {			
+            top: 0;            
+            width:100%;            
+            height: 70px;
+            line-height: 73px;
+            font-size: 13px;
+            font-weight: 400;
+            background-color: #f4f7f6;
+            z-index: 302;
+            margin-left: auto;
+            position: relative;
+            min-width:1903px;
+            
+        }
+
+        .header>.headerLeft{
+            position: absolute;
+            width: 230px;
+            height: 70px;
+            cursor: pointer;
+            overflow: hidden;
+            border-right: 1px solid #cacaca;                         
+        }
+
+        .header>.headerLeft>.logo img{
+            position: absolute;            
+            top: 10px;                        
+            width: 190px;
+            height: 50px;            
+            display: block;
+            left:20px;                     
+        }
+        
+        .header>.headerLeft>.logo{
+        	position: absolute;                        
+            width: 240px;
+            height: 70px;            
+            display: block; 
+        
+        }
+        .header>#searchForm>.search{
+            position: absolute;
+            top:0;
+            left:37%;            
+            width:30%;            
+        }
+
+        .header>#searchForm>.search>.searchInput{
+            position: absolute;            
+            top:20px;
+            width: 100%;
+            padding-left: 45px;
+            height: 40px;
+            border: 0px;
+            border-bottom: 1px solid #222228;
+            font-size: 18px;
+            color: #222222;
+            background: url(https://s3-ap-northeast-1.amazonaws.com/dcicons/new/images/web/common/search@2x.png) no-repeat left;
+            background-size: 40px;
+        }
+
+        .header>.headerRight{
+            position: absolute;            
+            width:230px;
+            height:70px;
+            font-size: 0px;
+            right:0;
+            border-left:1px solid#cacaca;               
+        }
+
+        .header>.headerRight>.mypage{
+            position: absolute;
+            background-image: url(https://mp-seoul-image-develop-s3.mangoplate.com/web/resources/2018022864551sprites_desktop.png?fit=around|*:*&crop=*:*;*,*&output-format=png&output-quality=80);
+            background-position: -82px -919px;
+            top:20px;
+            width: 34px;
+            height: 34px;
+            display: block;
+            left : 20%;
+        }
+        
+       
+
+        
+
+        
+        .btn { 
+            width: 60px; 
+            height: 60px; 
+            position: absolute; 
+            right: 30px; 
+            top: 10px; 
+            z-index: 1; 
+            background-image: url("../../images/main/menu.jpg"); 
+            background-size: 50%; 
+            background-repeat: no-repeat; 
+            background-position: center; 
+            cursor: pointer; 
+            
+        } 
+            
+            
+        .close { 
+            width: 70px; 
+            height: 70px; 
+            position: absolute; 
+            right: 0px; 
+            top: 0px; 
+            background-image: url("../../images/main/menuclose.png"); 
+            background-size: 50%; 
+            background-repeat: no-repeat; 
+            background-position: center; 
+            cursor: pointer; 
+        }  
+        #menu { 
+            width: 230px; 
+            height: 100%; 
+            position: fixed; 
+            top: 0px; 
+            right: -232px; 
+            z-index: 10; 
+            border: 1px solid #c9c9c9; 
+            background-color: white; 
+            text-align: center; 
+            transition: All 0.2s ease; 
+            -webkit-transition: All 0.2s ease; 
+            -moz-transition: All 0.2s ease; 
+            -o-transition: All 0.2s ease; 
+        }  
+        #menu.open { 
+            right: 0px; 
+        } 
+        
+        .page_cover.open { 
+            display: block; 
+        } 
+        
+        .page_cover { 
+            width: 100%; 
+            height: 100%; 
+            position: fixed; 
+            top: 0px; 
+            left: 0px; 
+            background-color: rgba(0,0,0,0.4); 
+            z-index: 4; 
+            display: none; 
+        }
+         .header>#searchForm>.search>.gps{
+            position: absolute;
+            top:20px;
+            width:50px;
+            height:50px;
+            left:-130px;            
+            font-size: 0;
+            white-space: nowrap;
+        }
+
+        .header>#searchForm>.search>.gps>.gpsBtn{
+            background: #fff url(https://www.yogiyo.co.kr/mobile/image/sprite-icon.png?v=60803898f15011f36386764ab7f8933c6a9b1487) no-repeat 0 0;
+            background-size: 400px;
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            border: none;
+            position:absolute;
+            left:140%;
+        }
+        
+       #menu.open>.list{
+            position: relative;
+            top: 100px;
+		    display: block;
+		    padding: 24px 36px;
+		    font-size: 17px;
+		    font-weight: bold;
+		    color: #202121;
+		    cursor: pointer;
+		    border-top:1px solid #E6EAEA;		    
+		    border-bottom: 1px solid #E6EAEA;
+		    background-color: #fcfcfc;
+		    transition: background 0.3s
+        }
+
+        #menu.open>.user{
+            font-size: 15px;
+            top:50px;
+            margin:15px;
+            position: relative;
+            text-align: center;
+            width:200px;
+            height: 100px;
+            border-bottom: 1px solid #222222;
+        }

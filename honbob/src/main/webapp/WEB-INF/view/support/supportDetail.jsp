@@ -8,6 +8,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 </head>
+
+<style>
+    .optionButtons {
+        margin: 2px;
+    }
+</style>
+
+
 <body>
 <div class="table">
 <table class="table table-bordered">
@@ -33,17 +41,26 @@
 </div>
 <div class="form-group">
     <label>답변내용</label>
-    <questionField class="form-control" id="answerField" rows="3">TO BE DEVELOPED</questionField>
-</div>
-<div class="optionButtons">
-    <button id="subjectListPageLinkBtn" type="button" class="btn btn-warning">
-        목록
-    </button>
-</div>
-<div class="optionButtons">
-    <button id="editPageBtn" type="button" class="btn btn-warning">수정</button>
+    <questionField class="form-control" id="answerField" rows="3">${adminReply.content}</questionField>
 </div>
 
+<div class="container">
+    <div class="row">
+        <div class="optionButtons">
+            <button id="subjectListPageLinkBtn" type="button" class="btn btn-warning">목록</button>
+        </div>
+
+            <div class="optionButtons">
+                <button id="editPageBtn" type="button" class="btn btn-warning">수정</button>
+            </div>
+
+        <form method="post" action="/supportDelete/${support.id}" class="was-validated">
+            <div class="optionButtons">
+                <button type="submit" class="btn btn-warning">삭제</button>
+            </div>
+        </form>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         $('#subjectListPageLinkBtn').click(
@@ -57,17 +74,18 @@
                 window.location.href = "http://localhost:8080/supportEdit/${support.id}";
             }
         );
-
-        $('#editPageBtn').click(
+        $('#deleteBtn').click(
             function(e) {
-                window.location.href = "http://localhost:8080/supportEdit/${support.id}";
+                if (confirm("삭제 하시겠습니까?")) {
+                    // 확인 버튼 클릭 시 동작
+                    alert("삭제 되었습니다.");
+                } else {
+                    // 취소 버튼 클릭 시 동작
+                    alert("삭제가 취소되었습니다.");
+                }
             }
         );
-
     });
-
 </script>
 </body>
-
-
 </html>
