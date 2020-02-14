@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -18,8 +19,12 @@ public class HonmukListDAO {
 		return sqlSession.selectList("Honmuk.searchList", resVO); 
 	}  
 	
-	public int count() {
-		return sqlSession.selectOne("Honmuk.searchCount");
+	public int count(RestaurantVO resVO) {
+		return sqlSession.selectOne("Honmuk.searchCount", resVO);
+	}
+	
+	public List<RestaurantVO> visitList(String visit_num){
+		return sqlSession.selectList("Honmuk.visitList", visit_num);
 	}
 	
 }

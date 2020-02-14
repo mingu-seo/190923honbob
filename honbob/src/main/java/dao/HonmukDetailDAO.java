@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import vo.GradeVO;
 import vo.RestaurantImageVO;
 import vo.RestaurantVO;
-import vo.ReviewVO;
+import vo.review.ReviewVO;
 
 @Repository
 public class HonmukDetailDAO {

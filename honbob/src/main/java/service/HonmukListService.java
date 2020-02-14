@@ -1,5 +1,6 @@
 package service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,12 @@ public class HonmukListService {
 		return addressCut;
 	}
 	
-	public int count() {
-		return HonmukDao.count();
+	public int count(RestaurantVO resVO) {
+		return HonmukDao.count(resVO);
+	}		
+	
+	public List<RestaurantVO> visitList(String visit_num) {
+		return HonmukDao.visitList(visit_num);
 	}		
 
 

@@ -10,13 +10,13 @@
     <meta charset="utf-8">
     <title>Ryan Login</title>
     
-    <link rel="stylesheet" href="/dog/css/style.css">
+    <link rel="stylesheet" href="/honbob/css/user/style.css">
 </head>
 <script src="https://code.jquery.com/jquery-3.4.1.js"> </script>
 	<script type = "text/javascript">
 		function check() {
 			if ($("#userName").val().trim() == "") {
-				alert("이름 입력해 주세요");
+				alert("별명 입력해 주세요");
 				$("#userName").focus();
 				return false;
 			}
@@ -77,7 +77,7 @@
 			<a href = "loginForm.do"> 로그인 </a>
 			<a href = "search_Pwd.do"> 비밀번호 찾기 </a>
 			<% } %>
-    <script src="/dog/js/script.js"></script>
+    <script src="/honbob/js/user/script.js"></script>
     </form>
 </body>
 </html>

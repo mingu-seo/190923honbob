@@ -6,7 +6,7 @@
 		</encoder>
 	</appender>
 	
-	<logger name="test">
+	<logger name="root"> <!-- <<name이름의 패키지의 로그를 console창에 보여줌. root은 최상위(모두다) -->
 		<level value="DEBUG"/>
 		<appender-ref ref="stdout"/>
 	</logger>

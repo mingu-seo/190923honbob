@@ -1,7 +1,10 @@
 package controller;
 
+
+import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,46 +12,42 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
+import mail.SendMail;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.multipart.MultipartFile;
 import service.HonmukDetailService;
 import service.HonmukListService;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import mail.SendMail;
-
-import service.HonmukDetailService;
 import service.HonmukMainPageService;
 import service.HonmukUserService;
+import util.FileUtil;
 import util.Page;
 import util.PageInfo;
 import vo.GradeVO;
 import vo.RestaurantImageVO;
 import vo.RestaurantVO;
-import vo.ReviewVO;
 import vo.UserVO;
-import util.Page;
-import util.PageInfo;
-import vo.RestaurantVO;
+import vo.review.ReviewVO;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 @Controller
 public class HonmukController {
-	
 	@Autowired
 	private HonmukDetailService hmDetailService;
 	@Autowired
 	private HonmukMainPageService hmMainService;
 	@Autowired
 	private HonmukUserService hmUserService;
-	
 	@Autowired
 	HonmukListService hmListService;
 	
@@ -56,7 +55,8 @@ public class HonmukController {
 	
 	//기본 페이지 호출 경로
 	@RequestMapping("/searchList.do")
-	public String searchList() {		
+	public String searchList(HttpServletRequest req, RestaurantVO resVO) {
+		req.setAttribute("resVO", resVO);
 		
 		return "searchList";  
 	}	
@@ -64,7 +64,7 @@ public class HonmukController {
 	//내부영역 식당리스트 결과 ajax로 뿌리는 경로
 	@RequestMapping("/listAjax.do")
 	public String listAjax(Model model, RestaurantVO resVO, @RequestParam(name="page", required = false) String page,
-			@RequestParam(name="filter1", required = false) String filter1) {
+			@RequestParam(name="filter1", required = false) String filter1, HttpSession session) {
 			
 		//초기 검색시 별점순으로
 		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
@@ -79,21 +79,27 @@ public class HonmukController {
 		}else if("readcount".equals(filter1)) {
 			resVO.setReadcount(1);
 		}		
-				
-		//하단부 페이징 관련
-		Page Page = new Page();
-		int listCount = hmListService.count();
-		PageInfo pageInfo = Page.page(page, listCount);
-		model.addAttribute("pageInfo", pageInfo);
+		
+		//방문 리스트 데이터 받아오기
+		String visit_num = (String)session.getAttribute("visit_num");
+		List<RestaurantVO> visitList = hmListService.visitList(visit_num);
+		model.addAttribute("visitList", visitList);
+		
 		
 		//검색결과를 받아옴
 		List<RestaurantVO> searchlist = hmListService.searchList(resVO); 		
 		model.addAttribute("searchlist", searchlist);
 		
+		//하단부 페이징 관련
+		Page Page = new Page();
+		int listCount = hmListService.count(resVO);
+		PageInfo pageInfo = Page.page(page, listCount);	
+		model.addAttribute("pageInfo", pageInfo);		
+		
 		//검색결과가 없을시 안내문
 		if(searchlist.size()==0) {			
 			model.addAttribute("msg", "식당 정보가 없습니다.");
-			model.addAttribute("url", "/Honmuk/searchList.do");			
+			model.addAttribute("url", "/honbob/searchList.do");
 			return "include/alert";
 		}else {
 			return "include/listAjax";
@@ -159,7 +165,8 @@ public class HonmukController {
 		return "";
 	}
 	@RequestMapping("/DetailView.do")
-	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,HttpServletRequest req) {
+	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,HttpServletRequest req,
+			HttpSession session) {
 		//조회수 올리기
 		int upCount = hmDetailService.upViewCount(res_num);
 		if(upCount==1) {
@@ -193,6 +200,25 @@ public class HonmukController {
 		reviewList = null;
 		int reviewcount = 0;
 		restDetail.setGradecount(gradeCnt);
+		
+		
+		//최근 방문 식당 res_num 세션 저장			
+		String visit_res[] = new String[5];		
+		for(int i=0; i<visit_res.length; i++) {
+			if(visit_res[i]==null) {
+				visit_res[i] = Integer.toString(res_num);
+				break;
+			}else if(i==visit_res.length-1) {
+				visit_res[0] = visit_res[1];
+				visit_res[1] = visit_res[2];
+				visit_res[2] = visit_res[3];
+				visit_res[3] = visit_res[4];
+				visit_res[4] = Integer.toString(res_num);
+			}
+		}
+		session = req.getSession();
+		session.setAttribute("visit_num", visit_res);
+		
 		
 		
 		//모델에 넣기
@@ -272,7 +298,7 @@ public class HonmukController {
 	public String loginForm() {
 		return "user/loginForm";
 	}
-	
+
 	@RequestMapping("/login.do")
 	public String login(UserVO vo, HttpSession session, HttpServletResponse response) throws IOException {
 		UserVO login = hmUserService.login(vo);
@@ -281,13 +307,13 @@ public class HonmukController {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.print("<script>");
-			out.print("alert('아이디 또는 비밀번호가\\n올바르지 않습니다.');");
+			out.print("alert('아이디 또는 비밀번호가 올바르지 않습니다.');");
 			out.print("location.href='loginForm.do';");
 			out.print("</script>");
 			return null;
 		} else {
 			session.setAttribute("Session", login);
-			return "redirect:/user/loginForm.do";
+			return "redirect:/loginForm.do";
 		}
 	}
 	
@@ -296,7 +322,8 @@ public class HonmukController {
 	@RequestMapping("/logOut.do")
 	public String logout(HttpSession session, @RequestParam(name="url", required=false) String url) {
 		session.invalidate();
-		return "redirect:"+url.substring(4);
+		// 로그아웃한 페이지로 다시 돌아간다.
+		return "redirect:/mainPage.do";
 	}
 	
 	
@@ -332,7 +359,7 @@ public class HonmukController {
 	}
 	
 	@RequestMapping("/search_pwd.do")
-	public String search_pwd(Model model, UserVO vo, HttpServletResponse response) throws IOException {
+	public String search_pwd(Model model, UserVO vo, HttpServletResponse response, HttpSession session) throws IOException {
 		UserVO search = hmUserService.search_pwd(vo);
 		
 		if ( search == null ) {
@@ -346,17 +373,34 @@ public class HonmukController {
 			return null;
 		} else {
 			model.addAttribute("search",search);
+			session.setAttribute("userEmail", search);
 			return "user/search_Pwd";
 		}
 	}
 	
 	// 비밀번호 질문,대답 체크
 	@RequestMapping("/qwdAnswerCheck.do")
-	public String qwdAnswerCheck(Model model,@RequestParam("pwdAnswer") String pwdAnswer) {
-		int r = hmUserService.qwdAnswerCheck(pwdAnswer);
+	public String qwdAnswerCheck(Model model,@RequestParam("pwdQuestion") String pwdQuestion,@RequestParam("pwdAnswer") String pwdAnswer) {
+		int r = hmUserService.qwdAnswerCheck(pwdQuestion, pwdAnswer);
 		model.addAttribute("value",r);
-		return "include/return";
+		return "user/ajax/return";
 	}
+	
+	
+	// 이메일로 임시비밀번호 전송
+	@RequestMapping("/pwdSearch.do")
+	public String pwdSearch(Model model, @RequestParam("userEmail") String userEmail, UserVO vo) throws Exception {
+		// 랜덤 12자리 받아오기
+		String pwdNum = hmUserService.emailPass();
+		// 12자리로 비밀번호 변경 후
+		int r = hmUserService.pwdUpdate(userEmail, pwdNum);
+		// 이메일로 임시 비밀번호 전송
+		SendMail.sendEmail("duwkdutns2@naver.com", userEmail, "안녕하세요^^. [밥먹자] 임시 비밀번호 발급 입니다.", " 회원가입 이메일 인증번호 : "+ pwdNum);
+		model.addAttribute("value",r);
+		return "user/ajax/return";
+
+	}
+	
 	
 	// 회원가입
 	@RequestMapping("/userJoinForm.do")
@@ -371,14 +415,14 @@ public class HonmukController {
 		String url = "";
 		if ( r > 0 ) {
 			msg = "정상적으로 가입되었습니다.";
-			url = "/honbab/user/index.do";
+			url = "/honbob/user/index.do";
 		} else {
 			msg = "회원가입 실패";
-			url = "/honbab/user/userJoinForm.do";
+			url = "/honbob/user/userJoinForm.do";
 		}
 		model.addAttribute("msg",msg);
 		model.addAttribute("url",url);
-		return "include/alert";
+		return "user/ajax/alert";
 	}
 	
 	
@@ -387,7 +431,7 @@ public class HonmukController {
 	public String idCheck(Model model, @RequestParam("userId") String userId) {
 		int cnt = hmUserService.idCheck(userId);
 		model.addAttribute("value",cnt);
-		return "include/return";
+		return "user/ajax/return";
 	}
 	
 	
@@ -398,13 +442,12 @@ public class HonmukController {
 		model.addAttribute("value",cnt);
 	
 		if ( cnt != 0 ) {
-			return "include/return";
+			return "user/ajax/return";
 		} else if ( cnt == 0 ) {
 			String emailPwd = hmUserService.emailPass();
-			System.out.println("랜덤코드:"+emailPwd);
 			SendMail.sendEmail("duwkdutns2@naver.com", userEmail, "안녕하세요^^. [밥먹자] 회원가입 입니다.", " 회원가입 이메일 인증번호 : "+emailPwd);
 			session.setAttribute("emailPwd",emailPwd);
-			return "include/return";
+			return "user/ajax/return";
 		}
 		return null;
 	}
@@ -415,7 +458,7 @@ public class HonmukController {
 	public String emailPwdCheck(Model model, @RequestParam("emailPwdNumber") String emailPwdNumber, HttpSession session) throws IOException {
 		int r = hmUserService.emailPwdCheck(emailPwdNumber, (String)session.getAttribute("emailPwd"));
 		model.addAttribute("value", r);
-		return "ajax/return";
+		return "user/ajax/return";
 	}
 	
 	
@@ -425,7 +468,7 @@ public class HonmukController {
 		UserVO uv = (UserVO)sess.getAttribute("Session");
 		UserVO vo = hmUserService.userInfoView(uv.getUserNo());
 		model.addAttribute("vo",vo);
-		return "userInfoView";	
+		return "user/userInfoView";	
 	}
 			
 	// 비밀번호 변경
@@ -450,6 +493,47 @@ public class HonmukController {
 		return null;
 		}
 	
+	
+	// 프로필 수정 페이지 (마이페이지)
+	@RequestMapping("/profileForm.do")
+	public String profileForm(Model model, HttpSession sess,UserVO vo) {
+		// 세션에 있는 userNo로 테이블에서 조회해서 model
+		UserVO uv = (UserVO)sess.getAttribute("Session");
+		UserVO user = hmUserService.userInfoView(uv.getUserNo());
+		model.addAttribute("vo",user);
+		return "user/profileForm";
+	}
+	
+	// 프로필 사진 or 별명 수정
+	@RequestMapping("profileFormUpdate.do")
+	public String profileFormUpdate(UserVO vo, @RequestParam("userImage_tmp") MultipartFile file, HttpServletRequest req) {
+		// 프로필 사진 수정
+		FileUtil fu = new FileUtil();
+		fu.fileUpload(file,req.getRealPath("/images/"));
+		vo.setUserImage(fu.fileName);
+		
+		if (vo.getUserImage() != null) {
+			hmUserService.imageUpdate(vo,file,req);
+		}
+		// 프로필 별명 수정
+		if (vo.getUserName() != null) {
+			hmUserService.nameUpdate(vo);
+		}
+			return "redirect:/profileForm.do";
+	}
+	
+	// 나의 QnA 질문과 답변 리스트
+	@RequestMapping("/myQnA.do")
+	public String myQnAList() {
+		return "user/myQnA";
+	}
+	
+	/*// 나의 리뷰글(마이페이지)
+	@RequestMapping("/myReview.do")
+	public String myReview(Model model,ReviewVO vo, HttpSession sess) {
+		int r = hmUserService.myReviewList();
+		return "user/myReview";
+	}*/
 	
 	// 회원탈퇴
 	@RequestMapping("/userInfoDeleteForm.do")
@@ -479,12 +563,11 @@ public class HonmukController {
 		return null;
 	}
 	
-	
-	// 프로필 변경
-	@RequestMapping("/userImageUpdate.do")
-	public String imageUpdate(UserVO vo, @RequestParam("userImage_tmp") MultipartFile file, HttpServletRequest req) {
-		hmUserService.imageUpdate(vo,file,req);
-		return "redirect:/user/myPage.do";			
+	// 만드는중
+	@RequestMapping("/bobmukEmail.do")
+	public String bobmukEmail() {
+		return "user/bobmukEmail";
 	}
+	
 
 }
