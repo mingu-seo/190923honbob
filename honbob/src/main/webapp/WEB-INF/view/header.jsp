@@ -7,7 +7,7 @@ int userNo = 0;
 if (sess != null) userNo = sess.getUserNo();
 %>
 <%
-	session.setMaxInactiveInterval(60*30);
+	session.setMaxInactiveInterval(60*60*6);
 %>
 <!DOCTYPE html>
 <html>
@@ -24,21 +24,16 @@ if (sess != null) userNo = sess.getUserNo();
         $('.close').click(function() { 
             $('#menu').removeClass('open'); 
         });
-
-
-
         $('.btn').click(function () { 
             $('#menu,.page_cover,html').addClass('open');  
             window.location.hash = '#open';  
         }); 
-
         window.onhashchange = function () { 
             if (location.hash != '#open') {  
                 $('#menu,.page_cover,html').removeClass('open');  
             } 
         };
  
-
     });
 	
 	
@@ -79,8 +74,6 @@ if (sess != null) userNo = sess.getUserNo();
             width: 100%;
             margin:0 auto;            
         }
-
-
 		.header {			
             top: 0;            
             width:100%;            
@@ -95,7 +88,6 @@ if (sess != null) userNo = sess.getUserNo();
             min-width:1903px;
             
         }
-
         .header>.headerLeft{
             position: absolute;
             width: 230px;
@@ -104,7 +96,6 @@ if (sess != null) userNo = sess.getUserNo();
             overflow: hidden;
             border-right: 1px solid #cacaca;                         
         }
-
         .header>.headerLeft>.logo img{
             position: absolute;            
             top: 10px;                        
@@ -127,7 +118,6 @@ if (sess != null) userNo = sess.getUserNo();
             left:37%;            
             width:30%;            
         }
-
         .header>#searchForm>.search>.searchInput{
             position: absolute;            
             top:20px;
@@ -141,7 +131,6 @@ if (sess != null) userNo = sess.getUserNo();
             background: url(https://s3-ap-northeast-1.amazonaws.com/dcicons/new/images/web/common/search@2x.png) no-repeat left;
             background-size: 40px;
         }
-
         .header>.headerRight{
             position: absolute;            
             width:230px;
@@ -150,7 +139,6 @@ if (sess != null) userNo = sess.getUserNo();
             right:0;
             border-left:1px solid#cacaca;               
         }
-
         .header>.headerRight>.mypage{
             position: absolute;
             background-image: url(https://mp-seoul-image-develop-s3.mangoplate.com/web/resources/2018022864551sprites_desktop.png?fit=around|*:*&crop=*:*;*,*&output-format=png&output-quality=80);
@@ -163,9 +151,7 @@ if (sess != null) userNo = sess.getUserNo();
         }
         
        
-
         
-
         
         .btn { 
             width: 50px; 
@@ -236,7 +222,6 @@ if (sess != null) userNo = sess.getUserNo();
             font-size: 0;
             white-space: nowrap;
         }
-
         .header>#searchForm>.search>.gps>.gpsBtn{
             background: #fff url(https://www.yogiyo.co.kr/mobile/image/sprite-icon.png?v=60803898f15011f36386764ab7f8933c6a9b1487) no-repeat 0 0;
             background-size: 400px;
@@ -246,32 +231,8 @@ if (sess != null) userNo = sess.getUserNo();
             border: none;
             position:absolute;
             left:140%;
-        }
+        }        
         
-        #menu.open>.list{
-            font-size: 15px;
-            top:150px;
-            margin: 15px;
-            position: relative;
-            text-align: center;
-            width:200px;
-            height:100px;
-            border: 1px solid #222228;
-            background-color: orange;
-        }
-
-        #menu.open>.user{
-            font-size: 15px;
-            top:50px;
-            margin:15px;
-            position: relative;
-            text-align: center;
-            width:200px;
-            height: 100px;
-            border-bottom: 1px solid #222222;
-            z-index: 9999;
-        }
-
 </style>
 
 <link rel="stylesheet" href="css/header/style.css"/>
@@ -306,13 +267,11 @@ if (sess != null) userNo = sess.getUserNo();
                 <div onclick="history.back();" class="page_cover"></div>
                 <div id="menu">
                     <div onclick="history.back();" class="close"></div>
-
                     <div class="user" style=" cursor: pointer;" onclick=''>로그인을 해주세요.</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>                    
-
                     <div class="user" style=" cursor: pointer;" onclick="location.href='';">로그인을 해주세요.</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">게시판</div>                                   
@@ -326,6 +285,7 @@ if (sess != null) userNo = sess.getUserNo();
         <% } else { %>
 			<a href = "logOut.do"> 로그아웃 </a>
 		<% } %>
+	
 	
 	</div>
 

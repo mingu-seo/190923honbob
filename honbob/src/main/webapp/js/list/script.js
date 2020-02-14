@@ -71,7 +71,6 @@ $(function(){
         
     function submitAction(){
     	$("#page").val(1);
-    	$("#mapLevel").val(6);
     	$("#latitude").val(0);
     	$("#longitude").val(0);
     	listAjax();

@@ -35,7 +35,6 @@
         <input type="hidden" name="keyword" id="keyword" value="<%=resVO.getKeyword()%>">
         <input type="hidden" name="latitude" id="latitude" value="0">
         <input type="hidden" name="longitude" id="longitude" value="0">
-        <input type="hidden" name="mapLevel" id="mapLevel" value="6">        
              <div class="popup-filter">
                  <div class="inner">
                      <div class="filter-item">

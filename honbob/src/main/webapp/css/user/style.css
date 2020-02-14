@@ -42,6 +42,16 @@ input {
 #qwdAnswer {
 	margin-top: 1px;
 }
+
+a {
+	text-decoration: none; 
+}
+
+.se {
+	position: relative;
+	width: 300px;
+}
+
 @keyframes lookaway-up {
     from {
         transform: rotate3d(.2, 0, -.01, 20deg);

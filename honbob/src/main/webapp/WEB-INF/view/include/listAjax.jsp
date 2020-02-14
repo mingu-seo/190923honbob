@@ -10,7 +10,8 @@
 	int nowPage=pageInfo.getPage();
 	int maxPage=pageInfo.getMaxPage();
 	int startPage=pageInfo.getStartPage();
-	int endPage=pageInfo.getEndPage();	
+	int endPage=pageInfo.getEndPage();		
+	
 %>
 <meta name="viewport" charset="utf-8" content="user-scalable=no, initial-scale=1, maximum-scale=1">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -72,18 +73,19 @@
     	<div class="map">    		
          	<div id="map" style="width:100%;height:700px;"><div class="locationSearch" onclick="locationSearch()">이 위치로 검색</div></div>	                
      	</div>
-    	<div class="chat">
-             chat
+    	<div class="visit_res">
+             <c:forEach var="visit" items="${visitList }" varStatus="status">
+             	${visit.res_name }
+             </c:forEach>
     	</div>
     </div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=968f5cb093e2b0f76e796a0721504779&libraries=services"></script>
 <script>
-	var mapLevel = $("#mapLevel").val()
 	var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 		mapOption = { 
 		    center: new kakao.maps.LatLng(37.497928, 127.027583), // 지도의 중심좌표
-		    level: mapLevel // 지도의 확대 레벨
+		    level: 3 // 지도의 확대 레벨
 		}; 
 	
 	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다	
@@ -125,6 +127,8 @@
 	var overlays = [];
 	var arrIdx = 0;
 	
+	var points = [];
+	var bounds = new kakao.maps.LatLngBounds();
 	
 	latitude.forEach(function(element){
 		
@@ -137,8 +141,7 @@
 	        map: map,
 	        position: markerPosition,
 	        image : icon
-	    });
-		
+	    });		
 	    
 		var overlay = new kakao.maps.CustomOverlay({
 			content: "",
@@ -168,13 +171,17 @@
 		        '    </div>' +    
 		        '</div>');
 		
-		map.setCenter(markerPosition);		
+		points[arrIdx] = markerPosition;
+		bounds.extend(points[arrIdx]);		
+		
 		overlay.setMap(null);		
 		
 		markers.push(marker);
 		overlays.push(overlay);
 		
 		arrIdx++;
+		
+		map.setBounds(bounds, 0,0,0,0);
 	});
 	
 	function closeOverlay() {

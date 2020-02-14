@@ -45,7 +45,7 @@
 	</select>
 	
 	<delete id = "userDelete" parameterType = "vo.UserVO">
-		DELETE FROM honmuk.user WHERE userNo = #{userNo} AND userName = #{userName} AND userId = #{userId} AND userPassword = md5(#{userPassword})
+		DELETE FROM honmuk.user WHERE userNo = #{userNo} AND userId = #{userId} AND userPassword = md5(#{userPassword})
 	</delete>
 
 	<update id = "imageUpdate" parameterType = "vo.UserVO">

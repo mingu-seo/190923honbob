@@ -54,16 +54,13 @@
                         <span class = "menu-title menu-title-active"><h4>회원정보</h4></span><hr>
                     </li>
                     <li class = "menulIST">
+                        <span class = "menu-title"><a href = "userInfoDeleteForm.do"><h4>회원탈퇴</h4></a></span><hr>
+                    </li>
+                    <li class = "menulIST">
                         <span class = "menu-title"><a href = "myReview.do"><h4>나의 리뷰글</h4></a></span><hr>
                     </li>
                     <li class = "menulIST">
                         <h4><span class = "menu-title"><a href = "myQnA.do"><h4>나의 QnA</h4></a></span></h4><hr>
-                    </li>
-                    <li class = "menulIST">
-                        <h4><span class = "menu-title"><a href = ""> 준비중 </a></span></h4><hr>
-                    </li>
-                    <li class = "menulIST">
-                        <h4><span class = "menu-title"><a href = ""> 준비중 </a></span></h4><hr>
                     </li>
                 </ul>
         </nav>

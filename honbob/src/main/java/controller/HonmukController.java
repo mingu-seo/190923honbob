@@ -1,8 +1,10 @@
 package controller;
 
+
 import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 
 import mail.SendMail;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,7 +67,7 @@ public class HonmukController {
 	//내부영역 식당리스트 결과 ajax로 뿌리는 경로
 	@RequestMapping("/listAjax.do")
 	public String listAjax(Model model, RestaurantVO resVO, @RequestParam(name="page", required = false) String page,
-			@RequestParam(name="filter1", required = false) String filter1) {
+			@RequestParam(name="filter1", required = false) String filter1, HttpSession session) {
 			
 		//초기 검색시 별점순으로
 		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
@@ -79,6 +82,11 @@ public class HonmukController {
 		}else if("readcount".equals(filter1)) {
 			resVO.setReadcount(1);
 		}		
+		
+		//방문 리스트 데이터 받아오기
+		String visit_num = (String)session.getAttribute("visit_num");
+		List<RestaurantVO> visitList = hmListService.visitList(visit_num);
+		model.addAttribute("visitList", visitList);
 		
 		
 		//검색결과를 받아옴
@@ -160,7 +168,8 @@ public class HonmukController {
 		return "";
 	}
 	@RequestMapping("/DetailView.do")
-	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,HttpServletRequest req) {
+	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,HttpServletRequest req,
+			HttpSession session) {
 		//조회수 올리기
 		int upCount = hmDetailService.upViewCount(res_num);
 		if(upCount==1) {
@@ -194,6 +203,25 @@ public class HonmukController {
 		reviewList = null;
 		int reviewcount = 0;
 		restDetail.setGradecount(gradeCnt);
+		
+		
+		//최근 방문 식당 res_num 세션 저장			
+		String visit_res[] = new String[5];		
+		for(int i=0; i<visit_res.length; i++) {
+			if(visit_res[i]==null) {
+				visit_res[i] = Integer.toString(res_num);
+				break;
+			}else if(i==visit_res.length-1) {
+				visit_res[0] = visit_res[1];
+				visit_res[1] = visit_res[2];
+				visit_res[2] = visit_res[3];
+				visit_res[3] = visit_res[4];
+				visit_res[4] = Integer.toString(res_num);
+			}
+		}
+		session = req.getSession();
+		session.setAttribute("visit_num", visit_res);
+		
 		
 		
 		//모델에 넣기
@@ -297,7 +325,6 @@ public class HonmukController {
 	@RequestMapping("/logOut.do")
 	public String logout(HttpSession session, @RequestParam(name="url", required=false) String url) {
 		session.invalidate();
-		// 로그아웃한 페이지로 다시 돌아간다.
 		return "redirect:/mainPage.do";
 	}
 	
@@ -390,7 +417,7 @@ public class HonmukController {
 		String url = "";
 		if ( r > 0 ) {
 			msg = "정상적으로 가입되었습니다.";
-			url = "/honbob/user/index.do";
+			url = "/honbob/user/mainPage.do";
 		} else {
 			msg = "회원가입 실패";
 			url = "/honbob/user/userJoinForm.do";
@@ -457,12 +484,12 @@ public class HonmukController {
 		if ( r == 0 ) {
 			out.print("<script>");
 			out.print("alert('현재 비밀번호가 일치하지 않습니다.');");
-			out.print("location.href='index.do';");
+			out.print("location.href='userInfoView.do';");
 			out.print("</script>");
 		} else {
 			out.print("<script>");
 			out.print("alert('비밀번호 변경 완료되었습니다.');");
-			out.print("location.href='index.do';");
+			out.print("location.href='userInfoView.do';");
 			out.print("</script>");
 			}
 		
@@ -475,14 +502,16 @@ public class HonmukController {
 	public String profileForm(Model model, HttpSession sess,UserVO vo) {
 		// 세션에 있는 userNo로 테이블에서 조회해서 model
 		UserVO uv = (UserVO)sess.getAttribute("Session");
+		
 		UserVO user = hmUserService.userInfoView(uv.getUserNo());
+
 		model.addAttribute("vo",user);
 		return "user/profileForm";
 	}
 	
 	// 프로필 사진 or 별명 수정
 	@RequestMapping("profileFormUpdate.do")
-	public String profileFormUpdate(Model model, UserVO vo, @RequestParam("userImage_tmp") MultipartFile file, HttpServletRequest req, HttpServletResponse response) throws IOException {
+	public String profileFormUpdate(Model model, UserVO vo, @RequestParam("userImage_tmp") MultipartFile file, HttpServletRequest req, HttpServletResponse response, HttpSession sess) throws IOException {
 		response.setCharacterEncoding("UTF-8");		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -495,17 +524,27 @@ public class HonmukController {
 		// 프로필 사진 수정
 		if (vo.getUserImage() != null) {
 			hmUserService.imageUpdate(vo,file,req);
+			sess.setAttribute("upImage",vo.getUserImage());
+			out.print("<script>");
+			out.print("alert('1변경되었습니다.');");
+			out.print("location.href='/honbob/profileForm.do';");
+			out.print("</script>");
 
 		}
 		// 프로필 별명 수정
-		if (vo.getUserName() != null) {
+		UserVO name = (UserVO) sess.getAttribute("Session");
+		if (!vo.getUserName().equals(name.getUserName())) {
 			hmUserService.nameUpdate(vo);
+			out.print("<script>");
+			out.print("alert('2변경되었습니다.');");
+			out.print("location.href='/honbob/profileForm.do';");
+			out.print("</script>");
 		}
 		out.print("<script>");
-		out.print("alert('변경되었습니다.');");
-		out.print("location.href='index.do';");
+		out.print("alert('변경 사항이 없습니다.');");
+		out.print("location.href='/honbob/profileForm.do';");
 		out.print("</script>");
-		return "redirect:/profileForm.do";
+		return null;
 		
 	}
 	
