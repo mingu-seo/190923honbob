@@ -229,7 +229,7 @@
 			</section>
 			<div id="review_subject">
 				<p class="review_subject_txt">리뷰(${reviewcount })</p>
-				<a><img id="review_write_btn" src="images/detail/grade_star_on.jpg"></a>
+				<a href="reviewWrite"><img id="review_write_btn" src="images/detail/grade_star_on.jpg"></a>
 			</div>
 			<hr id = "reviewTophr">
 			<div id="review_content">
