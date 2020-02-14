@@ -1,14 +1,17 @@
 <%@page import="vo.RestaurantVO" %>
 <%@page import="vo.RestaurantImageVO" %>
+<%@page import="vo.UserVO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+UserVO uv = (UserVO)session.getAttribute("Session");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 	<link rel="stylesheet" href="css/detail/reset.css"/>
-	<link rel="stylesheet" href="css/detail/common.css"/>
 	<link rel="stylesheet" href="css/detail/content.css"/>
 	<link rel="stylesheet" href="css/detail/swiper.css"/> 
 	<link rel="stylesheet" href="css/detail/style.css"/> 
@@ -16,112 +19,29 @@
     <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="js/detail/swiper.min.js"></script>
 	<script src="js/detail/ssss.js"></script>
+	<script src="js/detail/grade_star_active.js"></script>
 	<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript">
 	var star_cnt = ${userGrade};
+	var userNo = <%=uv.getUserNo()%>;
 	function gradeConfirm(star_count){
-		var result = confirm(star_count+"개의 별점을 주시겠습니까?");
-		if(result){
-			ajaxView(star_count,${restaurantDetail.res_num});
+		if(star_count == star_cnt){
+			var result = confirm("별점을 삭제 하시겠습니까?");
+			if(result){
+				ajaxView(star_count,${restaurantDetail.res_num},userNo);
+			}
+		}else{
+			var result = confirm(star_count+"개의 별점을 주시겠습니까?");
+			if(result){
+				ajaxView(star_count,${restaurantDetail.res_num},userNo);
+			}
 		}
 		
-	}
-	function ajaxView(star_count,res_num){
-    	$.ajax({
-			url : 'starAjax.do',
-			data :{
-				'star_count' : star_count,
-				'res_num' : res_num
-			},
-			dataType : 'JSON',
-			success : function(data){
-				star_cnt = data.new_star_count;
-				detail_grade(data.new_star_count);
-				document.getElementById("detail_grade_count").innerHTML = data.current_grade_count;
-				document.getElementById("restaurant_grade_text").innerHTML = data.current_res_grade;
-			},
-			error : function(data){
-				console.log(data);
-			}
-		});
-    }
-	function load()
-    {
-		detail_grade(star_cnt);
-    }
-	$(function() {
-		$('#detail_count_picture1').on('mouseenter',function() {
-			detail_grade(1);
-			
-		}).on('mouseleave',function(){
-			detail_grade(star_cnt);
-		});
-		$('#detail_count_picture2').on('mouseenter',function() {
-			detail_grade(2);
-			
-		}).on('mouseleave',function(){
-			detail_grade(star_cnt);
-		});
-		$('#detail_count_picture3').on('mouseenter',function() {
-			detail_grade(3);
-			
-		}).on('mouseleave',function(){
-			detail_grade(star_cnt);
-		});
-		$('#detail_count_picture4').on('mouseenter',function() {
-			detail_grade(4);
-			
-		}).on('mouseleave',function(){
-			detail_grade(star_cnt);
-		});
-		$('#detail_count_picture5').on('mouseenter',function() {
-			detail_grade(5);
-			
-		}).on('mouseleave',function(){
-			detail_grade(star_cnt);
-		});
 		
-	});
-	function detail_grade(star_count) {
-		if(star_count==0){
-			$('#detail_count_picture1').attr("src","images/detail/grade_star_off.jpg");
-			$('#detail_count_picture2').attr("src","images/detail/grade_star_off.jpg");
-			$('#detail_count_picture3').attr("src","images/detail/grade_star_off.jpg");
-			$('#detail_count_picture4').attr("src","images/detail/grade_star_off.jpg");
-			$('#detail_count_picture5').attr("src","images/detail/grade_star_off.jpg");
-	   }else if(star_count==1){
-			$('#detail_count_picture1').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture2').attr("src","images/detail/grade_star_off.jpg");
-			$('#detail_count_picture3').attr("src","images/detail/grade_star_off.jpg");
-			$('#detail_count_picture4').attr("src","images/detail/grade_star_off.jpg");
-			$('#detail_count_picture5').attr("src","images/detail/grade_star_off.jpg");
-	   }else if(star_count==2){
-			$('#detail_count_picture1').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture2').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture3').attr("src","images/detail/grade_star_off.jpg");
-			$('#detail_count_picture4').attr("src","images/detail/grade_star_off.jpg");
-			$('#detail_count_picture5').attr("src","images/detail/grade_star_off.jpg");
-	   }else if(star_count==3){
-			$('#detail_count_picture1').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture2').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture3').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture4').attr("src","images/detail/grade_star_off.jpg");
-			$('#detail_count_picture5').attr("src","images/detail/grade_star_off.jpg");
-	   }else if(star_count==4){
-			$('#detail_count_picture1').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture2').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture3').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture4').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture5').attr("src","images/detail/grade_star_off.jpg");
-	   }else if(star_count==5){
-			$('#detail_count_picture1').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture2').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture3').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture4').attr("src","images/detail/grade_star_on.jpg");
-			$('#detail_count_picture5').attr("src","images/detail/grade_star_on.jpg");
-	   }
-	}
+	} 
+	
 	</script>
+
 <style>
 
 </style>
@@ -183,7 +103,7 @@
 				<c:if test="${restaurantDetail.calculator == 1}"> 현금계산 </c:if>
 				<c:if test="${restaurantDetail.park == 1}"> 주차가능 </c:if>
 				<c:if test="${restaurantDetail.table2 == 1}"> 2인테이블 </c:if><br>
-				
+				 
 				<b>지도</b>
 				
 				<div id="map" style="width:100%;height:400px;"></div>
@@ -227,11 +147,28 @@
 					
 				<b>주소 : </b>${restaurantDetail.address}<br>
 			</section>
-			<p class="middleSizeText">리뷰(${reviewcount })</p>
+			<div id="review_subject">
+				<p class="review_subject_txt">리뷰(${reviewcount })</p>
+				<a href="reviewWrite"><img id="review_write_btn" src="images/detail/review_write.jpg"></a>
+			</div>
 			<hr id = "reviewTophr">
-			<c:if test="${reviewList==null}">
-				<p>아직 리뷰가 작성되지 않았습니다.</p>
-			</c:if>
+			<div id="review_content">
+				<c:choose>
+					<c:when test="${reviewList!=null}">
+						<p class="review_content_txt">아직 리뷰가 작성되지 않았습니다.</p>
+					</c:when>
+					<c:otherwise>
+						<div class="review_detail">
+							<div class="review_detail_user">
+								<img class="review_detail_profile" src="images/detail/grade_star_off.jpg">
+							</div>
+							<div class="review_detail_content">
+								<p>리뷰 내용이 들어갈 자리 입니다.</p>
+							</div>
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
 		<div id="content_right">
 			<p id = "recom_subject">추천 식당 리스트</p>

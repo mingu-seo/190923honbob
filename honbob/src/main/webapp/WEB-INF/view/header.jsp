@@ -243,7 +243,7 @@ if (sess != null) userNo = sess.getUserNo();
 	<div class="wrap">
 	 <!--Header-->
         <div class="header">            
-            <div class="headerLeft">
+            <div class="headerLeft" onclick="location.href='mainPage.do'">
                 <div class="logo">
                 	<img src="images/main/logo.png">                                   
                 </div>

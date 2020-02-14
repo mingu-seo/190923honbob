@@ -167,6 +167,7 @@ public class HonmukController {
 		
 		return "";
 	}
+	//상세 페이지 이동
 	@RequestMapping("/DetailView.do")
 	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,HttpServletRequest req,
 			HttpSession session) {
@@ -185,8 +186,9 @@ public class HonmukController {
 		int gradeCnt = hmDetailService.getGradeCnt(res_num);
 		//유저가 여기를 평가했는지 확인해야함 평가했으면 별점 안했으면 0으로 줘야할듯
 		//유저 번호 가져오기 나중에..
-		int userNo = 111;
-		GradeVO gradevo = new GradeVO();
+		UserVO asd=(UserVO) req.getSession().getAttribute("Session");
+		int userNo = asd.getUserNo();
+		GradeVO gradevo = new GradeVO(); 
 		gradevo.setUserNo(userNo);
 		gradevo.setRes_num(res_num);
 		int userGrade = hmDetailService.getUserGrade(gradevo);
@@ -239,12 +241,12 @@ public class HonmukController {
 	//별점
 	
 	@RequestMapping("starAjax.do")
-	public String gradeControl(@RequestParam(name = "res_num", required = true)int res_num,@RequestParam(name = "star_count", required = true)int star_count,Model model) {
+	public String gradeControl(@RequestParam(name = "res_num", required = true)int res_num,@RequestParam(name = "star_count", required = true)int star_count,@RequestParam(name = "userNo", required = true)int userNo,Model model,HttpServletRequest req) {
 		//서버에 있는 별점이랑 가지고 있는 별점이랑 비교해서 별점을 줘야한다.
 		//서버에 이 유저가 이 식당에 별점을 줬는지 확인해보자
 		System.out.println(star_count);
 		System.out.println(res_num);
-		int userNo = 111;
+		System.out.println(userNo);
 		GradeVO gradevo = new GradeVO();
 		gradevo.setUserNo(userNo);
 		gradevo.setRes_num(res_num);
