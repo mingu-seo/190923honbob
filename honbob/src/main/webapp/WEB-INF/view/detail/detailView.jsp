@@ -227,11 +227,28 @@
 					
 				<b>주소 : </b>${restaurantDetail.address}<br>
 			</section>
-			<p class="middleSizeText">리뷰(${reviewcount })</p>
+			<div id="review_subject">
+				<p class="review_subject_txt">리뷰(${reviewcount })</p>
+				<a><img id="review_write_btn" src="images/detail/grade_star_on.jpg"></a>
+			</div>
 			<hr id = "reviewTophr">
-			<c:if test="${reviewList==null}">
-				<p>아직 리뷰가 작성되지 않았습니다.</p>
-			</c:if>
+			<div id="review_content">
+				<c:choose>
+					<c:when test="${reviewList!=null}">
+						<p class="review_content_txt">아직 리뷰가 작성되지 않았습니다.</p>
+					</c:when>
+					<c:otherwise>
+						<div class="review_detail">
+							<div class="review_detail_user">
+								<img class="review_detail_profile" src="images/detail/grade_star_off.jpg">
+							</div>
+							<div class="review_detail_content">
+								<p>리뷰 내용이 들어갈 자리 입니다.</p>
+							</div>
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
 		<div id="content_right">
 			<p id = "recom_subject">추천 식당 리스트</p>
