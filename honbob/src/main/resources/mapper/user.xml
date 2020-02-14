@@ -36,6 +36,10 @@
 		SELECT count(*) FROM honmuk.user WHERE userId = #{userId}
 	</select>
 	
+	<select id = "nameCheck" parameterType = "vo.UserVO" resultType = "Integer">
+		SELECT count(*) FROM honmuk.user WHERE userNo != #{userNo} AND userName = #{userName}
+	</select>
+	
 	<select id = "emailCheck" parameterType = "String" resultType = "Integer">
 		SELECT count(*) FROM honmuk.user WHERE userEmail = #{userEmail}
 	</select>

@@ -51,10 +51,12 @@
         </div>
         <div>
     		<table>
-    			<tr><th>작성자</th>
-    				<th>제목</th>
-    				<th>답변</th>
-    				<th>등록일</th></tr>
+    			<tr class = "names">
+    				<th class = "name1">작성자</th>
+    				<th class = "name2">제목</th>
+    				<th class = "name3">답변</th>
+    				<th class = "name4">등록일</th>
+    			</tr>
     		</table>
     	</div>
 		<div id = "Info">

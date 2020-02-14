@@ -312,7 +312,7 @@ if (sess != null) userNo = sess.getUserNo();
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>                    
-=======
+
                     <div class="user" style=" cursor: pointer;" onclick="location.href='';">로그인을 해주세요.</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">게시판</div>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">게시판</div>                                   

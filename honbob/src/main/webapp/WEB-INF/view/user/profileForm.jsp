@@ -13,7 +13,30 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"> </script>
 	<script type = "text/javascript">
-
+	
+	$(function() {
+		$("#submits").click(function() {
+			if ($("#userName").val().trim() == "") {
+				alert("별명 칸이 비어 있습니다.");
+			} else {
+				$.ajax({
+					url : "/honbob/nameCheck.do",
+					data : {userName:$("#userName").val()},
+					type : "POST",
+					async : false,
+					success : function(data) {
+						if (data.trim() == "0") {
+						} else {
+							alert("이미 사용중인 별명 입니다.");
+							$("#userName").focus();
+							con = false;
+						}
+					}
+				});
+			} 
+			if (con == false) return false;
+		});
+	});
 		
 	
 	</script>
@@ -67,11 +90,11 @@
 				</tr>
 				<tr>
 					<th> &nbsp;&nbsp; 별명 </th> 
-					<td> &nbsp;&nbsp;&nbsp; <input type = "text" name = "userName" value = "<%=vo.getUserName()%>">
-						 </td>
+					<td> &nbsp;&nbsp;&nbsp; <input type = "text" name = "userName" id = "userName" value = "<%=vo.getUserName()%>">
+						 </td><tr><td><input type = "submit" value = "적용" id = "submits"/></td></tr>
 						
 			</table>
-			<input type = "submit" value = "적용"/>
+			
 		</form>
 		</div>
 	</div>

@@ -21,6 +21,7 @@ import service.HonmukDetailService;
 import service.HonmukListService;
 import service.HonmukMainPageService;
 import service.HonmukUserService;
+import service.review.ReviewService;
 import util.FileUtil;
 import util.Page;
 import util.PageInfo;
@@ -47,6 +48,8 @@ public class HonmukController {
 	private HonmukUserService hmUserService;
 	@Autowired
 	HonmukListService hmListService;
+	@Autowired
+    private ReviewService reviewService;
 	
 //식당 리스트 mapping-----------------------------------------------------------------------------------------------------------
 	
@@ -462,6 +465,7 @@ public class HonmukController {
 			out.print("location.href='index.do';");
 			out.print("</script>");
 			}
+		
 		return null;
 		}
 	
@@ -478,20 +482,39 @@ public class HonmukController {
 	
 	// 프로필 사진 or 별명 수정
 	@RequestMapping("profileFormUpdate.do")
-	public String profileFormUpdate(UserVO vo, @RequestParam("userImage_tmp") MultipartFile file, HttpServletRequest req) {
-		// 프로필 사진 수정
+	public String profileFormUpdate(Model model, UserVO vo, @RequestParam("userImage_tmp") MultipartFile file, HttpServletRequest req, HttpServletResponse response) throws IOException {
+		response.setCharacterEncoding("UTF-8");		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		
 		FileUtil fu = new FileUtil();
 		fu.fileUpload(file,req.getRealPath("/images/"));
 		vo.setUserImage(fu.fileName);
-		
+
+		// 프로필 사진 수정
 		if (vo.getUserImage() != null) {
 			hmUserService.imageUpdate(vo,file,req);
+
 		}
 		// 프로필 별명 수정
 		if (vo.getUserName() != null) {
 			hmUserService.nameUpdate(vo);
 		}
-			return "redirect:/profileForm.do";
+		out.print("<script>");
+		out.print("alert('변경되었습니다.');");
+		out.print("location.href='index.do';");
+		out.print("</script>");
+		return "redirect:/profileForm.do";
+		
+	}
+	
+	// 별명 중복 체크
+	@RequestMapping("nameCheck.do")
+	public String nameCheck(Model model, UserVO vo) {
+		int cnt = hmUserService.nameCheck(vo);
+		model.addAttribute("value",cnt);
+		return "user/ajax/return";
 	}
 	
 	// 나의 QnA 질문과 답변 리스트
@@ -500,12 +523,14 @@ public class HonmukController {
 		return "user/myQnA";
 	}
 	
-	/*// 나의 리뷰글(마이페이지)
+	// 나의 리뷰글(마이페이지)
 	@RequestMapping("/myReview.do")
 	public String myReview(Model model,ReviewVO vo, HttpSession sess) {
-		int r = hmUserService.myReviewList();
+		//ReviewVO List = hmUserService.myReviewList(vo);
 		return "user/myReview";
-	}*/
+	}
+	
+	
 	
 	// 회원탈퇴
 	@RequestMapping("/userInfoDeleteForm.do")
