@@ -25,6 +25,7 @@ import service.HonmukDetailService;
 import service.HonmukListService;
 import service.HonmukMainPageService;
 import service.HonmukUserService;
+import service.review.ReviewService;
 import util.FileUtil;
 import util.Page;
 import util.PageInfo;
@@ -51,6 +52,8 @@ public class HonmukController {
 	private HonmukUserService hmUserService;
 	@Autowired
 	HonmukListService hmListService;
+	@Autowired
+    private ReviewService reviewService;
 	
 //식당 리스트 mapping-----------------------------------------------------------------------------------------------------------
 	
@@ -168,6 +171,7 @@ public class HonmukController {
 		
 		return "";
 	}
+	//상세 페이지 이동
 	@RequestMapping("/DetailView.do")
 	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,HttpServletRequest req,
 			HttpSession session) {
@@ -186,8 +190,9 @@ public class HonmukController {
 		int gradeCnt = hmDetailService.getGradeCnt(res_num);
 		//유저가 여기를 평가했는지 확인해야함 평가했으면 별점 안했으면 0으로 줘야할듯
 		//유저 번호 가져오기 나중에..
-		int userNo = 111;
-		GradeVO gradevo = new GradeVO();
+		UserVO asd=(UserVO) req.getSession().getAttribute("Session");
+		int userNo = asd.getUserNo();
+		GradeVO gradevo = new GradeVO(); 
 		gradevo.setUserNo(userNo);
 		gradevo.setRes_num(res_num);
 		int userGrade = hmDetailService.getUserGrade(gradevo);
@@ -240,12 +245,12 @@ public class HonmukController {
 	//별점
 	
 	@RequestMapping("starAjax.do")
-	public String gradeControl(@RequestParam(name = "res_num", required = true)int res_num,@RequestParam(name = "star_count", required = true)int star_count,Model model) {
+	public String gradeControl(@RequestParam(name = "res_num", required = true)int res_num,@RequestParam(name = "star_count", required = true)int star_count,@RequestParam(name = "userNo", required = true)int userNo,Model model,HttpServletRequest req) {
 		//서버에 있는 별점이랑 가지고 있는 별점이랑 비교해서 별점을 줘야한다.
 		//서버에 이 유저가 이 식당에 별점을 줬는지 확인해보자
 		System.out.println(star_count);
 		System.out.println(res_num);
-		int userNo = 111;
+		System.out.println(userNo);
 		GradeVO gradevo = new GradeVO();
 		gradevo.setUserNo(userNo);
 		gradevo.setRes_num(res_num);
@@ -326,7 +331,6 @@ public class HonmukController {
 	@RequestMapping("/logOut.do")
 	public String logout(HttpSession session, @RequestParam(name="url", required=false) String url) {
 		session.invalidate();
-		// 로그아웃한 페이지로 다시 돌아간다.
 		return "redirect:/mainPage.do";
 	}
 	
@@ -393,15 +397,22 @@ public class HonmukController {
 	
 	// 이메일로 임시비밀번호 전송
 	@RequestMapping("/pwdSearch.do")
-	public String pwdSearch(Model model, @RequestParam("userEmail") String userEmail, UserVO vo) throws Exception {
+	public String pwdSearch(Model model, @RequestParam("userEmail") String userEmail, HttpServletResponse response, UserVO vo) throws Exception {
 		// 랜덤 12자리 받아오기
 		String pwdNum = hmUserService.emailPass();
 		// 12자리로 비밀번호 변경 후
 		int r = hmUserService.pwdUpdate(userEmail, pwdNum);
 		// 이메일로 임시 비밀번호 전송
-		SendMail.sendEmail("duwkdutns2@naver.com", userEmail, "안녕하세요^^. [밥먹자] 임시 비밀번호 발급 입니다.", " 회원가입 이메일 인증번호 : "+ pwdNum);
-		model.addAttribute("value",r);
-		return "user/ajax/return";
+		SendMail.sendEmail("duwkdutns2@naver.com", userEmail, "안녕하세요^^. [밥먹자] 임시 비밀번호 발급 입니다.", " 임시 비밀번호 : '"+ pwdNum + "' 마이페이지에서 비밀번호를 꼭 변경해주세요.");
+
+		response.setCharacterEncoding("UTF-8");		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print("<script>");
+		out.print("alert('이메일로 임시 비밀번호가 발급 되었습니다.');");
+		out.print("location.href='loginForm.do';");
+		out.print("</script>");
+		return null;
 
 	}
 	
@@ -413,20 +424,24 @@ public class HonmukController {
 	}
 	
 	@RequestMapping("/userJoin.do")
-	public String userJoin(UserVO vo, Model model) throws IOException{
+	public String userJoin(UserVO vo, Model model, HttpServletResponse response) throws IOException{
 		int r = hmUserService.userJoin(vo);
-		String msg = "";
-		String url = "";
+		
+		response.setCharacterEncoding("UTF-8");		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		if ( r > 0 ) {
-			msg = "정상적으로 가입되었습니다.";
-			url = "/honbob/user/index.do";
-		} else {
-			msg = "회원가입 실패";
-			url = "/honbob/user/userJoinForm.do";
-		}
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-		return "user/ajax/alert";
+			out.print("<script>");
+			out.print("alert('회원가입 되었습니다.');");
+			out.print("location.href='mainPage.do';");
+			out.print("</script>"); 
+			} else {
+				out.print("<script>");
+				out.print("alert('회원가입 실패하였습니다.');");
+				out.print("location.href='userJoin.do';");
+				out.print("</script>"); 
+			}
+		return null;
 	}
 	
 	
@@ -486,14 +501,15 @@ public class HonmukController {
 		if ( r == 0 ) {
 			out.print("<script>");
 			out.print("alert('현재 비밀번호가 일치하지 않습니다.');");
-			out.print("location.href='index.do';");
+			out.print("location.href='userInfoView.do';");
 			out.print("</script>");
 		} else {
 			out.print("<script>");
 			out.print("alert('비밀번호 변경 완료되었습니다.');");
-			out.print("location.href='index.do';");
+			out.print("location.href='userInfoView.do';");
 			out.print("</script>");
 			}
+		
 		return null;
 		}
 	
@@ -503,27 +519,50 @@ public class HonmukController {
 	public String profileForm(Model model, HttpSession sess,UserVO vo) {
 		// 세션에 있는 userNo로 테이블에서 조회해서 model
 		UserVO uv = (UserVO)sess.getAttribute("Session");
+		
 		UserVO user = hmUserService.userInfoView(uv.getUserNo());
+
 		model.addAttribute("vo",user);
 		return "user/profileForm";
 	}
 	
 	// 프로필 사진 or 별명 수정
 	@RequestMapping("profileFormUpdate.do")
-	public String profileFormUpdate(UserVO vo, @RequestParam("userImage_tmp") MultipartFile file, HttpServletRequest req) {
-		// 프로필 사진 수정
+	public String profileFormUpdate(Model model, UserVO vo, @RequestParam("userImage_tmp") MultipartFile file, HttpServletRequest req, HttpServletResponse response, HttpSession sess) throws IOException {
+		response.setCharacterEncoding("UTF-8");		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		
 		FileUtil fu = new FileUtil();
 		fu.fileUpload(file,req.getRealPath("/images/"));
 		vo.setUserImage(fu.fileName);
-		
+
+		// 프로필 사진 수정
 		if (vo.getUserImage() != null) {
 			hmUserService.imageUpdate(vo,file,req);
+			sess.setAttribute("upImage",vo.getUserImage());
 		}
 		// 프로필 별명 수정
-		if (vo.getUserName() != null) {
+		UserVO name = (UserVO) sess.getAttribute("Session");
+		if (!vo.getUserName().equals(name.getUserName())) {
 			hmUserService.nameUpdate(vo);
 		}
-			return "redirect:/profileForm.do";
+		
+		out.print("<script>");
+		out.print("alert('수정 되었습니다.');");
+		out.print("location.href='/honbob/profileForm.do';");
+		out.print("</script>");
+		return null;
+		
+	}
+	
+	// 별명 중복 체크
+	@RequestMapping("nameCheck.do")
+	public String nameCheck(Model model, UserVO vo) {
+		int cnt = hmUserService.nameCheck(vo);
+		model.addAttribute("value",cnt);
+		return "user/ajax/return";
 	}
 	
 	// 나의 QnA 질문과 답변 리스트
@@ -532,12 +571,14 @@ public class HonmukController {
 		return "user/myQnA";
 	}
 	
-	/*// 나의 리뷰글(마이페이지)
+	// 나의 리뷰글(마이페이지)
 	@RequestMapping("/myReview.do")
 	public String myReview(Model model,ReviewVO vo, HttpSession sess) {
-		int r = hmUserService.myReviewList();
+		//ReviewVO List = hmUserService.myReviewList(vo);
 		return "user/myReview";
-	}*/
+	}
+	
+	
 	
 	// 회원탈퇴
 	@RequestMapping("/userInfoDeleteForm.do")

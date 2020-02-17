@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@page import="vo.UserVO"%>
-	<%
-	UserVO sess = (UserVO)session.getAttribute("Session");
-	int userNo = 0;
-	if (sess != null) userNo = sess.getUserNo();
-	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -179,6 +174,7 @@
 </style>
 </head>
 <body>
+	<%@ include file = "../header.jsp" %>
 	<div id = "container">
 	<div id = "momtong">
 	<div class = "bab">
@@ -223,11 +219,10 @@
 		<h4><label for = "pwdAnswer"> 비밀번호 찾기 답변 </label></h4>
 		<input type = "text" name = "pwdAnswer" id = "qwdAnswer" maxlength="15" class = "input1">
 	</div>
-		<div class = "input">
-			<a href="javascript:join();" id = "join" class = "input1"> 가입하기 </a>
-		</div>
+			<a href="javascript:join();" id = "join"> <input type = "button" id = "join" class = "subm" value = "가입"> </a> <input type = "button" id = "join" class = "subm" value = "취소">
 	</form>
 	</div>
 	</div>
+		<%@ include file = "../footer.jsp" %>
 </body>
 </html>

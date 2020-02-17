@@ -47,7 +47,10 @@ public class HonmukUserDAO {
 	public int nameUpdate(UserVO vo) {
 		return sqlSession.update("user.nameUpdate",vo);
 	}
-	
+	// 별명 중복 체크(마이페이지)
+	public int nameCheck(UserVO vo) {
+		return sqlSession.selectOne("user.nameCheck",vo);
+	}
 	// 아이디 중복 체크(회원가입)
 	public int idCheck(String userId) {
 		return sqlSession.selectOne("user.idCheck",userId);

@@ -32,17 +32,15 @@
                         <span class = "menu-title"><a href = "userInfoView.do"><h4>회원정보</h4></a></span><hr>
                     </li>
                     <li class = "menulIST">
+                        <span class = "menu-title"><a href = "userInfoDeleteForm.do"><h4>회원탈퇴</h4></a></span><hr>
+                    </li>
+                    <li class = "menulIST">
                         <span class = "menu-title"><a href = "myReview.do"><h4>나의 리뷰글</h4></a></span><hr>
                     </li>
                     <li class = "menulIST">
                         <span class = "menu-title menu-title-active"><h4>나의 QnA</h4></span><hr>
                     </li>
-                    <li class = "menulIST">
-                        <h4><span class = "menu-title"><a href = ""> 준비중 </a></span></h4><hr>
-                    </li>
-                    <li class = "menulIST">
-                        <h4><span class = "menu-title"><a href = ""> 준비중 </a></span></h4><hr>
-                    </li>
+
                 </ul>
         </nav>
         
@@ -51,10 +49,12 @@
         </div>
         <div>
     		<table>
-    			<tr><th>작성자</th>
-    				<th>제목</th>
-    				<th>답변</th>
-    				<th>등록일</th></tr>
+    			<tr class = "names">
+    				<th class = "name1">작성자</th>
+    				<th class = "name2">제목</th>
+    				<th class = "name3">답변</th>
+    				<th class = "name4">등록일</th>
+    			</tr>
     		</table>
     	</div>
 		<div id = "Info">

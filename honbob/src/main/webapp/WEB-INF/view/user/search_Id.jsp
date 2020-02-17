@@ -71,7 +71,7 @@
 			<input type = "text" name = "userName" id = "userName" placeholder="NAME">
 			<input type = "text" name = "userEmail" id = "userEmail" placeholder="email@domain.com" >
 			<input type = "submit" value = "아이디 찾기"> <br> 
-			<span><a href = "loginForm.do"> 로그인 </a> / <a href = "search_Pwd.do"> 비밀번호 찾기 </a></span>
+			<span><a href = "loginForm.do" class= "se"> 로그인 </a> / <a href = "search_Pwd.do" class = "se"> 비밀번호 찾기 </a></span>
 			<% } else { %>
 			아이디 : ${search.userId} 
 			<a href = "loginForm.do"> 로그인 </a>

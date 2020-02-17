@@ -60,9 +60,17 @@ public class HonmukUserService {
 		return honmukUserDAO.nameUpdate(vo);
 	}
 	
+	// 나의 리뷰글(마이페이지)
+
+ 	
+	// 별명 중복 체크(회원가입)
+	public int nameCheck (UserVO vo) {
+		return honmukUserDAO.nameCheck(vo);
+	}
+	
 	// 아이디 중복 체크(회원가입)
 	public int idCheck (String userId) {
-		return honmukUserDAO.idCheck(userId);
+		return honmukUserDAO.idCheck(userId); 
 	}
 	
 	// 이메일 중복 체크(회원가입)

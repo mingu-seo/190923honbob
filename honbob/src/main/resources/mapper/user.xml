@@ -36,12 +36,16 @@
 		SELECT count(*) FROM honmuk.user WHERE userId = #{userId}
 	</select>
 	
+	<select id = "nameCheck" parameterType = "vo.UserVO" resultType = "Integer">
+		SELECT count(*) FROM honmuk.user WHERE userNo != #{userNo} AND userName = #{userName}
+	</select>
+	
 	<select id = "emailCheck" parameterType = "String" resultType = "Integer">
 		SELECT count(*) FROM honmuk.user WHERE userEmail = #{userEmail}
 	</select>
 	
 	<delete id = "userDelete" parameterType = "vo.UserVO">
-		DELETE FROM honmuk.user WHERE userNo = #{userNo} AND userName = #{userName} AND userId = #{userId} AND userPassword = md5(#{userPassword})
+		DELETE FROM honmuk.user WHERE userNo = #{userNo} AND userId = #{userId} AND userPassword = md5(#{userPassword})
 	</delete>
 
 	<update id = "imageUpdate" parameterType = "vo.UserVO">

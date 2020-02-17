@@ -16,25 +16,34 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"> </script>
 	<script type = "text/javascript">
-		function check() {
-			if ($("#userPassword").val() == "") {
-				alert("현재 비밀번호를 입력해 주세요. ");
-				return false;
-				}
-			if ($("#userPassword1").val() == "") {
-				alert("변경 비밀번호를 입력해 주세요. ");
-				return false;
-				}
-			if ($("#userPassword2").val() == "") {
-				alert("비밀번호 확인을 입력해 주세요. ");
-				return false;
-				}
-			if ($("#userPassword1").val() != $("#userPassword2").val()) {
-				alert("비밀번호 확인이 일치하지 않습니다. ");
-				return false;
-				}
-		}
 
+		$(function() {
+			$("#submits").click(function() {
+				if ($("#userPassword").val() == "") {
+					alert("현재 비밀번호를 입력해 주세요. ");
+					return false;
+					}
+				if ($("#userPassword1").val() == "") {
+					alert("변경 비밀번호를 입력해 주세요. ");
+					return false;
+					}
+				if ($("#userPassword2").val() == "") {
+					alert("비밀번호 확인을 입력해 주세요. ");
+					return false;
+					}
+				if ($("#userPassword1").val() != $("#userPassword2").val()) {
+					alert("비밀번호 확인이 일치하지 않습니다. ");
+					return false;
+					} else {
+						
+					} if (confirm("적용 하시겠습니까?")) {
+						
+					} else {
+						alert("취소 되었습니다.");
+						return false;
+					}
+				});
+			});
 
 
 	</script>
@@ -54,16 +63,13 @@
                         <span class = "menu-title menu-title-active"><h4>회원정보</h4></span><hr>
                     </li>
                     <li class = "menulIST">
+                        <span class = "menu-title"><a href = "userInfoDeleteForm.do"><h4>회원탈퇴</h4></a></span><hr>
+                    </li>
+                    <li class = "menulIST">
                         <span class = "menu-title"><a href = "myReview.do"><h4>나의 리뷰글</h4></a></span><hr>
                     </li>
                     <li class = "menulIST">
                         <h4><span class = "menu-title"><a href = "myQnA.do"><h4>나의 QnA</h4></a></span></h4><hr>
-                    </li>
-                    <li class = "menulIST">
-                        <h4><span class = "menu-title"><a href = ""> 준비중 </a></span></h4><hr>
-                    </li>
-                    <li class = "menulIST">
-                        <h4><span class = "menu-title"><a href = ""> 준비중 </a></span></h4><hr>
                     </li>
                 </ul>
         </nav>
@@ -89,7 +95,7 @@
 			<tr class="pwdch"><th> &nbsp;&nbsp; 변경 비밀번호 </th>
 			<td>&nbsp;&nbsp;&nbsp;<input type = "password" name = "password1" id = "userPassword1" class = "pwd"></td></tr>
 			<tr class="pwdch"><th> &nbsp;&nbsp; 비밀번호 확인 </th>
-			<td>&nbsp;&nbsp;&nbsp;<input type = "password" id = "userPassword2" class = "pwd"> <input type= "submit" class = "button" value = "변경"></td></tr>
+			<td>&nbsp;&nbsp;&nbsp;<input type = "password" id = "userPassword2" class = "pwd"> <input type= "submit" id ="submits" class = "button" value = "변경"></td></tr>
 			<tr><th> &nbsp;&nbsp; 회원가입 날짜 </th>
 			<td>&nbsp;&nbsp;&nbsp;<%=sess.getUserJoinDate() %></td></tr>
 		</table>

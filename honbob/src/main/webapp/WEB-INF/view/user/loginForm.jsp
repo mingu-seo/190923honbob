@@ -53,8 +53,9 @@
 	 			<input type = "password" name = "userPassword" id="password" maxlength="30" placeholder="Password">
 	 			<input type = "submit" value = "Login">
 	 		<br>
-	 			<span><a href = "search_Id.do">아이디 찾기</a> / <a href = "search_Pwd.do"> 비밀번호 찾기</a> 
-	 			<a href="" onclick='window.open("http://localhost:8080/honbob/userJoinForm.do");return false'>회원가입</a></span>
+	 			<span><a href = "search_Id.do" class = "se1">아이디 찾기 /</a>
+	 				  <a href = "search_Pwd.do" class = "se2"> 비밀번호 찾기 /</a>
+	 			<a href="" onclick='window.open("http://localhost:8080/honbob/userJoinForm.do");return false' class = "se3"> 회원가입 </a></span>
  		</form>
  		<% } else if ((session.getAttribute("Session") != null)) { %>
  		<script language="javascript" type="text/javascript">

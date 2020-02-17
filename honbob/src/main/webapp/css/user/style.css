@@ -27,21 +27,41 @@ svg {
 }
 
 input {
+	position: relative;
     font-size: 16px;
     border: 0;
     border-radius: 5px;
     outline: 0;
     padding: 10px 15px;
     margin-top: 15px;
+    top: -20px;
 }
 
-#qwdQuestion {
-	margin-top: 2px;
+#pwdQuestion {
+	margin-top: -12px;
+	z-index: 10;
 }
 
-#qwdAnswer {
-	margin-top: 1px;
+#pwdAnswer {
+	margin-top: 10px;
 }
+
+a {
+	text-decoration: none;
+}
+
+.pwdLo {
+		position: relative;
+		top : -20px; 
+}
+
+.se {
+	position: relative;
+	width: 300px;
+}
+
+
+
 @keyframes lookaway-up {
     from {
         transform: rotate3d(.2, 0, -.01, 20deg);
