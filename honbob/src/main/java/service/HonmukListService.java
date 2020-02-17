@@ -49,7 +49,7 @@ public class HonmukListService {
 		return HonmukDao.count(resVO);
 	}		
 	
-	public List<RestaurantVO> visitList(String visit_num) {
+	public List<RestaurantVO> visitList(List<String> visit_num) {
 		return HonmukDao.visitList(visit_num);
 	}		
 
