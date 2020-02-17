@@ -74,9 +74,25 @@
          	<div id="map" style="width:100%;height:700px;"><div class="locationSearch" onclick="locationSearch()">이 위치로 검색</div></div>	                
      	</div>
     	<div class="visit_res">
-             <c:forEach var="visit" items="${visitList }" varStatus="status">
-             	${visit.res_name }
-             </c:forEach>
+    		<p id = "visit_title">내가 본 식당</p>
+	            <c:forEach var="visit" items="${visitList }" varStatus="status">	            			
+					<div class="visit_box">
+						<a href="DetailView.do?res_num=${visit.res_num }">
+							<img class="visit_img" src="images/food/${visit.res_image_name }" style="width:100px; height:100px;">
+							<br>
+						</a>
+						<div class="visit_contents">
+							<b class="visit_grade">${visit.grade}</b><br>
+							<span class="visit_name"><b>식당 이름 : </b>${visit.res_name}<br>
+							<b>음식 종류 : </b>
+							<c:if test="${visit.koreafood == 1}">한식</c:if>
+							<c:if test="${visit.chinafood == 1}">중식</c:if>
+							<c:if test="${visit.westernfood == 1}">양식</c:if>
+							<c:if test="${visit.japanfood == 1}">일식</c:if>
+							<c:if test="${visit.etcfood == 1}">중식</c:if><br></span>
+						</div>
+					</div>			
+	            </c:forEach>
     	</div>
     </div>
 

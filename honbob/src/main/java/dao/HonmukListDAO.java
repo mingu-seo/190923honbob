@@ -23,8 +23,10 @@ public class HonmukListDAO {
 		return sqlSession.selectOne("Honmuk.searchCount", resVO);
 	}
 	
-	public List<RestaurantVO> visitList(String visit_num){
-		return sqlSession.selectList("Honmuk.visitList", visit_num);
+	public List<RestaurantVO> visitList(List<String> visit_num){
+		RestaurantVO resVO = new RestaurantVO();
+		resVO.setVisit_num(visit_num);
+		return sqlSession.selectList("Honmuk.visitList", resVO);
 	}
 	
 }

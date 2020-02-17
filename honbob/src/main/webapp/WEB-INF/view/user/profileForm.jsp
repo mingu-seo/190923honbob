@@ -35,11 +35,17 @@
 						}
 					}
 				});
-			} 
+			} if (confirm("적용 하시겠습니까?")) {
+			} else {
+				alert("취소 되었습니다.");
+				return false;
+			}
 			if (con == true) $("#frm").submit();
 		});
 	});
 		
+	
+	
 	
 	</script>
 </head>

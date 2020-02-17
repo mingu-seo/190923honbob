@@ -76,22 +76,6 @@ if (sess != null) userNo = sess.getUserNo();
 		}                            
 	}   
 	
-	$(function() {
-		$("#pwdSearch").click(function() {
-				$.ajax({
-					url : "/honbab/pwdSearch.do",
-					data : {
-						pwdSearch:$("#pwdSearch").val()
-					},
-					type : "POST",
-					async : false,
-					success : function(data) {
-							alert("이메일로 메일이 전송 되었습니다..");
-					}
-				});
-		});
-	});
-	
 
 	</script>
 <body>
@@ -129,8 +113,7 @@ if (sess != null) userNo = sess.getUserNo();
 			</select>
 			<input type = "text" name = "pwdAnswer" id = "pwdAnswer" maxlength="15" placeholder = "비밀번호 찾기 답변">
 			<input type = "submit" value = "비밀번호 찾기"> <br>
-			
-			<span><a href = "loginForm.do"> 로그인 </a> / <a href = "search_Id.do"> 아이디 찾기 </a></span>
+			<span class = "pwdLo"><a href = "loginForm.do"> 로그인 </a> / <a href = "search_Id.do"> 아이디 찾기 </a></span>
 		</form>
 	<% } else { %>
 	<%
