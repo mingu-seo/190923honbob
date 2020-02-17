@@ -142,14 +142,14 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 						kakao.maps.event.addListener(marker, 'click', function() {
 						      // 마커 위에 인포윈도우를 표시합니다
 						      infowindow.open(map, marker);  
-						});
+						}); 
 					</script>
 					
 				<b>주소 : </b>${restaurantDetail.address}<br>
 			</section>
 			<div id="review_subject">
 				<p class="review_subject_txt">리뷰(${reviewcount })</p>
-				<a href="reviewWrite"><img id="review_write_btn" src="images/detail/review_write.jpg"></a>
+				<a href="reviewWrite"><img id="review_write_btn" src="images/detail/review_write_icon.jpg"></a>
 			</div>
 			<hr id = "reviewTophr">
 			<div id="review_content">

@@ -84,9 +84,9 @@ public class HonmukController {
 		}		
 		
 		//방문 리스트 데이터 받아오기
-		String visit_num = (String)session.getAttribute("visit_num");
-		List<RestaurantVO> visitList = hmListService.visitList(visit_num);
-		model.addAttribute("visitList", visitList);
+		//String visit_num = (String)session.getAttribute("visit_num");
+		//List<RestaurantVO> visitList = hmListService.visitList(visit_num);
+		//model.addAttribute("visitList", visitList);
 		
 		
 		//검색결과를 받아옴
@@ -169,8 +169,9 @@ public class HonmukController {
 	}
 	//상세 페이지 이동
 	@RequestMapping("/DetailView.do")
-	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,HttpServletRequest req,
-			HttpSession session) {
+	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,
+			HttpServletRequest req, HttpServletResponse response,
+			HttpSession session) throws IOException {
 		//조회수 올리기
 		int upCount = hmDetailService.upViewCount(res_num);
 		if(upCount==1) {
@@ -187,8 +188,15 @@ public class HonmukController {
 		//유저가 여기를 평가했는지 확인해야함 평가했으면 별점 안했으면 0으로 줘야할듯
 		//유저 번호 가져오기 나중에..
 		UserVO asd=(UserVO) req.getSession().getAttribute("Session");
+		if(asd==null) {
+			response.setContentType("text/html; charset=UTF-8");
+			 
+			PrintWriter out = response.getWriter();
+			 
+			out.println("<script>alert('로그인이 필요한 서비스입니다.'); location.href='mainPage.do';</script>");
+		}
 		int userNo = asd.getUserNo();
-		GradeVO gradevo = new GradeVO(); 
+		GradeVO gradevo = new GradeVO();
 		gradevo.setUserNo(userNo);
 		gradevo.setRes_num(res_num);
 		int userGrade = hmDetailService.getUserGrade(gradevo);
@@ -272,6 +280,9 @@ public class HonmukController {
 		//새롭게 적용된 별점과 카운트를 넘겨준다.
 		int current_grade_count = hmDetailService.getGradeCnt(res_num);
 		Double current_res_grade = hmDetailService.getGrade(res_num);
+		
+		//새롭게 적용된 별점을 저장한다.
+		int update_grade_res = hmDetailService.updateRestuarantGrade(res_num,current_res_grade);
 		
 		model.addAttribute("star_count", star_count);
 		model.addAttribute("current_grade_count", current_grade_count);

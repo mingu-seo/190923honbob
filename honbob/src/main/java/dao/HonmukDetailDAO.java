@@ -79,4 +79,7 @@ public class HonmukDetailDAO {
 	public int deleteGrade(GradeVO gradevo) {
 		return sqlSession.delete("Honmuk.deleteGrade", gradevo);
 	}
+	public int updateRestuarantGrade(RestaurantVO resVO) {
+		return sqlSession.update("Honmuk.updateRestaurantGrade",resVO);
+	}
 }

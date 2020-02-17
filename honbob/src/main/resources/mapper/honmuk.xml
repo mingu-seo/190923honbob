@@ -392,6 +392,10 @@
 		delete from grade
 		where res_num=#{res_num} and userNo = #{userNo}
 	</delete>
+	<!-- updateRestaurantGrade -->
+	<update id="updateRestaurantGrade" parameterType="vo.RestaurantVO">
+		update restaurant set grade = #{grade} where res_num=#{res_num}
+	</update>
 	<!-- 리뷰 리스트 가져오기 -->
 	
 	<!-- 메인페이지에서 최신리뷰 6개 가져오기 -->
