@@ -219,9 +219,7 @@
 		<h4><label for = "pwdAnswer"> 비밀번호 찾기 답변 </label></h4>
 		<input type = "text" name = "pwdAnswer" id = "qwdAnswer" maxlength="15" class = "input1">
 	</div>
-		<div class = "input" id = "joiner">
-			<a href="javascript:join();" id = "join" class = "input1"> 가입하기 </a>
-		</div>
+			<a href="javascript:join();" id = "join"> <input type = "button" id = "join" class = "subm" value = "가입"> </a> <input type = "button" id = "join" class = "subm" value = "취소">
 	</form>
 	</div>
 	</div>

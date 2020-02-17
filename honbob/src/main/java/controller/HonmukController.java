@@ -393,15 +393,22 @@ public class HonmukController {
 	
 	// 이메일로 임시비밀번호 전송
 	@RequestMapping("/pwdSearch.do")
-	public String pwdSearch(Model model, @RequestParam("userEmail") String userEmail, UserVO vo) throws Exception {
+	public String pwdSearch(Model model, @RequestParam("userEmail") String userEmail, HttpServletResponse response, UserVO vo) throws Exception {
 		// 랜덤 12자리 받아오기
 		String pwdNum = hmUserService.emailPass();
 		// 12자리로 비밀번호 변경 후
 		int r = hmUserService.pwdUpdate(userEmail, pwdNum);
 		// 이메일로 임시 비밀번호 전송
-		SendMail.sendEmail("duwkdutns2@naver.com", userEmail, "안녕하세요^^. [밥먹자] 임시 비밀번호 발급 입니다.", " 회원가입 이메일 인증번호 : "+ pwdNum);
-		model.addAttribute("value",r);
-		return "user/ajax/return";
+		SendMail.sendEmail("duwkdutns2@naver.com", userEmail, "안녕하세요^^. [밥먹자] 임시 비밀번호 발급 입니다.", " 임시 비밀번호 : '"+ pwdNum + "' 마이페이지에서 비밀번호를 꼭 변경해주세요.");
+
+		response.setCharacterEncoding("UTF-8");		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print("<script>");
+		out.print("alert('이메일로 임시 비밀번호가 발급 되었습니다.');");
+		out.print("location.href='loginForm.do';");
+		out.print("</script>");
+		return null;
 
 	}
 	
@@ -413,20 +420,24 @@ public class HonmukController {
 	}
 	
 	@RequestMapping("/userJoin.do")
-	public String userJoin(UserVO vo, Model model) throws IOException{
+	public String userJoin(UserVO vo, Model model, HttpServletResponse response) throws IOException{
 		int r = hmUserService.userJoin(vo);
-		String msg = "";
-		String url = "";
+		
+		response.setCharacterEncoding("UTF-8");		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		if ( r > 0 ) {
-			msg = "정상적으로 가입되었습니다.";
-			url = "/honbob/user/mainPage.do";
-		} else {
-			msg = "회원가입 실패";
-			url = "/honbob/user/userJoinForm.do";
-		}
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-		return "user/ajax/alert";
+			out.print("<script>");
+			out.print("alert('회원가입 되었습니다.');");
+			out.print("location.href='mainPage.do';");
+			out.print("</script>"); 
+			} else {
+				out.print("<script>");
+				out.print("alert('회원가입 실패하였습니다.');");
+				out.print("location.href='userJoin.do';");
+				out.print("</script>"); 
+			}
+		return null;
 	}
 	
 	
@@ -527,23 +538,15 @@ public class HonmukController {
 		if (vo.getUserImage() != null) {
 			hmUserService.imageUpdate(vo,file,req);
 			sess.setAttribute("upImage",vo.getUserImage());
-			out.print("<script>");
-			out.print("alert('1변경되었습니다.');");
-			out.print("location.href='/honbob/profileForm.do';");
-			out.print("</script>");
-
 		}
 		// 프로필 별명 수정
 		UserVO name = (UserVO) sess.getAttribute("Session");
 		if (!vo.getUserName().equals(name.getUserName())) {
 			hmUserService.nameUpdate(vo);
-			out.print("<script>");
-			out.print("alert('2변경되었습니다.');");
-			out.print("location.href='/honbob/profileForm.do';");
-			out.print("</script>");
 		}
+		
 		out.print("<script>");
-		out.print("alert('변경 사항이 없습니다.');");
+		out.print("alert('수정 되었습니다.');");
 		out.print("location.href='/honbob/profileForm.do';");
 		out.print("</script>");
 		return null;
