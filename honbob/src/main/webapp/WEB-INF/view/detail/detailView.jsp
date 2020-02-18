@@ -22,8 +22,13 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 	<script src="js/detail/grade_star_active.js"></script>
 	<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript">
-	var star_cnt = ${userGrade};
-	var userNo = <%=uv.getUserNo()%>;
+	var star_cnt;
+	var userNo;
+	<% if(uv!=null){ %>
+		star_cnt = ${userGrade};
+		userNo = <%=uv.getUserNo()%>;
+ 	<% } %>
+	
 	function gradeConfirm(star_count){
 		if(star_count == star_cnt){
 			var result = confirm("별점을 삭제 하시겠습니까?");
@@ -34,11 +39,10 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 			var result = confirm(star_count+"개의 별점을 주시겠습니까?");
 			if(result){
 				ajaxView(star_count,${restaurantDetail.res_num},userNo);
-			}
+			} 
 		}
-		
-		
-	} 
+	}
+	
 	
 	</script>
 
@@ -65,11 +69,13 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 			</div>
 		</div>
 		<div id="subject_right_side">
+		<% if(uv!=null){ %>
 			<img id="detail_count_picture1" src="images/detail/grade_star_off.jpg" onclick="gradeConfirm(1);">
 			<img id="detail_count_picture2" src="images/detail/grade_star_off.jpg" onclick="gradeConfirm(2);">
 			<img id="detail_count_picture3" src="images/detail/grade_star_off.jpg" onclick="gradeConfirm(3);">
 			<img id="detail_count_picture4" src="images/detail/grade_star_off.jpg" onclick="gradeConfirm(4);">
 			<img id="detail_count_picture5" src="images/detail/grade_star_off.jpg" onclick="gradeConfirm(5);">
+		<% } %>
 		</div>
 	</div>
 	<div id="content_main">
@@ -104,7 +110,7 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 				<c:if test="${restaurantDetail.park == 1}"> 주차가능 </c:if>
 				<c:if test="${restaurantDetail.table2 == 1}"> 2인테이블 </c:if><br>
 				 
-				<b>지도</b>
+				<b>지도</b> 
 				
 				<div id="map" style="width:100%;height:400px;"></div>
 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=968f5cb093e2b0f76e796a0721504779&libraries=services"></script>
@@ -149,7 +155,9 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 			</section>
 			<div id="review_subject">
 				<p class="review_subject_txt">리뷰(${reviewcount })</p>
+				<% if(uv!=null){ %>
 				<a href="reviewWrite"><img id="review_write_btn" src="images/detail/review_write_icon.jpg"></a>
+				<%} %>
 			</div>
 			<hr id = "reviewTophr">
 			<div id="review_content">
