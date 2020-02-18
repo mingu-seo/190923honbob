@@ -231,17 +231,17 @@ public class HonmukController {
 		} else {
 			visit_res = new ArrayList<String>();
 		}
-		if (visit_res.size() < 5) {
+		if (visit_res.size() < 6) {
 			if (!visit_res.contains(String.valueOf(res_num))) {
 				visit_res.add(String.valueOf(res_num));
 			}
-		} else {
+		} else {			
 			visit_res.remove(0);
 			visit_res.add(String.valueOf(res_num));
 		}
 		session = req.getSession();
-		session.setAttribute("visit_num", visit_res);		
-		
+		session.setAttribute("visit_num", visit_res);	
+
 		
 		//모델에 넣기
 		model.addAttribute("restaurantDetail", restDetail);
