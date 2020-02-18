@@ -4,6 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import util.PagingOption;
+import vo.RestaurantVO;
 import vo.review.ReviewEditRequest;
 import vo.review.ReviewVO;
 import vo.support.SupportEditRequest;
@@ -41,5 +42,8 @@ public class ReviewDAO {
 		int theNumOfReviews = sqlSession.selectOne("Review.countReviews");
 		return theNumOfReviews;
 	}
+
+//    public void matchingRestr(RestaurantVO vo) {sqlSession.
+//    }
 }
 

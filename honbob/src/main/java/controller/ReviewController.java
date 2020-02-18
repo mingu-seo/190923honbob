@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import service.review.ReviewService;
 import util.PagingHelper;
 import util.PagingOption;
+import vo.RestaurantVO;
 import vo.review.ReviewEditRequest;
 import vo.review.ReviewVO;
 
@@ -20,6 +21,9 @@ import java.util.List;
 public class ReviewController {
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+
 
     public void setReviewService(ReviewService reviewService) {
         this.reviewService = reviewService;
@@ -46,20 +50,24 @@ public class ReviewController {
     }
 
     //리뷰 작성폼 불러오기
-    @RequestMapping(path ="/reviewWrite", method = RequestMethod.GET)
-    public ModelAndView reviewWrite(){
+    //식당번호 삽입 시 수정할 부분? => @PathVariable restraurantId
+    // 리뷰 작성 페이지를 불러오는 부분부터 식당_ID를 들고 시작
+    @RequestMapping(path ="/reviewWrite/{restaurantId}", method = RequestMethod.GET)
+    public ModelAndView reviewWrite(@PathVariable int restaurantId){
         ModelAndView mav = new ModelAndView();
         String pageName = "review/reviewWrite";
         mav.setViewName(pageName);
+        mav.addObject("restaurantId", restaurantId);
         return mav;
     }
 
     //리뷰 작성내용 DB저장
     @RequestMapping(path = "/reviewWrite", method = RequestMethod.POST)
     public ModelAndView reviewWrite(ReviewVO vo) {
+        System.out.println("@ECHO reviewVO = " + vo);
         ModelAndView mav = new ModelAndView();
         reviewService.insertReview(vo);
-        String pageName = "redirect:/reviewList";
+        String pageName = "redirect:/reviewList?page=1";
         mav.setViewName(pageName);
         return mav;
     }
@@ -104,6 +112,25 @@ public class ReviewController {
     public ModelAndView reviewDelete(@PathVariable int reviewDocumentId) {
         ModelAndView mav = new ModelAndView();
         reviewService.deleteReview(reviewDocumentId);
+        String pageName = "redirect:/reviewList";
+        mav.setViewName(pageName);
+        return mav;
+    }
+
+    //식당 이름 검색
+    @RequestMapping(path ="/searchRestr", method = RequestMethod.GET)
+    public ModelAndView searchRestr(){
+        ModelAndView mav = new ModelAndView();
+        String pageName = "review/reviewWrite";
+        mav.setViewName(pageName);
+        return mav;
+    }
+
+    //리뷰에 식당 이름 걸기
+   @RequestMapping(path = "/matchingRestr", method = RequestMethod.POST)
+    public ModelAndView matchingRestr(RestaurantVO vo) {
+        ModelAndView mav = new ModelAndView();
+//        reviewService.matchingRestr(vo);
         String pageName = "redirect:/reviewList";
         mav.setViewName(pageName);
         return mav;

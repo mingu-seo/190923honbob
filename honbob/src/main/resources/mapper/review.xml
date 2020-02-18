@@ -5,27 +5,32 @@
 <mapper namespace="Review">
 	
 	<select id="getReviews" parameterType="util.PagingOption" resultType="vo.review.ReviewVO">
-		select * from review
+		select * from review order by registdate DESC
 		LIMIT ${currentItemStartNumber}, ${itemsPerPage};
 	</select>
 
-<insert id="insertReview" parameterType="vo.review.ReviewVO">
-INSERT INTO `honmuk`.`review` ('id', `subject`, `content`, `registdate`, `count`, `Restaurant_menu_res_num`, `user_userNo`)
-VALUES (null, ${subject}, ${content}, ${registdate}, ${count}, ${Restaurant_menu_res_num}, ${user_userNo});
-</insert>
+<!--<insert id="insertReview" parameterType="vo.review.ReviewVO">-->
+<!--INSERT INTO `honmuk`.`review` ('id', `subject`, `content`, `registdate`, `count`, `Restaurant_menu_res_num`, `user_userNo`)-->
+<!--VALUES (null, ${subject}, ${content}, ${registdate}, ${count}, ${Restaurant_menu_res_num}, ${user_userNo});-->
+<!--</insert>-->
+
+	<insert id="insertReview" parameterType="vo.review.ReviewVO">
+	INSERT INTO review(`id`, `subject`, `content`, `registdate`, `res_num`, `user_userNo`)
+	VALUES (null, '${subject}', '${content}', CURDATE(), ${res_num}, ${user_userNo});
+	</insert>
 
 	<select id="getReview" parameterType="int" resultType="vo.review.ReviewVO">
 		select * from review where id = #{id};
 	</select>
 
 	<update id="updateReview" parameterType="vo.review.ReviewEditRequest">
-		UPDATE `honmuk`.`review`
+		UPDATE review
 		SET `subject` = #{subject}, `content` = #{content}
 		WHERE (`id` = #{id});
 	</update>
 
 	<delete id="deleteReview" parameterType="int">
-		DELETE FROM `honmuk`.`review` WHERE (`id` = #{id});
+		DELETE FROM review WHERE (`id` = #{id});
 	</delete>
 
 	<select id="countReviews" resultType="int">
