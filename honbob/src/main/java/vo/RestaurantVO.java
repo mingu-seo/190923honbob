@@ -62,9 +62,17 @@ public class RestaurantVO {
 	private int count;
 	
 	private List<String> visit_num;
-		
+	private int gu;
 	
 	
+	public int getGu() {
+		return gu;
+	}
+
+	public void setGu(int gu) {
+		this.gu = gu;
+	}
+
 	public List<String> getVisit_num() {
 		return visit_num;
 	}
