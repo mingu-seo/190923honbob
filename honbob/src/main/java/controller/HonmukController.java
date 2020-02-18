@@ -189,21 +189,26 @@ public class HonmukController {
 		Double res_grade = hmDetailService.getGrade(res_num);
 		//별점준 사람 수를 구해오기
 		int gradeCnt = hmDetailService.getGradeCnt(res_num);
+		
 		//유저가 여기를 평가했는지 확인해야함 평가했으면 별점 안했으면 0으로 줘야할듯
-		//유저 번호 가져오기 나중에..
+		//로그인 여부 확인후 확인이 되면 별점을 가지고온다.
 		UserVO asd=(UserVO) req.getSession().getAttribute("Session");
 		if(asd==null) {
-			response.setContentType("text/html; charset=UTF-8");
+			//response.setContentType("text/html; charset=UTF-8");
 			 
-			PrintWriter out = response.getWriter();
+			//PrintWriter out = response.getWriter();
 			 
-			out.println("<script>alert('로그인이 필요한 서비스입니다.'); location.href='mainPage.do';</script>");
+			//out.println("<script>alert('로그인이 필요한 서비스입니다.'); location.href='mainPage.do';</script>");
+		}else {
+			int userNo = asd.getUserNo();
+			GradeVO gradevo = new GradeVO();
+			gradevo.setUserNo(userNo);
+			gradevo.setRes_num(res_num);
+			int userGrade = hmDetailService.getUserGrade(gradevo);
+			model.addAttribute("userGrade", userGrade);
 		}
-		int userNo = asd.getUserNo();
-		GradeVO gradevo = new GradeVO();
-		gradevo.setUserNo(userNo);
-		gradevo.setRes_num(res_num);
-		int userGrade = hmDetailService.getUserGrade(gradevo);
+		
+		
 		//식당사진 가져오기
 		List<RestaurantImageVO> imageList = hmDetailService.getRestaurantImageById(res_num);
 		//추천식당 3개정도 가져오기 !! 현재 있는 식당은 목록에 안나오게 해야함;
@@ -226,24 +231,24 @@ public class HonmukController {
 		} else {
 			visit_res = new ArrayList<String>();
 		}
-		if (visit_res.size() < 5) {
+		if (visit_res.size() < 6) {
 			if (!visit_res.contains(String.valueOf(res_num))) {
 				visit_res.add(String.valueOf(res_num));
 			}
-		} else {
+		} else {			
 			visit_res.remove(0);
 			visit_res.add(String.valueOf(res_num));
 		}
 		session = req.getSession();
-		session.setAttribute("visit_num", visit_res);		
-		
+		session.setAttribute("visit_num", visit_res);	
+
 		
 		//모델에 넣기
 		model.addAttribute("restaurantDetail", restDetail);
 		model.addAttribute("imageList", imageList);
 		model.addAttribute("res_grade",String.format("%.1f", res_grade));
 		model.addAttribute("recomList",recomRest);
-		model.addAttribute("userGrade", userGrade);
+		
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("reviewcount", reviewcount);
 		model.addAttribute("recomImageList", recomImageList);
