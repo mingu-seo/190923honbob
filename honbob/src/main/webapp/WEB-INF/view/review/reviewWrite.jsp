@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <form method="POST" action="/reviewWrite" class="was-validated">
+    <form method="POST" action="/honbob/reviewWrite" class="was-validated">
         <input type="hidden" name="res_num" value="${restaurantId}">
         <div class="mb-3">
             <label for="reviewSubject">제목</label>
@@ -72,7 +72,7 @@
         // );
         $('#backBtn').click(
             function(e) {
-                window.location.href = "http://localhost:8080/reviewList?page=1";
+                window.location.href = "reviewList?page=1";
             }
         );
     });
