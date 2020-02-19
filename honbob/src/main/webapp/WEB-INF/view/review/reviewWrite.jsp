@@ -28,17 +28,6 @@
     <div class="col-md-9">
         <div class="row">
             <div class="col-md-1  pl-1">
-
-            </div>
-
-            <div class="col-md-3  pl-2">
-                <div class="restrSearch" style="width:183px;">
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
     </div>

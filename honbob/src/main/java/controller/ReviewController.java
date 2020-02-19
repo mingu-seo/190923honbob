@@ -33,7 +33,7 @@ public class ReviewController {
     @RequestMapping(path="/reviewList", method=RequestMethod.GET)
     public ModelAndView reviewList(@RequestParam(required = false) Integer page) {
         System.out.println("page: " + page);
-        page = (page==0)?1:page;
+        page = (page==null)?1:page;
 
         ModelAndView mav = new ModelAndView();
         String pageName = "review/reviewList";
@@ -52,8 +52,8 @@ public class ReviewController {
     //리뷰 작성폼 불러오기
     //식당번호 삽입 시 수정할 부분? => @PathVariable restraurantId
     // 리뷰 작성 페이지를 불러오는 부분부터 식당_ID를 들고 시작
-    @RequestMapping(path ="/reviewWrite/{restaurantId}", method = RequestMethod.GET)
-    public ModelAndView reviewWrite(@PathVariable int restaurantId){
+    @RequestMapping(path ={"/reviewWrite/{restaurantId}","/reviewWrite"}, method = RequestMethod.GET)
+    public ModelAndView reviewWrite(@PathVariable(name="restaurantId", required = false) Integer restaurantId){
         ModelAndView mav = new ModelAndView();
         String pageName = "review/reviewWrite";
         mav.setViewName(pageName);
