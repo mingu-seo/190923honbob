@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 import service.HonmukDetailService;
 import service.HonmukListService;
 import service.HonmukMainPageService;
@@ -569,13 +570,20 @@ public class HonmukController {
 	
 	// 나의 리뷰글(마이페이지)
 	@RequestMapping("/myReview.do")
-	public String myReview(Model model,ReviewVO vo, HttpSession sess) {
-		//ReviewVO List = hmUserService.myReviewList(vo);
+	public String myReview(Model model,ReviewVO vo,UserVO uv, HttpSession sess) {
+		// 페이징 처리
+		 int[] listcount = hmUserService.pageUpDown();
+		// userId로 조회
+		UserVO sessUv = (UserVO)sess.getAttribute("Session");
+
+		uv.setUserId(sessUv.getUserId());
+		List<ReviewVO> List = hmUserService.myReviewList(uv);
+		model.addAttribute("listcount",listcount[0]);
+		model.addAttribute("totalpage",listcount[1]);
+		model.addAttribute("myReviewList",List);
 		return "user/myReview";
 	}
-	
-	
-	
+
 	// 회원탈퇴
 	@RequestMapping("/userInfoDeleteForm.do")
 	public String userInfoDeleteForm() {
@@ -603,12 +611,5 @@ public class HonmukController {
 			}
 		return null;
 	}
-	
-	// 만드는중
-	@RequestMapping("/bobmukEmail.do")
-	public String bobmukEmail() {
-		return "user/bobmukEmail";
-	}
-	
 
 }
