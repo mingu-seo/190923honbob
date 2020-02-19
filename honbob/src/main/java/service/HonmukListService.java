@@ -49,8 +49,20 @@ public class HonmukListService {
 		return HonmukDao.count(resVO);
 	}		
 	
-	public List<RestaurantVO> visitList(String visit_num) {
-		return HonmukDao.visitList(visit_num);
+	public List<RestaurantVO> visitList(List<String> visit_num) {
+		List<RestaurantVO> visitlist = HonmukDao.visitList(visit_num);
+		for(int i=0; i<visitlist.size(); i++) {
+			if(visitlist.get(i).getGu()==1)visitlist.get(i).setAddressCut("강남구");
+			if(visitlist.get(i).getGu()==2)visitlist.get(i).setAddressCut("강동구");
+			if(visitlist.get(i).getGu()==3)visitlist.get(i).setAddressCut("강북구");
+			if(visitlist.get(i).getGu()==4)visitlist.get(i).setAddressCut("강서구");
+			if(visitlist.get(i).getGu()==5)visitlist.get(i).setAddressCut("관악구");
+			if(visitlist.get(i).getGu()==6)visitlist.get(i).setAddressCut("광진구");
+			if(visitlist.get(i).getGu()==7)visitlist.get(i).setAddressCut("구로구");
+			if(visitlist.get(i).getGu()==8)visitlist.get(i).setAddressCut("금천구");
+			if(visitlist.get(i).getGu()==9)visitlist.get(i).setAddressCut("노원구");
+		}
+		return visitlist;
 	}		
 
 

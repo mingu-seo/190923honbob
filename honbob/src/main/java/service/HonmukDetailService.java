@@ -134,6 +134,7 @@ public class HonmukDetailService {
 			
 			recomGradeList.add(String.format("%.1f", (double)gradeSum/(double)gradeCnt));
 			
+			
 		}
 		
 		return recomGradeList;
@@ -141,6 +142,15 @@ public class HonmukDetailService {
 
 	public int getGradeCnt(int res_num) {
 		return HonmukDao.getGradeCnt(res_num);
+	}
+	public int updateRestuarantGrade(int res_num, Double current_res_grade) {
+		
+		RestaurantVO resVO = new RestaurantVO();
+		
+		resVO.setRes_num(res_num);
+		resVO.setGrade(current_res_grade);
+		
+		return HonmukDao.updateRestuarantGrade(resVO);
 	}
 	
 	//리뷰 가져오기

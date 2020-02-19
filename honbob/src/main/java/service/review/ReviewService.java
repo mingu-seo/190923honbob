@@ -4,6 +4,7 @@ import dao.ReviewDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import util.PagingOption;
+import vo.RestaurantVO;
 import vo.review.ReviewEditRequest;
 import vo.review.ReviewVO;
 import vo.support.SupportEditRequest;
@@ -29,7 +30,7 @@ public class ReviewService {
     public void insertReview(ReviewVO vo) {
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         vo.setRegistdate(date);
-        vo.setUser_userId("1");
+        vo.setUser_userNo("1");
         reviewDao.insertReview(vo);
     }
 
@@ -45,5 +46,8 @@ public class ReviewService {
     public void deleteReview(int reviewDocumentId) { reviewDao.deleteReview(reviewDocumentId);
 
     }
+
+//    public void matchingRestr(RestaurantVO vo) {reviewDao.matchingRestr(vo);
+//    }
 }
 

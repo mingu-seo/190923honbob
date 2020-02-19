@@ -315,9 +315,12 @@
 			) as a		
 		</if>		
 	</select>
-
-	<select id="visitList" parameterType="String" resultType="vo.RestaurantVO">
-		select * from restaurant where res_num=#{res_num}
+	
+	<select id="visitList" parameterType="vo.RestaurantVO" resultType="vo.RestaurantVO">
+		select a.*, b.res_image_name from restaurant a inner join restaurantimage b on a.res_num = b.res_num where b.best_image='1' and a.res_num in
+		<foreach collection="visit_num" item="item" index="index" separator="," open="(" close=")">
+			#{item}
+		</foreach>
 	</select>
 	
 	<!-- 전체 식당 리스트 불러오기 -->
@@ -392,6 +395,10 @@
 		delete from grade
 		where res_num=#{res_num} and userNo = #{userNo}
 	</delete>
+	<!-- updateRestaurantGrade -->
+	<update id="updateRestaurantGrade" parameterType="vo.RestaurantVO">
+		update restaurant set grade = #{grade} where res_num=#{res_num}
+	</update>
 	<!-- 리뷰 리스트 가져오기 -->
 	
 	<!-- 메인페이지에서 최신리뷰 6개 가져오기 -->

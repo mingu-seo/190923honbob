@@ -4,6 +4,7 @@ package controller;
 import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -85,9 +86,12 @@ public class HonmukController {
 		}		
 		
 		//방문 리스트 데이터 받아오기
-		String visit_num = (String)session.getAttribute("visit_num");
-		List<RestaurantVO> visitList = hmListService.visitList(visit_num);
-		model.addAttribute("visitList", visitList);
+		if(session.getAttribute("visit_num") != null) {
+			List<String> visit_num = (List<String>)session.getAttribute("visit_num");			
+			List<RestaurantVO> visitList = hmListService.visitList(visit_num);
+			model.addAttribute("visitList", visitList);
+		}
+		
 		
 		
 		//검색결과를 받아옴
@@ -170,8 +174,9 @@ public class HonmukController {
 	}
 	//상세 페이지 이동
 	@RequestMapping("/DetailView.do")
-	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,HttpServletRequest req,
-			HttpSession session) {
+	public String DetailRes(Model model, @RequestParam(name = "res_num", required = true)int res_num,
+			HttpServletRequest req, HttpServletResponse response,
+			HttpSession session) throws IOException {
 		//조회수 올리기
 		int upCount = hmDetailService.upViewCount(res_num);
 		if(upCount==1) {
@@ -185,14 +190,26 @@ public class HonmukController {
 		Double res_grade = hmDetailService.getGrade(res_num);
 		//별점준 사람 수를 구해오기
 		int gradeCnt = hmDetailService.getGradeCnt(res_num);
+		
 		//유저가 여기를 평가했는지 확인해야함 평가했으면 별점 안했으면 0으로 줘야할듯
-		//유저 번호 가져오기 나중에..
+		//로그인 여부 확인후 확인이 되면 별점을 가지고온다.
 		UserVO asd=(UserVO) req.getSession().getAttribute("Session");
-		int userNo = asd.getUserNo();
-		GradeVO gradevo = new GradeVO(); 
-		gradevo.setUserNo(userNo);
-		gradevo.setRes_num(res_num);
-		int userGrade = hmDetailService.getUserGrade(gradevo);
+		if(asd==null) {
+			//response.setContentType("text/html; charset=UTF-8");
+			 
+			//PrintWriter out = response.getWriter();
+			 
+			//out.println("<script>alert('로그인이 필요한 서비스입니다.'); location.href='mainPage.do';</script>");
+		}else {
+			int userNo = asd.getUserNo();
+			GradeVO gradevo = new GradeVO();
+			gradevo.setUserNo(userNo);
+			gradevo.setRes_num(res_num);
+			int userGrade = hmDetailService.getUserGrade(gradevo);
+			model.addAttribute("userGrade", userGrade);
+		}
+		
+		
 		//식당사진 가져오기
 		List<RestaurantImageVO> imageList = hmDetailService.getRestaurantImageById(res_num);
 		//추천식당 3개정도 가져오기 !! 현재 있는 식당은 목록에 안나오게 해야함;
@@ -208,31 +225,31 @@ public class HonmukController {
 		restDetail.setGradecount(gradeCnt);
 		
 		
-		//최근 방문 식당 res_num 세션 저장			
-		String visit_res[] = new String[5];		
-		for(int i=0; i<visit_res.length; i++) {
-			if(visit_res[i]==null) {
-				visit_res[i] = Integer.toString(res_num);
-				break;
-			}else if(i==visit_res.length-1) {
-				visit_res[0] = visit_res[1];
-				visit_res[1] = visit_res[2];
-				visit_res[2] = visit_res[3];
-				visit_res[3] = visit_res[4];
-				visit_res[4] = Integer.toString(res_num);
+		//최근 방문 식당 res_num 세션 저장	
+		List<String> visit_res;
+		if (session.getAttribute("visit_num") != null) {
+			visit_res = (List<String>)session.getAttribute("visit_num");
+		} else {
+			visit_res = new ArrayList<String>();
+		}
+		if (visit_res.size() < 6) {
+			if (!visit_res.contains(String.valueOf(res_num))) {
+				visit_res.add(String.valueOf(res_num));
 			}
+		} else {			
+			visit_res.remove(0);
+			visit_res.add(String.valueOf(res_num));
 		}
 		session = req.getSession();
-		session.setAttribute("visit_num", visit_res);
-		
-		
+		session.setAttribute("visit_num", visit_res);	
+
 		
 		//모델에 넣기
 		model.addAttribute("restaurantDetail", restDetail);
 		model.addAttribute("imageList", imageList);
 		model.addAttribute("res_grade",String.format("%.1f", res_grade));
 		model.addAttribute("recomList",recomRest);
-		model.addAttribute("userGrade", userGrade);
+		
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("reviewcount", reviewcount);
 		model.addAttribute("recomImageList", recomImageList);
@@ -273,6 +290,9 @@ public class HonmukController {
 		//새롭게 적용된 별점과 카운트를 넘겨준다.
 		int current_grade_count = hmDetailService.getGradeCnt(res_num);
 		Double current_res_grade = hmDetailService.getGrade(res_num);
+		
+		//새롭게 적용된 별점을 저장한다.
+		int update_grade_res = hmDetailService.updateRestuarantGrade(res_num,current_res_grade);
 		
 		model.addAttribute("star_count", star_count);
 		model.addAttribute("current_grade_count", current_grade_count);

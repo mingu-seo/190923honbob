@@ -1,5 +1,7 @@
 package vo;
 
+import java.util.List;
+
 public class RestaurantVO {
 
 	private int res_num;
@@ -58,8 +60,27 @@ public class RestaurantVO {
 	private String res_image_name;
 	
 	private int count;
-		
 	
+	private List<String> visit_num;
+	private int gu;
+	
+	
+	public int getGu() {
+		return gu;
+	}
+
+	public void setGu(int gu) {
+		this.gu = gu;
+	}
+
+	public List<String> getVisit_num() {
+		return visit_num;
+	}
+
+	public void setVisit_num(List<String> visit_num) {
+		this.visit_num = visit_num;
+	}
+
 	public int getCount() {
 		return count;
 	}
