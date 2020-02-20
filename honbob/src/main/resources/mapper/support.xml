@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <!-- Mybatis 사용 -->
 <mapper namespace="Support">
 
@@ -30,5 +29,4 @@
 			(`id`, `subject`, `content`, `registdate`, `lock`, `sendemail`, `user_userNo`)
 		VALUES (NULL, #{subject}, #{content}, #{registdate}, #{lock}, #{sendemail}, #{user_userId});
 	</insert>
-
 </mapper>

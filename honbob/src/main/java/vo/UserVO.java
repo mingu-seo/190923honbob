@@ -22,11 +22,54 @@ public class UserVO {
 	private Date userJoinDate;
 	//프로필 사진
 	private String userImage;
-
 	
 	//비밀번호 확인 및 비밀번호 변경
 	private String password1;
 	
+	// 추가 필드
+	private int page; // 사용자가 요청한 페이지 번호
+	private int limit; // 페이지당 로우 수
+	private int startIndex; // limit 시작 인덱스
+	private int maxPage; // 총페이지수
+	
+	public UserVO() {
+		this.page = 1; // 사용자가 요청한 페이지번호가 없으면 초기값 1
+		this.limit = 5; // 페이지당 로우수가 지정이 안되면 초기값 10
+	}
+
+	
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+
+	public int getStartIndex() {
+		return (this.page-1)*this.limit;
+	}
+
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
+
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
+	}
 
 	public String getPassword1() {
 		return password1;

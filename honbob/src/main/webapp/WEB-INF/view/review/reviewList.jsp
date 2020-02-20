@@ -98,7 +98,7 @@
     $(document).ready(function() {
         $('#writePageBtn').click(
             function(e) {
-                window.location.href = "http://localhost:8080/reviewWrite";
+                window.location.href = "reviewWrite";
             }
         );
 

@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import vo.UserVO;
+import vo.review.ReviewVO;
 
 @Repository
 public class HonmukUserDAO {
@@ -43,6 +45,15 @@ public class HonmukUserDAO {
 		return sqlSession.update("user.imageUpdate",vo);
 	}
 	
+	// 나의 리뷰글(마이페이지) 
+	public List<ReviewVO> myReviewList(UserVO uv) {
+		return sqlSession.selectList("user.myReviewList",uv);
+	}
+	
+	// 페이징 처리(마이페이지)
+	public int pageUpDown() {
+		return sqlSession.selectOne("user.pageUpDown");
+	}
 	// 별명 변경(마이페이지)
 	public int nameUpdate(UserVO vo) {
 		return sqlSession.update("user.nameUpdate",vo);

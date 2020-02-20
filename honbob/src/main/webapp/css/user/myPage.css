@@ -65,6 +65,9 @@
 	    width: 100%;
     }
     
+    .listCon {
+    	text-align: center;
+    }
     
     
     #myPage {
@@ -156,7 +159,7 @@
     .sub {
     	position: relative;
     	border: none;
-    	left: 210px;
+    	left: 205px;
     }
     
     .subm {
