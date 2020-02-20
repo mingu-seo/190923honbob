@@ -6,10 +6,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/footer/style.css"/>
-</head>
-<body>
 
-	<div class="wrap">
+
+	
 	<!--Footer-->
         <div class="footer">
             <div class="size">
@@ -29,7 +28,5 @@
         </div>
 		
 	
-	</div>
+	
 
-</body>
-</html>

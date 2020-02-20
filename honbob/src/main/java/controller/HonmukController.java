@@ -109,9 +109,9 @@ public class HonmukController {
 		if(searchlist.size()==0) {			
 			model.addAttribute("msg", "식당 정보가 없습니다.");
 			model.addAttribute("url", "/honbob/searchList.do");
-			return "include/alert";
+			return "list/alert";
 		}else {
-			return "include/listAjax";
+			return "list/listAjax";
 		}				
 		
 	}	
@@ -210,7 +210,6 @@ public class HonmukController {
 			model.addAttribute("userGrade", userGrade);
 		}
 		
-		
 		//식당사진 가져오기
 		List<RestaurantImageVO> imageList = hmDetailService.getRestaurantImageById(res_num);
 		//추천식당 3개정도 가져오기 !! 현재 있는 식당은 목록에 안나오게 해야함;
@@ -221,8 +220,15 @@ public class HonmukController {
 		List<String> recomGradeList = hmDetailService.getRecommandGrade(recomRest);
 		//리뷰가져오기
 		List<ReviewVO> reviewList = hmDetailService.getReviewList(res_num);
-		reviewList = null;
-		int reviewcount = 0;
+		//여러 리뷰에 있는 userNo를 가지고 유저 정보를 가지고 온다.
+		List<UserVO> review_userList = new ArrayList<UserVO>();	
+		if(reviewList == null) {
+			
+		}else {
+			review_userList = hmDetailService.getReviewUserList(reviewList);			
+		}
+		//리뷰 숫자 가져오기
+		int reviewcount = hmDetailService.getReviewCount(res_num);
 		restDetail.setGradecount(gradeCnt);
 		
 		
@@ -250,8 +256,8 @@ public class HonmukController {
 		model.addAttribute("imageList", imageList);
 		model.addAttribute("res_grade",String.format("%.1f", res_grade));
 		model.addAttribute("recomList",recomRest);
-		
 		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("review_userList",review_userList);
 		model.addAttribute("reviewcount", reviewcount);
 		model.addAttribute("recomImageList", recomImageList);
 		model.addAttribute("recomGradeList", recomGradeList);

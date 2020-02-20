@@ -63,7 +63,7 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 				<img class="detail_count_picture" src="images/detail/picture_read.jpg"> &nbsp
 				<span class="detail_count_text">${restaurantDetail.readcount}</span> &nbsp &nbsp
 				<img class="detail_count_picture" src="images/detail/picture_review.jpg"> &nbsp
-				<span class="detail_count_text">${restaurantDetail.reviewcount}</span> &nbsp &nbsp
+				<span class="detail_count_text">${reviewcount}</span> &nbsp &nbsp
 				<img class="detail_count_picture" src="images/detail/picture_like.jpg"> &nbsp
 				<span class="detail_count_text" id = "detail_grade_count">${restaurantDetail.gradecount}</span>
 			</div>
@@ -109,8 +109,9 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 				<c:if test="${restaurantDetail.calculator == 1}"> 현금계산 </c:if>
 				<c:if test="${restaurantDetail.park == 1}"> 주차가능 </c:if>
 				<c:if test="${restaurantDetail.table2 == 1}"> 2인테이블 </c:if><br>
-				 
-				<b>지도</b> 
+				
+				<div id = "detail_map_view">
+				<span class="detail_map_text"><b>지도</b></span> 
 				
 				<div id="map" style="width:100%;height:400px;"></div>
 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=968f5cb093e2b0f76e796a0721504779&libraries=services"></script>
@@ -152,30 +153,35 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 					</script>
 					
 				<b>주소 : </b>${restaurantDetail.address}<br>
+				</div>
 			</section>
-			<div id="review_subject">
-				<p class="review_subject_txt">리뷰(${reviewcount })</p>
-				<% if(uv!=null){ %>
-				<a href="reviewWrite/${restaurantDetail.res_num }"><img id="review_write_btn" src="images/detail/review_write_icon.jpg"></a>
-				<%} %>
-			</div>
-			<hr id = "reviewTophr">
-			<div id="review_content">
-				<c:choose>
-					<c:when test="${reviewList!=null}">
-						<p class="review_content_txt">아직 리뷰가 작성되지 않았습니다.</p>
-					</c:when>
-					<c:otherwise>
-						<div class="review_detail">
-							<div class="review_detail_user">
-								<img class="review_detail_profile" src="images/detail/grade_star_off.jpg">
+			<div id="review_detail_all">
+				<div id="review_subject">
+					<p class="review_subject_txt">리뷰(${reviewcount })</p>
+					<% if(uv!=null){ %>
+					<a href="reviewWrite/${restaurantDetail.res_num }"><img id="review_write_btn" src="images/detail/review_write_icon.jpg"></a>
+					<%} %>
+				</div>
+				<hr id = "reviewTophr">
+				<div id="review_content">
+					<c:choose>
+						<c:when test="${reviewcount==0}">
+							<p class="review_content_txt">아직 리뷰가 작성되지 않았습니다.</p>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="review" items="${reviewList }" varStatus="status">
+							<div class="review_detail">
+								<div class="review_detail_user">
+									<img class="review_detail_profile" src="images/detail/grade_star_off.jpg">
+								</div>
+								<div class="review_detail_content">
+									<p>${review.content }</p>
+								</div>
 							</div>
-							<div class="review_detail_content">
-								<p>리뷰 내용이 들어갈 자리 입니다.</p>
-							</div>
-						</div>
-					</c:otherwise>
-				</c:choose>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</div>
 			</div>
 		</div>
 		<div id="content_right">
@@ -187,7 +193,7 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 					<img class="recom_image" src="images/food/${recomImageList[status.index].res_image_name }"><br>
 					<div class="recom_content_txt">
 						<b class="recom_grade_txt">${recomGradeList[status.index]}</b><br>
-						<span class="recom_subject_txt"><b>식당 이름 : </b>${recom.res_name}<br>
+						<span class="recom_subject_txt"><b>${recom.res_name}</b><br>
 						<b>음식 종류 : </b>
 						<c:if test="${restaurantDetail.koreafood == 1}">한식</c:if>
 						<c:if test="${restaurantDetail.chinafood == 1}">중식</c:if>

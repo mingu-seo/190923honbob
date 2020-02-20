@@ -35,11 +35,11 @@
 						   </div>
 						   <div class="restaurants-info">
 						       <a href="DetailView.do?res_num=${res.res_num }"><h2>${res.res_name }</h2></a>
-						       <strong class="grade"><img src="images/list/grade_icon.png" width="15" height="15">${res.grade }</strong>
+						       <strong class="grade"><img src="images/list/grade_icon.png" width="15" height="15"> ${res.grade }</strong>
 						       <p><span>${res.addressCut } - ${res.category }${res.option }</span></p>
 						       <p>
-						           <span class="view_count"><img src="images/list/read_icon.png" width="15" height="15">${res.readcount }</span>
-						           <span class="review_count"><img src="images/list/review_icon.jpg" width="15" height="15">${res.reviewcount }</span>
+						           <span class="view_count"><img src="images/list/read_icon.png" width="15" height="15"> ${res.readcount }</span>
+						           <span class="review_count"><img src="images/list/review_icon.jpg" width="15" height="15"> ${res.reviewcount }</span>
 						       </p>                                        
 						   </div>
 						</div>   
@@ -90,7 +90,9 @@
 							<c:if test="${visit.japanfood == 1}">일식</c:if>
 							<c:if test="${visit.etcfood == 1}">중식</c:if><br>
 						</div>
-					</div>			
+					</div>
+					<br>
+								
 	            </c:forEach>
     	</div>
     </div>
@@ -175,7 +177,7 @@
 		        '                <img src="images/food/'+thumbnail[arrIdx]+'" width="75" height="73">' +
 		        '           </div>' + 
 		        '            <div class="desc">' + 
-		        '                <div class="ellipsis"><a href="DetailView.do?res_num='+res_num[arrIdx]+'">'+res_name[arrIdx]+'</a></div>' + 
+		        '                <div class="ellipsis"><a href="DetailView.do?res_num='+res_num[arrIdx]+'" style="text-decoration:none; color:black;"">'+res_name[arrIdx]+'</a></div>' + 
 		        '                <div class="marker-grade"><img src="images/list/grade_icon.png" width="15" height="15">'+grade[arrIdx]+' </div>' + 
 		        '                <div class="jibun ellipsis">'+addressCut[arrIdx]+' - '+category[arrIdx]+'</div>' + 
 		        '                <div><img src="images/list/read_icon.png" width="15" height="15">'+readcount[arrIdx]+
