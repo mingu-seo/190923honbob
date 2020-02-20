@@ -174,5 +174,18 @@ body{
 	width:50%;
 }
 #review_detail_all{
-	
+	margin-top:25px;
+}
+#detail_map_view{
+	margin-top:25px;
+	margin-bottom:25px;
+}
+.detail_map_text{
+	font-size:23px;
+}
+.review_content_txt{
+	margin-top:15px;
+	margin-bottom:15px;
+	margin-left:20px;
+	font-size:19px;
 }

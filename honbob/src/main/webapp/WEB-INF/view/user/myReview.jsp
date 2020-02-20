@@ -63,7 +63,7 @@
 				</tr>
 				<% for ( int i=0 ; i < list.size() ; i++) { %>
 				<tr>
-					<td class = "listCon"><%=list.get(i).getUser_userId() %></td>
+					<td class = "listCon"><%=list.get(i).getId() %></td>
 					<td>&nbsp;&nbsp;&nbsp;<%=list.get(i).getSubject() %></td>
 					<td class = "listCon"><%=list.get(i).getContent() %></td>
 					<td class = "listCon"><%=list.get(i).getRegistdate() %></td>

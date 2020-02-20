@@ -63,7 +63,7 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 				<img class="detail_count_picture" src="images/detail/picture_read.jpg"> &nbsp
 				<span class="detail_count_text">${restaurantDetail.readcount}</span> &nbsp &nbsp
 				<img class="detail_count_picture" src="images/detail/picture_review.jpg"> &nbsp
-				<span class="detail_count_text">${restaurantDetail.reviewcount}</span> &nbsp &nbsp
+				<span class="detail_count_text">${reviewcount}</span> &nbsp &nbsp
 				<img class="detail_count_picture" src="images/detail/picture_like.jpg"> &nbsp
 				<span class="detail_count_text" id = "detail_grade_count">${restaurantDetail.gradecount}</span>
 			</div>
@@ -109,8 +109,9 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 				<c:if test="${restaurantDetail.calculator == 1}"> 현금계산 </c:if>
 				<c:if test="${restaurantDetail.park == 1}"> 주차가능 </c:if>
 				<c:if test="${restaurantDetail.table2 == 1}"> 2인테이블 </c:if><br>
-				 
-				<span class=""><b>지도</b></span> 
+				
+				<div id = "detail_map_view">
+				<span class="detail_map_text"><b>지도</b></span> 
 				
 				<div id="map" style="width:100%;height:400px;"></div>
 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=968f5cb093e2b0f76e796a0721504779&libraries=services"></script>
@@ -152,6 +153,7 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 					</script>
 					
 				<b>주소 : </b>${restaurantDetail.address}<br>
+				</div>
 			</section>
 			<div id="review_detail_all">
 				<div id="review_subject">
@@ -163,7 +165,7 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 				<hr id = "reviewTophr">
 				<div id="review_content">
 					<c:choose>
-						<c:when test="${reviewList==null}">
+						<c:when test="${reviewcount==0}">
 							<p class="review_content_txt">아직 리뷰가 작성되지 않았습니다.</p>
 						</c:when>
 						<c:otherwise>
