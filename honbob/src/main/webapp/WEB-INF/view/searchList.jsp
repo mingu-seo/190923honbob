@@ -11,6 +11,7 @@
     <meta name="viewport" charset="utf-8" content="user-scalable=no, initial-scale=1, maximum-scale=1">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     
+<link href="https://fonts.googleapis.com/css?family=Sintony:400,700" rel="stylesheet">      
 <link rel="stylesheet" href="css/list/style.css"/>
 <script src="js/list/script.js"></script>
 
