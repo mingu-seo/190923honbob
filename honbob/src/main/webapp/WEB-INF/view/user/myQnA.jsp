@@ -1,9 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="vo.UserVO"%>
+<%@page import="util.PageInfo" %>
+<%@page import="util.Page" %>
+<%@page import="java.util.List"%>
+<%@page import="vo.support.SupportVO"%>
 <%
 	UserVO vo = (UserVO) request.getAttribute("vo");
 %>
+<%
+	List<SupportVO> list = (List<SupportVO>) request.getAttribute("myQnAList"); 
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +31,7 @@
 		<div id = "myPage">
 			<h2> 마이페이지 </h2>
 		</div>
-        <nav id = "main-navigation">
+     <nav id = "main-navigation">
                 <ul class = "menu">
                     <li class = "menulIST">
                         <span class = "menu-title"><a href = "profileForm.do"><h4>프로필 수정</h4></a></span><hr>
@@ -55,15 +63,17 @@
     				<th class = "name3">답변</th>
     				<th class = "name4">등록일</th>
     			</tr>
+				<% for ( int i=0 ; i < list.size() ; i++) { %>
+				<tr>
+					<td class = "listCon"> <%=list.get(i).getId()%></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/honbob/supportDetail/<%=list.get(i).getId()%>"><%=list.get(i).getSubject() %></a></td>
+					<td class = "listCon"><%=list.get(i).getLock() %></td>
+					<td class = "listCon"><%=list.get(i).getRegistdate() %></td>
+				</tr>
+				<% } %>
     		</table>
     	</div>
-		<div id = "Info">
-		<form action = "myQnAList.do" method = "post">
-		<table>
 
-		</table>
-		</form>
-		</div>
 	</div>
 	<script src="/honbob/js/user/myPage.js"></script> 
 	<%@ include file = "../footer.jsp" %>

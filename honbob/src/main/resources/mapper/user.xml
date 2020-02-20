@@ -69,6 +69,10 @@
 		select * FROM review where user_userNo = #{userNo} LIMIT #{startIndex}, #{limit}
 	</select>
 	
+	<select id="myQnAList" parameterType="vo.UserVO" resultType="vo.support.SupportVO">
+		select * FROM support where userNo = #{userNo} LIMIT #{startIndex}, #{limit}
+	</select>
+	
 	<select id="pageUpDown" resultType="Integer">
 		SELECT COUNT(*) FROM honmuk.user
 	</select>
