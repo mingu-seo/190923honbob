@@ -60,7 +60,7 @@
                         <p class="card-text">${reviewItem.subject} / ${reviewItem.subject}</p>
                         <p class="card-text update">${reviewItem.registdate}</p>
 
-                        <a href="/reviewDetail/${reviewItem.id}" id="viewPageBtn" class="btn btn-primary reviewbutton">리뷰 보기</a>
+                        <a href="reviewDetail/${reviewItem.id}" id="viewPageBtn" class="btn btn-primary reviewbutton">리뷰 보기</a>
                     </div>
                 </div>
             </c:forEach>
@@ -78,10 +78,10 @@
 
                         <c:forEach begin="1" end="${totalPages}" varStatus="loop">
                             <c:if test="${loop.index eq currentPage}">
-                                <li class="page-item active"><a class="page-link" href="/reviewList?page=${loop.index}">${loop.index}</a></li>
+                                <li class="page-item active"><a class="page-link" href="reviewList?page=${loop.index}">${loop.index}</a></li>
                             </c:if>
                             <c:if test="${loop.index ne currentPage}">
-                                <li class="page-item"><a class="page-link" href="/reviewList?page=${loop.index}">${loop.index}</a></li>
+                                <li class="page-item"><a class="page-link" href="reviewList?page=${loop.index}">${loop.index}</a></li>
                             </c:if>
                         </c:forEach>
                         <li class="page-item">
