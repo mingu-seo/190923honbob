@@ -10,6 +10,7 @@ import dao.HonmukDetailDAO;
 import vo.GradeVO;
 import vo.RestaurantImageVO;
 import vo.RestaurantVO;
+import vo.UserVO;
 import vo.review.ReviewVO;
 
 @Service
@@ -103,7 +104,7 @@ public class HonmukDetailService {
 	public int deleteGrade(GradeVO gradevo) {
 		return HonmukDao.deleteGrade(gradevo);
 	}
-
+	//추천 리스트 사진 가지고오기
 	public List<RestaurantImageVO> getRecommandImage(List<RestaurantVO> recomRest) {
 		//들어있는 3개의 식당에서 식당번호를 뽑아서 대표이미지를 가져와서 저장하면된다.
 		List<RestaurantImageVO> recomImageList = new ArrayList<RestaurantImageVO>();
@@ -115,7 +116,7 @@ public class HonmukDetailService {
 		
 		return recomImageList;
 	}
-
+	//추천리스트 별점 정보 가지고오기
 	public List<String> getRecommandGrade(List<RestaurantVO> recomRest) {
 		List<String> recomGradeList = new ArrayList<String>();
 		
@@ -139,10 +140,11 @@ public class HonmukDetailService {
 		
 		return recomGradeList;
 	}
-
+	// 별점 한 사람수 가지고 오기
 	public int getGradeCnt(int res_num) {
 		return HonmukDao.getGradeCnt(res_num);
 	}
+	// 별점(Restaurant table grade) 업데이트 해주기
 	public int updateRestuarantGrade(int res_num, Double current_res_grade) {
 		
 		RestaurantVO resVO = new RestaurantVO();
@@ -151,6 +153,26 @@ public class HonmukDetailService {
 		resVO.setGrade(current_res_grade);
 		
 		return HonmukDao.updateRestuarantGrade(resVO);
+	}
+	//reviewList를 가지고 맞는 uservolist를 만들어준다.
+	//리뷰리스트 각각의 리뷰에서 userNo를 가져온다
+	//userNo을 가지고 
+	public List<UserVO> getReviewUserList(List<ReviewVO> reviewList) {
+		//유저정보를 넣어줄 리스트를 가지고온다.
+		List<UserVO> reviewUserList = new ArrayList<UserVO>();
+		//리뷰 숫자만큼 유저정보가 필요하기때문에 리뷰리스트의 숫자만큼 포문을 돌려준다.
+		for(int i=0;i<reviewList.size();i++) {
+			//리뷰 하나별로 저장되어있는 userNo을 이용하여 User정보를 가지고 온다.
+			UserVO uv = HonmukDao.getUserInfo(reviewList.get(i).getUser_userNo());
+			//가지고온 정보를 리스트에 넣어준다.
+			reviewUserList.add(uv);
+		}
+		//완성된 리스트를 리턴
+		return reviewUserList;
+	}
+	//리뷰 숫자 가져오기
+	public int getReviewCount(int res_num) {
+		return HonmukDao.getReviewCount(res_num);
 	}
 	
 	//리뷰 가져오기

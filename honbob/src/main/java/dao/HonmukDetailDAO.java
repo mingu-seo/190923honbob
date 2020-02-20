@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import vo.GradeVO;
 import vo.RestaurantImageVO;
 import vo.RestaurantVO;
+import vo.UserVO;
 import vo.review.ReviewVO;
 
 @Repository
@@ -53,11 +54,7 @@ public class HonmukDetailDAO {
 	public List<RestaurantVO> getRecommnadRestaurant(RestaurantVO restDetail) {
 		return sqlSession.selectList("Honmuk.getRecommandRestaurant", restDetail);
 	}
-	//리뷰 가져오기
-	public List<ReviewVO> getReviewList(int res_num) {
-		//return sqlSession.selectList("Honmuk.getReviewList", res_num);
-		return null;
-	}
+	
 	//유저가 별점한건지 가져오기
 	public int getUserGrade(GradeVO gradevo) {
 		if (sqlSession.selectOne("Honmuk.getUserGrade", gradevo)==null) {
@@ -79,7 +76,21 @@ public class HonmukDetailDAO {
 	public int deleteGrade(GradeVO gradevo) {
 		return sqlSession.delete("Honmuk.deleteGrade", gradevo);
 	}
+	//별점정보 레스토랑 테이블에 넣기
 	public int updateRestuarantGrade(RestaurantVO resVO) {
 		return sqlSession.update("Honmuk.updateRestaurantGrade",resVO);
+	}
+	//리뷰 가져오기
+	public List<ReviewVO> getReviewList(int res_num) {
+		return sqlSession.selectList("Honmuk.getReviewList", res_num);
+	}
+	//유저정보 가지고오기
+	public UserVO getUserInfo(String userNo) {
+		//return sqlSession.selectOne("Honmuk.getUserInfo",userNo);
+		return null;
+	}
+	//리뷰 숫자 가져오기
+	public int getReviewCount(int res_num) {
+		return sqlSession.selectOne("Honmuk.getReviewCount",res_num);
 	}
 }

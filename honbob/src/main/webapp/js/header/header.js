@@ -1,6 +1,6 @@
 	$(function() {
-		/*
-        $('.btn').click(function() { 
+		
+        $('.headerBtn').click(function() { 
             $('#menu').addClass('open'); 
         }); 
             
@@ -10,7 +10,7 @@
 
 
 
-        $('.btn').click(function () { 
+        $('.headerBtn').click(function () { 
             $('#menu,.page_cover,html').addClass('open');  
             window.location.hash = '#open';  
         }); 
@@ -20,7 +20,7 @@
                 $('#menu,.page_cover,html').removeClass('open');  
             } 
         };
-        */
+        
  
 
     });

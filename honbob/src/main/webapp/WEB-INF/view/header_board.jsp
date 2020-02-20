@@ -16,7 +16,7 @@ if (sess != null) userNo = sess.getUserNo();
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
-	$(function() {
+	<%--$(function() {
         $('.btn_board').click(function() {
             $('#menu').addClass('open'); 
         }); 
