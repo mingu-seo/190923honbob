@@ -48,7 +48,7 @@ if (sess != null) userNo = sess.getUserNo();
                 <div class="headerBtn">
                 </div> 
                 <div onclick="history.back();" class="page_cover"></div>
-                <div id="Menu">
+                <div id="menu">
                 	<div onclick="history.back();" class="close"></div>                                    
                     <% if (session.getAttribute("Session") == null) { %>
 						<div class="user" style=" cursor: pointer;" onclick='window.open("http://localhost:8080/honbob/loginForm.do","_blank","height=600,width=470, status=yes,toolbar=no,menubar=no,location=no");return false'>로그인을 해주세요.</div>

@@ -16,6 +16,7 @@ RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <link rel="stylesheet" href="css/header/style.css"/>
 <script src="js/header/header.js"></script>
+<link rel="stylesheet" href="css/footer/style.css"/>
 
     <script>    
     
