@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html><head>
     <title>Title</title>
@@ -24,73 +25,12 @@
     </style>
 </head>
 <body>
+<div class="wrap">
+    <%@ include file="/WEB-INF/view/header_board.jsp"%>
 <div class="container">
     <div class="row">
         <p></p>
     </div>
-    <div class="row">
-        <p>게시글을 원하는 검색어에 설정하여 많은분들께 공유해주세요! 인기 게시글이 될 확률이 높습니다.</p>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-2  pl-1">
-                    <div class="btn-group myBtnGroup">
-                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            메뉴별
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">한식</a>
-                            <a class="dropdown-item" href="#">양식</a>
-                            <a class="dropdown-item" href="#">중식</a>
-                            <a class="dropdown-item" href="#">일식</a>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-md-2  pl-2">
-                    <div class="local myBtnGroup">
-                        <form class="form-inline">
-                            <select class="custom-select" id="inlineFormCustomSelectPref" style="width: -webkit-fill-available;">
-                                <option selected="">지역 별</option>
-                                <option value="1">강서구</option>
-                                <option value="2">강남구</option>
-                                <option value="3">강동구</option>
-                                <option value="4">강서구</option>
-                                <option value="5">양천구</option>
-                                <option value="6">구로구</option>
-                                <option value="7">금천구</option>
-                                <option value="8">서대문구</option>
-                                <option value="9">중구</option>
-                            </select>
-                        </form>
-                    </div>
-
-                </div>
-                <div class="col-md-3  pl-2">
-                    <div class="restrSearch" style="width:183px;">
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-md-2  pl-2">
-                    <div class="optionButtons ">
-                        <button type="button" class="btn btn-warning myBtnGroup">평점순</button>
-                    </div>
-
-                </div>
-                <div class="col-md-2 pl-2">
-                    <div class="optionButtons">
-                        <button type="button" class="btn btn-warning myBtnGroup">최신순</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <form method="POST" action="/reviewEdit" class="was-validated" id="frm">
     <input type="hidden" name="id" value="${review.id}">
@@ -114,7 +54,8 @@
         </div>
     </div>
 </div>
-
+    <jsp:include page="/footer.do"/>
+</div>
 <script>
     $(document).ready(function() {
         $('#editBtn').click(function() {
@@ -122,7 +63,7 @@
         });
         $('#backBtn').click(
             function(e) {
-                window.location.href = "http://localhost:8080/reviewList";
+                window.location.href = "reviewList";
             }
         );
     });

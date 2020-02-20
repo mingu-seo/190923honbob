@@ -56,22 +56,21 @@
         <div>
     		<table>
     			<tr class = "names">
-    				<th class = "name1">작성자</th>
+    				<th class = "name1">글번호</th>
 				    <th class = "name2">제목</th>
 				    <th class = "name3">조회수</th>
 				    <th class = "name4">등록일</th>
 				</tr>
 				<% for ( int i=0 ; i < list.size() ; i++) { %>
 				<tr>
-					<td class = "listCon"><%=list.get(i).getId() %></td>
-					<td>&nbsp;&nbsp;&nbsp;<%=list.get(i).getSubject() %></td>
+					<td class = "listCon"><%=i+1%></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;<%=list.get(i).getSubject() %></td>
 					<td class = "listCon"><%=list.get(i).getContent() %></td>
 					<td class = "listCon"><%=list.get(i).getRegistdate() %></td>
 				</tr>
 				<% } %>
     		</table>
     	</div>
-    	
 	</div>
 	<script src="/honbob/js/user/myPage.js"></script> 
 	<%@ include file = "../footer.jsp" %>

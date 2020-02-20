@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <html>
 <head>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -14,6 +15,8 @@
 </style>
 
 <body>
+<div class="wrap">
+    <%@ include file="/WEB-INF/view/header_board.jsp"%>
 <form method="POST" action="/supportEdit" class="was-validated" id="frm">
     <input type="hidden" name="id" value="${support.id}">
     <div class="mb-3">
@@ -36,7 +39,8 @@
         </div>
     </div>
 </div>
-
+    <jsp:include page="/footer.do"/>
+</div>
 <script>
     $(document).ready(function() {
         $('#editBtn').click(function() {

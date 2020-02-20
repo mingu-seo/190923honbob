@@ -1,4 +1,5 @@
 	$(function() {
+		/*
         $('.btn').click(function() { 
             $('#menu').addClass('open'); 
         }); 
@@ -19,6 +20,7 @@
                 $('#menu,.page_cover,html').removeClass('open');  
             } 
         };
+        */
  
 
     });
