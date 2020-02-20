@@ -13,8 +13,6 @@ import util.PagingOption;
 import vo.RestaurantVO;
 import vo.review.ReviewEditRequest;
 import vo.review.ReviewVO;
-
-
 import java.util.List;
 
 @Controller
@@ -54,6 +52,8 @@ public class ReviewController {
     // 리뷰 작성 페이지를 불러오는 부분부터 식당_ID를 들고 시작
     @RequestMapping(path ={"/reviewWrite/{restaurantId}","/reviewWrite"}, method = RequestMethod.GET)
     public ModelAndView reviewWrite(@PathVariable(name="restaurantId", required = false) Integer restaurantId){
+        System.out.println("oo");
+        if (restaurantId == null) restaurantId = 0;
         ModelAndView mav = new ModelAndView();
         String pageName = "review/reviewWrite";
         mav.setViewName(pageName);

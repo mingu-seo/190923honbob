@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <html>
 <head>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -14,6 +15,9 @@
 </style>
 
 <body>
+<div class="wrap">
+    <%@ include file="/WEB-INF/view/header_board.jsp"%>
+
 <form method="POST" action="/supportWrite" class="was-validated">
     <div class="mb-3">
         <label for="questionSubject">문의제목</label>
@@ -35,7 +39,8 @@
         </div>
     </div>
 </form>
-
+    <jsp:include page="/WEB-INF/view/footer.jsp"/>
+</div>
 <script>
     $(document).ready(function() {
         $('#saveBtn').click(

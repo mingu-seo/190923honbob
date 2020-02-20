@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html><head>
     <title>Title</title>
@@ -24,6 +25,10 @@
     </style>
 </head>
 <body>
+
+<div class="wrap">
+    <%@ include file="/WEB-INF/view/header_board.jsp"%>
+
 <div class="container">
     <div class="col-md-9">
         <div class="row">
@@ -34,7 +39,7 @@
     <form method="POST" action="/honbob/reviewWrite" class="was-validated">
         <input type="hidden" name="res_num" value="${restaurantId}">
         <div class="mb-3">
-            <label for="reviewSubject">제목</label>
+            <label for="reviewSubject">제목1</label>
             <textarea name="subject" class="form-control is-invalid" id="reviewSubject" placeholder="제목을 입력해주세요" required></textarea>
         </div>
         <div class="mb-3">
@@ -55,7 +60,8 @@
         </div>
     </form>
 </div>
-
+    <jsp:include page="/WEB-INF/view/footer.jsp"/>
+</div>
 <script>
     $(document).ready(function() {
         // $('#saveBtn').click(

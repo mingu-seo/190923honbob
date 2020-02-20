@@ -403,7 +403,17 @@
 		update restaurant set grade = #{grade} where res_num=#{res_num}
 	</update>
 	<!-- 리뷰 리스트 가져오기 -->
-	
+	<select id="getReviewList" parameterType="Integer" resultType="vo.review.ReviewVO">
+		select * from review where res_num=#{res_num}
+	</select>
+	<!-- 리뷰 숫자 가져오기 -->
+	<select id="getReviewCount" parameterType="Integer" resultType="Integer">
+		select count(*) from review where res_num=#{res_num}
+	</select>
+	<!-- 유저 정보 가지고오기 -->
+	<select id="getUserInfo" parameterType="Integer" resultType="vo.UserVO">
+		select * from user where userNo = #{userNo}
+	</select>
 	<!-- 메인페이지에서 최신리뷰 6개 가져오기 -->
 	<select id="mainReview" resultType="vo.review.ReviewVO" parameterType="vo.review.ReviewVO">
 			SELECT * FROM review WHERE registdate LIMIT 0,6
