@@ -78,7 +78,7 @@
         // );
         $('#backBtn').click(
             function(e) {
-                window.location.href = "http://localhost:8080/reviewList?page=1";
+                window.location.href = "reviewList?page=1";
             }
         );
     });

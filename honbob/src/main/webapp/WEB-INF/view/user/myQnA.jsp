@@ -50,7 +50,7 @@
         <div>
     		<table>
     			<tr class = "names">
-    				<th class = "name1">작성자</th>
+    				<th class = "name1">글번호</th>
     				<th class = "name2">제목</th>
     				<th class = "name3">답변</th>
     				<th class = "name4">등록일</th>

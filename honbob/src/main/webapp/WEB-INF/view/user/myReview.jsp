@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="vo.UserVO"%>
+<%@page import="util.PageInfo" %>
+<%@page import="util.Page" %>
+<%@page import="java.util.List"%>
+<%@page import="vo.review.ReviewVO"%>
 <%
 	UserVO vo = (UserVO) request.getAttribute("vo");
+%>
+<%
+	List<ReviewVO> list = (List<ReviewVO>) request.getAttribute("myReviewList"); 
 %>
 <!DOCTYPE html>
 <html>
@@ -38,7 +45,7 @@
                         <span class = "menu-title menu-title-active"><h4>나의 리뷰글</h4></span><hr>
                     </li>
                     <li class = "menulIST">
-                        <span class = "menu-title"><a href = "myQnA.do" ><h4>나의 QnA</h4></a></span><hr>
+                        <span class = "menu-title"><a href = "myQnA.do?" ><h4>나의 QnA</h4></a></span><hr>
                     </li>
                 </ul>
         </nav>
@@ -49,20 +56,21 @@
         <div>
     		<table>
     			<tr class = "names">
-    				<th class = "name1">작성자</th>
+    				<th class = "name1">글번호</th>
 				    <th class = "name2">제목</th>
 				    <th class = "name3">조회수</th>
 				    <th class = "name4">등록일</th>
 				</tr>
+				<% for ( int i=0 ; i < list.size() ; i++) { %>
+				<tr>
+					<td class = "listCon"><%=i+1%></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;<%=list.get(i).getSubject() %></td>
+					<td class = "listCon"><%=list.get(i).getContent() %></td>
+					<td class = "listCon"><%=list.get(i).getRegistdate() %></td>
+				</tr>
+				<% } %>
     		</table>
     	</div>
-		<div id = "Info">
-		<form action = "myReviewList.do" method = "post">
-		<table>
-
-		</table>
-		</form>
-		</div>
 	</div>
 	<script src="/honbob/js/user/myPage.js"></script> 
 	<%@ include file = "../footer.jsp" %>

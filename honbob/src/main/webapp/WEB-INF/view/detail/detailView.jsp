@@ -156,7 +156,7 @@ UserVO uv = (UserVO)session.getAttribute("Session");
 			<div id="review_subject">
 				<p class="review_subject_txt">리뷰(${reviewcount })</p>
 				<% if(uv!=null){ %>
-				<a href="reviewWrite"><img id="review_write_btn" src="images/detail/review_write_icon.jpg"></a>
+				<a href="reviewWrite/${restaurantDetail.res_num }"><img id="review_write_btn" src="images/detail/review_write_icon.jpg"></a>
 				<%} %>
 			</div>
 			<hr id = "reviewTophr">
