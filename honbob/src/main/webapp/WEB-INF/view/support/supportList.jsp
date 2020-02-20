@@ -131,7 +131,7 @@
         </ul>
     </nav>
 </div>
-    <jsp:include page="/footer.do"/>
+    <jsp:include page="/WEB-INF/view/footer.jsp"/>
 </div>
     <script>
         $(document).ready(function() {
