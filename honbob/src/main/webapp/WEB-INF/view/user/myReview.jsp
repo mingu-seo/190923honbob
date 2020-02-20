@@ -11,6 +11,7 @@
 <%
 	List<ReviewVO> list = (List<ReviewVO>) request.getAttribute("myReviewList"); 
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,14 +64,15 @@
 				</tr>
 				<% for ( int i=0 ; i < list.size() ; i++) { %>
 				<tr>
-					<td class = "listCon"><%=i+1%></td>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;<%=list.get(i).getSubject() %></td>
+					<td class = "listCon"> <%=list.get(i).getId()%></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/honbob/reviewDetail/<%=list.get(i).getId()%>"><%=list.get(i).getSubject() %></a></td>
 					<td class = "listCon"><%=list.get(i).getContent() %></td>
 					<td class = "listCon"><%=list.get(i).getRegistdate() %></td>
 				</tr>
 				<% } %>
     		</table>
     	</div>
+
 	</div>
 	<script src="/honbob/js/user/myPage.js"></script> 
 	<%@ include file = "../footer.jsp" %>

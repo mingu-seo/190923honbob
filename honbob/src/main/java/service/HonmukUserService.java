@@ -15,6 +15,7 @@ import dao.HonmukUserDAO;
 import util.FileUtil;
 import vo.UserVO;
 import vo.review.ReviewVO;
+import vo.support.SupportVO;
 
 @Service
 public class HonmukUserService {
@@ -65,6 +66,11 @@ public class HonmukUserService {
 	// 나의 리뷰글(마이페이지)
 	public List<ReviewVO> myReviewList(UserVO uv) {
 		return honmukUserDAO.myReviewList(uv);
+	}
+	
+	// 나의 QnA(마이페이지)
+	public List<SupportVO> myQnAList(UserVO uv) {
+		return honmukUserDAO.myQnAList(uv);
 	}
 	
 	// 페이징 처리(마이페이지)
