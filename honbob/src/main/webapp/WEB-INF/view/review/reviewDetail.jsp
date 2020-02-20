@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
@@ -17,6 +18,14 @@
 
 
 <body>
+<div class="wrap">
+    <%@ include file="/WEB-INF/view/header_board.jsp"%>
+
+        <div class="container">
+            <div class="row">
+
+            </div>
+
 <div class="table">
     <table class="table table-bordered">
         <thead>
@@ -58,6 +67,8 @@
             </div>
         </form>
     </div>
+</div>
+    <jsp:include page="/footer.do"/>
 </div>
 <script>
     $(document).ready(function() {

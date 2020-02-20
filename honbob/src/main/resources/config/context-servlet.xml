@@ -23,7 +23,8 @@
 	</mvc:view-resolvers>
 	
 	<!-- 정적인페이지 세팅 -->
-	<mvc:view-controller path="/design.do"/>
+	<mvc:view-controller path="/header.do"/>
+	<mvc:view-controller path="/footer.do"/>
 	
 	<!-- dataSource 설정 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
