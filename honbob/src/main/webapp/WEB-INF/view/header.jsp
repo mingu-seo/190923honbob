@@ -269,6 +269,8 @@ if (sess != null) userNo = sess.getUserNo();
                     <% if (session.getAttribute("Session") == null) { %>
 						<div class="user" style=" cursor: pointer;" onclick='window.open("http://localhost:8080/honbob/loginForm.do","_blank","height=600,width=470, status=yes,toolbar=no,menubar=no,location=no");return false'>로그인을 해주세요.</div>
 			        <% } else { %>
+			        	<%=sess.getUserImage() %>
+			        	<%=sess.getUserName() %>님 반갑습니다.
 						<a href = "logOut.do"> 로그아웃 </a>
 					<% } %>
                     <div class="list" style=" cursor: pointer;" onclick="location.href='review/reviewList.do';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">리뷰게시판</div>
