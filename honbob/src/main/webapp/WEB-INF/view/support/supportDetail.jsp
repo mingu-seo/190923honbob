@@ -19,7 +19,7 @@
 
 <body>
 <div class="wrap">
-    <%@ include file="/WEB-INF/view/header_board.jsp"%>
+    <%@ include file="/WEB-INF/view/header.jsp"%>
 
 <div class="table">
 <table class="table table-bordered">
@@ -65,19 +65,19 @@
         </form>
     </div>
 </div>
-<jsp:include page="/footer.do"/>
+<%@ include file="/WEB-INF/view/footer.jsp" %>
 </div>
 <script>
     $(document).ready(function() {
         $('#subjectListPageLinkBtn').click(
             function(e) {
-                window.location.href = "http://localhost:8080/supportList";
+                window.location.href = "/honbob/supportList";
             }
         );
 
         $('#editPageBtn').click(
             function(e) {
-                window.location.href = "http://localhost:8080/supportEdit/${support.id}";
+                window.location.href = "/honbob/supportEdit?supportDocumentId=${support.id}";
             }
         );
         $('#deleteBtn').click(

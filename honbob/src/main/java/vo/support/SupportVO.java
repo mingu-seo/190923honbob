@@ -1,19 +1,19 @@
 package vo.support;
 
-import lombok.Data;
+import java.sql.Timestamp;
 
-import java.sql.Date;
+import lombok.Data;
 
 @Data
 public class SupportVO {
 	private int id;
 	private String subject;
 	private String content;
-	private Date registdate;
+	private Timestamp registdate;
 	private boolean lock;
 	private boolean sendemail;
 	private int file_num;
-	private int user_userId;
+	private int userNo;
 	private int comment_num;
 
 }

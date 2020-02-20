@@ -25,9 +25,6 @@ public class SupportService {
     }
 
     public void insertSupport(SupportVO vo) {
-        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        vo.setRegistdate(date);
-        vo.setUser_userId(1);
         supportDao.insertSupport(vo);
     }
 

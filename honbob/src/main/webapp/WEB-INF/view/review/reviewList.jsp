@@ -24,7 +24,7 @@
 </head>
 <body>
 <div class="wrap">
-    <%@ include file="/WEB-INF/view/header_board.jsp"%>
+    <%@ include file="/WEB-INF/view/header.jsp"%>
     <div class="container">
 
         <div class="row">
@@ -65,7 +65,7 @@
                             <p class="card-text">${reviewItem.subject} / ${reviewItem.subject}</p>
                             <p class="card-text update">${reviewItem.registdate}</p>
 
-                            <a href="/reviewDetail/${reviewItem.id}" id="viewPageBtn" class="btn btn-primary reviewbutton">리뷰 보기</a>
+                            <a href="/reviewDetail?reviewDocumentId=${reviewItem.id}" id="viewPageBtn" class="btn btn-primary reviewbutton">리뷰 보기</a>
                         </div>
                     </div>
                 </c:forEach>
@@ -99,7 +99,7 @@
 
         </div>
     </div>
-    <jsp:include page="/footer.do"/>
+    <%@ include file="/WEB-INF/view/footer.jsp" %>
 </div>
 <script>
     $(document).ready(function() {

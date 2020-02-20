@@ -50,8 +50,8 @@ public class ReviewController {
     //리뷰 작성폼 불러오기
     //식당번호 삽입 시 수정할 부분? => @PathVariable restraurantId
     // 리뷰 작성 페이지를 불러오는 부분부터 식당_ID를 들고 시작
-    @RequestMapping(path ={"/reviewWrite/{restaurantId}","/reviewWrite"}, method = RequestMethod.GET)
-    public ModelAndView reviewWrite(@PathVariable(name="restaurantId", required = false) Integer restaurantId){
+    @RequestMapping(path ={"/reviewWrite"}, method = RequestMethod.GET)
+    public ModelAndView reviewWrite(@RequestParam(name="restaurantId", required = false) Integer restaurantId){
         System.out.println("oo");
         if (restaurantId == null) restaurantId = 0;
         ModelAndView mav = new ModelAndView();
@@ -73,8 +73,8 @@ public class ReviewController {
     }
 
     //리뷰 상세보기
-    @RequestMapping(path = "/reviewDetail/{reviewDocumentId}", method = RequestMethod.GET)
-    public ModelAndView reviewDetail(@PathVariable int reviewDocumentId) {
+    @RequestMapping(path = "/reviewDetail", method = RequestMethod.GET)
+    public ModelAndView reviewDetail(@RequestParam("reviewDocumentId") int reviewDocumentId) {
         ModelAndView mav = new ModelAndView();
         ReviewVO reviewVO = reviewService.getReviewDetail(reviewDocumentId);
         String pageName = "review/reviewDetail";
@@ -84,8 +84,8 @@ public class ReviewController {
     }
 
     //리뷰 수정폼 불러오기
-    @RequestMapping(path = "/reviewEdit/{reviewDocumentId}", method = RequestMethod.GET)
-    public ModelAndView reviewEdit(@PathVariable int reviewDocumentId) {
+    @RequestMapping(path = "/reviewEdit", method = RequestMethod.GET)
+    public ModelAndView reviewEdit(@RequestParam("reviewDocumentId") int reviewDocumentId) {
         ModelAndView mav = new ModelAndView();
         String pageName = "review/reviewEdit";
         mav.setViewName(pageName);
@@ -108,8 +108,8 @@ public class ReviewController {
     }
 
     //리뷰 삭제
-    @RequestMapping(path = "/reviewDelete/{reviewDocumentId}", method = RequestMethod.POST)
-    public ModelAndView reviewDelete(@PathVariable int reviewDocumentId) {
+    @RequestMapping(path = "/reviewDelete", method = RequestMethod.POST)
+    public ModelAndView reviewDelete(@RequestParam("reviewDocumentId") int reviewDocumentId) {
         ModelAndView mav = new ModelAndView();
         reviewService.deleteReview(reviewDocumentId);
         String pageName = "redirect:/reviewList";

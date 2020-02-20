@@ -27,7 +27,7 @@
 <body>
 
 <div class="wrap">
-    <%@ include file="/WEB-INF/view/header_board.jsp"%>
+    <%@ include file="/WEB-INF/view/header.jsp"%>
 
 <div class="container">
     <div class="col-md-9">
@@ -38,6 +38,7 @@
     </div>
     <form method="POST" action="/honbob/reviewWrite" class="was-validated">
         <input type="hidden" name="res_num" value="${restaurantId}">
+        <input type="hidden" name="userNo" value="<%=sess != null ? sess.getUserNo() : 0%>">
         <div class="mb-3">
             <label for="reviewSubject">제목1</label>
             <textarea name="subject" class="form-control is-invalid" id="reviewSubject" placeholder="제목을 입력해주세요" required></textarea>
@@ -51,16 +52,13 @@
             <label class="custom-file-label" for="validatedCustomFile">첨부할 파일을 업로드 해주세요.</label>
             <div class="invalid-feedback"></div>
         </div>
-        <div class="optionButtons">
-
+        <div class="optionButtons mt-3 text-right">
             <button id="saveBtn" type="submit" class="btn btn-warning">등록</button>
-        </div>
-        <div class="optionButtons">
             <button id="backBtn" type="button" class="btn btn-warning">취소</button>
         </div>
     </form>
 </div>
-    <jsp:include page="/footer.do"/>
+    <%@ include file="/WEB-INF/view/footer.jsp" %>
 </div>
 <script>
     $(document).ready(function() {

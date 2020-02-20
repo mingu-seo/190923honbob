@@ -26,7 +26,7 @@
 </head>
 <body>
 <div class="wrap">
-    <%@ include file="/WEB-INF/view/header_board.jsp"%>
+    <%@ include file="/WEB-INF/view/header.jsp"%>
 <div class="container">
     <div class="row">
         <p></p>
@@ -54,7 +54,7 @@
         </div>
     </div>
 </div>
-    <jsp:include page="/footer.do"/>
+    <%@ include file="/WEB-INF/view/footer.jsp" %>
 </div>
 <script>
     $(document).ready(function() {

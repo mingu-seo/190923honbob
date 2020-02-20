@@ -15,7 +15,7 @@
 <!--</insert>-->
 
 	<insert id="insertReview" parameterType="vo.review.ReviewVO">
-	INSERT INTO review(`id`, `subject`, `content`, `registdate`, `res_num`, `user_userNo`)
+	INSERT INTO review(`id`, `subject`, `content`, `registdate`, `res_num`, `userNo`)
 	VALUES (null, '${subject}', '${content}', CURDATE(), ${res_num}, ${user_userNo});
 	</insert>
 

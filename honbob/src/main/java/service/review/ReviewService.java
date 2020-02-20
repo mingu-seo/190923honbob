@@ -28,9 +28,6 @@ public class ReviewService {
     }
 
     public void insertReview(ReviewVO vo) {
-        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        vo.setRegistdate(date);
-        vo.setUser_userNo("1");
         reviewDao.insertReview(vo);
     }
 
