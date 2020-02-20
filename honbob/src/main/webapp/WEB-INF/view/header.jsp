@@ -265,26 +265,21 @@ if (sess != null) userNo = sess.getUserNo();
                 <div class="btn">
                 </div> 
                 <div onclick="history.back();" class="page_cover"></div>
-                <div id="menu">
-                    <div onclick="history.back();" class="close"></div>
-                    <div class="user" style=" cursor: pointer;" onclick=''>로그인을 해주세요.</div>
-                    <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
-                    <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
-                    <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>
-                    <div class="list" style=" cursor: pointer;" onclick="location.href='';">게시판</div>                    
-                    <div class="user" style=" cursor: pointer;" onclick="location.href='';">로그인을 해주세요.</div>
-                    <div class="list" style=" cursor: pointer;" onclick="location.href='';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">게시판</div>
-                    <div class="list" style=" cursor: pointer;" onclick="location.href='';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">게시판</div>                                   
-
+                <div id="menu">                                    
+                    <% if (session.getAttribute("Session") == null) { %>
+						<div class="user" style=" cursor: pointer;" onclick='window.open("http://localhost:8080/honbob/loginForm.do","_blank","height=600,width=470, status=yes,toolbar=no,menubar=no,location=no");return false'>로그인을 해주세요.</div>
+			        <% } else { %>
+			        	<%=sess.getUserImage() %>
+			        	<%=sess.getUserName() %>님 반갑습니다.
+						<a href = "logOut.do"> 로그아웃 </a>
+					<% } %>
+                    <div class="list" style=" cursor: pointer;" onclick="location.href='review/reviewList.do';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">리뷰게시판</div>
+                    <div class="list" style=" cursor: pointer;" onclick="location.href='support/supportList.do';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">문의하기</div>                                   
                 </div>
             </div>            
         </div>
         
-		<% if (session.getAttribute("Session") == null) { %>
-			<div class="user" style=" cursor: pointer;" onclick='window.open("http://localhost:8080/honbob/loginForm.do","_blank","height=600,width=470, status=yes,toolbar=no,menubar=no,location=no");return false'>로그인을 해주세요.</div>
-        <% } else { %>
-			<a href = "logOut.do"> 로그아웃 </a>
-		<% } %>
+		
 	
 	
 	</div>
