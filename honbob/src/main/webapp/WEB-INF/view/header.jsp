@@ -28,7 +28,7 @@ if (sess != null) userNo = sess.getUserNo();
         <div class="header">            
             <div class="headerLeft" onclick="location.href='mainPage.do'">
                 <div class="logo">
-                	<img src="images/main/logo.png">                                   
+                	<a href = "mainPage.do"><img src="images/main/logo.png"></a>                                   
                 </div>
             </div>
             <form action="searchList.do" method="post" name="searchword" id="searchForm" >
@@ -43,7 +43,7 @@ if (sess != null) userNo = sess.getUserNo();
             </div>
             </form>
             <div class="headerRight">
-                <div class="mypage" style=" cursor: pointer;" onclick="location.href='';">                    
+                <div class="mypage" style=" cursor: pointer;" onclick="location.href='profileForm.do';">                    
                 </div>                                                                          
                 <div class="headerBtn">
                 </div> 
