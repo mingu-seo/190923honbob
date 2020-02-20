@@ -596,7 +596,7 @@ public class HonmukController {
 		// userId로 조회
 		UserVO sessUv = (UserVO)sess.getAttribute("Session");
 
-		uv.setUserId(sessUv.getUserId());
+		uv.setUserNo(sessUv.getUserNo());
 		List<ReviewVO> List = hmUserService.myReviewList(uv);
 		model.addAttribute("listcount",listcount[0]);
 		model.addAttribute("totalpage",listcount[1]);
