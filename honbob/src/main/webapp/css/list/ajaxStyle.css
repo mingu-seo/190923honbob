@@ -55,21 +55,23 @@
     }  
     
     
-    	.visit_res{
+   	.visit_res{
 		background-color: #F6F6F6; 
-		height: 100%;
-		padding: 20px;
+		padding: 15px;
 	}
 	#visit_title{
 		font-size: 20px; 
 		padding: 15px; 
 		font-weight: bold;
+		width: 180px;
 	}
 	.visit_box{
 		padding :15px;
-		width: 100%;
+		border-radius: 20px;
+		width: 440px;
 		height: 13%;
 		overflow: hidden;
+		background-color: white;
 	}
 	.visit_box > a{
 		width: 30%;
@@ -86,8 +88,9 @@
 		float: right;
 	}
 	.visit_contents > .visit_name{
-		
 		font-size: 25px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 	.visit_address{
 		padding-top: 3px;

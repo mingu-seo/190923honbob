@@ -49,6 +49,9 @@
             width: 385px;
             height: 250px;
         }
+        .restaurants-info{
+        	line-height: 1.5;
+        }
         .restaurants-info p:nth-child(3) span{
         	white-space : nowrap;
 	    	overflow : hidden;

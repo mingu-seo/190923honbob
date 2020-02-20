@@ -19,6 +19,7 @@ public class HonmukListService {
 		
 		List<RestaurantVO> addressCut = HonmukDao.searchList(resVO);
 		
+		//식당리스트 식당정보의 카테고리 표시 문자 셋팅
 		for(int i=0; i<addressCut.size(); i++) {
 			String address[] = addressCut.get(i).getAddress().split(" ");
 			addressCut.get(i).setAddressCut(address[1]);
@@ -49,6 +50,7 @@ public class HonmukListService {
 		return HonmukDao.count(resVO);
 	}		
 	
+	//최근방문 맛집 내 주소표시를 위한 글자세팅
 	public List<RestaurantVO> visitList(List<String> visit_num) {
 		List<RestaurantVO> visitlist = HonmukDao.visitList(visit_num);
 		for(int i=0; i<visitlist.size(); i++) {

@@ -108,9 +108,9 @@ public class HonmukController {
 		if(searchlist.size()==0) {			
 			model.addAttribute("msg", "식당 정보가 없습니다.");
 			model.addAttribute("url", "/honbob/searchList.do");
-			return "include/alert";
+			return "list/alert";
 		}else {
-			return "include/listAjax";
+			return "list/listAjax";
 		}				
 		
 	}	
