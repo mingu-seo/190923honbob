@@ -64,4 +64,12 @@
 		SELECT count(*) FROM user WHERE pwdQuestion = #{pwdQuestion} AND pwdAnswer = #{pwdAnswer}
 	</select>
 	
+	
+	<select id="myReviewList" parameterType="vo.UserVO" resultType="vo.review.ReviewVO">
+		select * FROM review where user_userId = #{userId} LIMIT #{startIndex}, #{limit}
+	</select>
+	
+	<select id="pageUpDown" resultType="Integer">
+		SELECT COUNT(*) FROM honmuk.user
+	</select>
 </mapper>

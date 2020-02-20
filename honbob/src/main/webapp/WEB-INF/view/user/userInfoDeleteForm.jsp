@@ -15,13 +15,21 @@
 	<script type = "text/javascript">
 
 
-		function check() {
-			if ($("#userPassword").val() != $("#pssword1").val()) {
-				alert("비밀번호 확인이 일치하지 않습니다. ");
-				return false;
-				}
-		}
-	
+		$(function() {
+			$("#subm").click(function() {
+				if ($("#userPassword").val() != $("#pssword1").val()) {
+					alert("비밀번호 확인이 일치하지 않습니다. ");
+					return false;
+					} else {
+						
+					} if (confirm("적용 하시겠습니까?")) {
+						
+					} else {
+						alert("취소 되었습니다.");
+						return false;
+					}
+				});
+			});
 	</script>
 </head>
 <body>
@@ -82,7 +90,7 @@
 			<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type = "password" name = "password1"></td>
 		</tr>
 		<tr>
-			<td class ="sub"><input type = "submit" value = "탈퇴하기" class ="subm"><input type = "submit" value = "취소" class ="subm"></td>
+			<td class ="sub"><input type = "submit" value = "탈퇴하기" class ="subm" id = "subm"><input type = "submit" value = "취소" class ="subm"></td>
 		</tr>
 	</table>
 			

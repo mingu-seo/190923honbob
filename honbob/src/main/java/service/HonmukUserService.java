@@ -1,6 +1,7 @@
 package service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import dao.HonmukUserDAO;
 import util.FileUtil;
 import vo.UserVO;
+import vo.review.ReviewVO;
 
 @Service
 public class HonmukUserService {
@@ -61,7 +63,23 @@ public class HonmukUserService {
 	}
 	
 	// 나의 리뷰글(마이페이지)
-
+	public List<ReviewVO> myReviewList(UserVO uv) {
+		return honmukUserDAO.myReviewList(uv);
+	}
+	
+	// 페이징 처리(마이페이지)
+	public int[] pageUpDown() {
+		int listcount = honmukUserDAO.pageUpDown();
+		int totalpage = listcount / 5;
+		if (listcount % 5 > 0) totalpage++;
+		
+		int[] pagecount = new int[2];
+		pagecount[0] = listcount;
+		pagecount[1] = totalpage;
+		
+		return pagecount;
+	}
+	
  	
 	// 별명 중복 체크(회원가입)
 	public int nameCheck (UserVO vo) {

@@ -35,7 +35,7 @@
                         <span class = "menu-title"><a href = "userInfoDeleteForm.do"><h4>회원탈퇴</h4></a></span><hr>
                     </li>
                     <li class = "menulIST">
-                        <span class = "menu-title"><a href = "myReview.do"><h4>나의 리뷰글</h4></a></span><hr>
+                        <span class = "menu-title"><a href = "myReview.do?userId=<%=vo.getUserId()%>"><h4>나의 리뷰글</h4></a></span><hr>
                     </li>
                     <li class = "menulIST">
                         <span class = "menu-title menu-title-active"><h4>나의 QnA</h4></span><hr>
