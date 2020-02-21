@@ -20,7 +20,7 @@
 <body>
 <div class="wrap">
     <%@ include file="/WEB-INF/view/header.jsp"%>
-
+<div class="container">
 <div class="table">
 <table class="table table-bordered">
     <thead>
@@ -48,22 +48,14 @@
     <questionField class="form-control" id="answerField" rows="3">${adminReply.content}</questionField>
 </div>
 
-<div class="container">
-    <div class="row">
-        <div class="optionButtons">
-            <button id="subjectListPageLinkBtn" type="button" class="btn btn-warning">목록</button>
-        </div>
-
-            <div class="optionButtons">
-                <button id="editPageBtn" type="button" class="btn btn-warning">수정</button>
-            </div>
-
         <form method="post" action="/supportDelete/${support.id}" class="was-validated">
-            <div class="optionButtons">
+        <div class="optionButtons text-right">
+            <button id="subjectListPageLinkBtn" type="button" class="btn btn-warning">목록</button>
+                <button id="editPageBtn" type="button" class="btn btn-warning">수정</button>
+
                 <button type="submit" class="btn btn-warning">삭제</button>
             </div>
         </form>
-    </div>
 </div>
 <%@ include file="/WEB-INF/view/footer.jsp" %>
 </div>

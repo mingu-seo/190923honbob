@@ -18,7 +18,7 @@
 <div class="wrap">
     <%@ include file="/WEB-INF/view/header.jsp"%>
 
-<form method="POST" action="/supportWrite" class="was-validated">
+<form method="POST" action="/honbob/supportWrite" class="was-validated">
 <input type="hidden" name="userNo" value="<%=sess != null ? sess.getUserNo() : 0%>">
     <div class="mb-3">
         <label for="questionSubject">문의제목</label>
@@ -44,18 +44,6 @@
 </div>
 <script>
     $(document).ready(function() {
-        $('#saveBtn').click(
-            function(e) {
-                if (confirm("등록하시겠습니까?")) {
-                    // 확인 버튼 클릭 시 동작
-                    alert("등록되었습니다.");
-                } else {
-                    // 취소 버튼 클릭 시 동작
-                    alert("등록이 취소되었습니다.");
-                }
-                window.location.href = "/honbob/supportList";
-            }
-        );
         $('#backBtn').click(
             function(e) {
                 window.location.href = "/honbob/supportList";
