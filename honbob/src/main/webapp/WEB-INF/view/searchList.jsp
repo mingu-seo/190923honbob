@@ -34,8 +34,8 @@
         <form name="searchFilter" id="searchFilter" action="searchList.do">
         <input type="hidden" name="page" id="page" value="1">
         <input type="hidden" name="keyword" id="keyword" value="<%=resVO.getKeyword()%>">
-        <input type="hidden" name="latitude" id="latitude" value="0">
-        <input type="hidden" name="longitude" id="longitude" value="0">
+        <input type="hidden" name="latitude" id="latitude" value="<%=resVO.getLatitude()%>">
+        <input type="hidden" name="longitude" id="longitude" value="<%=resVO.getLongitude()%>">
              <div class="popup-filter">
                  <div class="inner">
                      <div class="filter-item">
