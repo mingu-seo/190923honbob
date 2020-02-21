@@ -423,7 +423,8 @@
 	<select id="mainList" resultType="vo.RestaurantVO" parameterType="vo.RestaurantVO">
 			select res_num, res_name, grade, address,
 			(select group_concat(res_image_name) as res_image_name from restaurantimage where res_num=restaurantvo.res_num) as res_image_name 
-			from restaurantvo order by grade desc limit 0,6
+			from restaurantvo 
+			order by grade desc limit 0,6
 
 	</select>
 	

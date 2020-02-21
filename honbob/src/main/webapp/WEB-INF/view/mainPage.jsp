@@ -14,7 +14,7 @@ RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Honmuk</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <link rel="stylesheet" href="css/header/style.css"/>
 <script src="js/header/header.js"></script>

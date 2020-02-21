@@ -308,7 +308,7 @@ public class HonmukController {
 	
 	@RequestMapping("/mainPage.do")
 	public String mainPage(Model model,vo.RestaurantVO rvo){
-		List<ReviewVO> mainList = hmMainService.mainList(rvo);		
+		List<RestaurantVO> mainList = hmMainService.mainList(rvo);		
 		model.addAttribute("mainList",mainList);
 		
 		
