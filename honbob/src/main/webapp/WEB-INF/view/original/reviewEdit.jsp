@@ -23,7 +23,7 @@
     <script src="/js/script.js"></script>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <%@ include file="/WEB-INF/view/review/headHtml.jsp" %>
+    <%@ include file="/WEB-INF/view/original/headHtml.jsp" %>
     <script>
         $(function() {
             var oEditors = [];

@@ -6,7 +6,7 @@
 	<select id="getSupports" parameterType="int" resultType="vo.support.SupportVO">
 		select *
 		from support
-		where user_userNo = #{id}
+		where userNo = #{id}
 		ORDER BY id DESC LIMIT 8;
 	</select>
 
@@ -26,7 +26,7 @@
 
 	<insert id="insertSupport" parameterType="vo.support.SupportVO">
 		INSERT INTO `honmuk`.`support`
-			(`id`, `subject`, `content`, `registdate`, `lock`, `sendemail`, `user_userNo`)
-		VALUES (NULL, #{subject}, #{content}, #{registdate}, #{lock}, #{sendemail}, #{user_userId});
+			(`subject`, `content`, `registdate`, `lock`, `sendemail`, `userNo`)
+		VALUES (#{subject}, #{content}, NOW(), #{lock}, #{sendemail}, #{userNo});
 	</insert>
 </mapper>

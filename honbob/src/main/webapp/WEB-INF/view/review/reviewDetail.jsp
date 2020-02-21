@@ -19,7 +19,7 @@
 
 <body>
 <div class="wrap">
-    <%@ include file="/WEB-INF/view/header_board.jsp"%>
+    <%@ include file="/WEB-INF/view/header.jsp"%>
 
         <div class="container">
             <div class="row">
@@ -37,7 +37,7 @@
         <tbody>
         <tr>
             <th scope="row">작성자</th>
-            <td>작성자 아이디 넣기</td>
+            <td>${review.userName }</td>
         </tr>
         <tr>
             <th scope="row">작성일</th>
@@ -55,32 +55,28 @@
 
 <div class="container">
     <div class="row">
-        <div class="optionButtons">
+        <form method="post" action="/honbob/reviewDelete?reviewDocumentId=${review.id}" class="was-validated">
+        <div class="optionButtons mt-3 text-right">
             <button id="subjectListPageLinkBtn" type="button" class="btn btn-warning">목록</button>
-        </div>
-        <div class="optionButtons">
             <button id="editPageBtn" type="button" class="btn btn-warning">수정</button>
-        </div>
-        <form method="post" action="/reviewDelete/${review.id}" class="was-validated">
-            <div class="optionButtons">
-                <button id=deleteBtn type="submit" class="btn btn-warning">삭제</button>
-            </div>
+            <button id=deleteBtn type="submit" class="btn btn-warning">삭제</button>
+        </div>  
         </form>
     </div>
 </div>
-    <jsp:include page="/WEB-INF/view/footer.jsp"/>
+    <%@ include file="/WEB-INF/view/footer.jsp" %>
 </div>
 <script>
     $(document).ready(function() {
         $('#subjectListPageLinkBtn').click(
             function(e) {
-                window.location.href = "http://localhost:8080/reviewList";
+                window.location.href = "/honbob/reviewList";
             }
         );
 
         $('#editPageBtn').click(
             function(e) {
-                window.location.href = "http://localhost:8080/reviewEdit/${review.id}";
+                window.location.href = "/honbob/reviewEdit?reviewDocumentId=${review.id}";
             }
         );
         $('#deleteBtn').click(

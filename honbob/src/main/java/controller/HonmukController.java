@@ -92,10 +92,6 @@ public class HonmukController {
 			List<RestaurantVO> visitList = hmListService.visitList(visit_num);
 			model.addAttribute("visitList", visitList);
 		}
-
-		System.out.println(resVO.getLatitude());
-		System.out.println(resVO.getLatitude());
-		System.out.println(resVO.getLatitude());
 		
 		//검색결과를 받아옴
 		List<RestaurantVO> searchlist = hmListService.searchList(resVO); 		

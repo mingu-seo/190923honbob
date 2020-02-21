@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="wrap">
-    <%@ include file="/WEB-INF/view/header_board.jsp"%>
+    <%@ include file="/WEB-INF/view/header.jsp"%>
 <div class="container">
     <div class="row">
         <p></p>
@@ -104,7 +104,7 @@
     <tr>
         <th scope="row">${supportPreview.id}</th>
         <td>
-            <a href="/supportDetail/${supportPreview.id}">${supportPreview.subject}
+            <a href="/honbob/supportDetail?supportDocumentId=${supportPreview.id}">${supportPreview.subject}
             </a>
         </td>
         <td>${supportPreview.registdate}</td>
@@ -131,13 +131,13 @@
         </ul>
     </nav>
 </div>
-    <jsp:include page="/WEB-INF/view/footer.jsp"/>
+    <%@ include file="/WEB-INF/view/footer.jsp" %>
 </div>
     <script>
         $(document).ready(function() {
             $('#writePageBtn').click(
                 function(e) {
-                    window.location.href = "http://localhost:8080/supportWrite";
+                    window.location.href = "/honbob/supportWrite";
                 }
             );
 

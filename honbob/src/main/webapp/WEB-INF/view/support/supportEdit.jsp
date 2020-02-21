@@ -16,7 +16,7 @@
 
 <body>
 <div class="wrap">
-    <%@ include file="/WEB-INF/view/header_board.jsp"%>
+    <%@ include file="/WEB-INF/view/header.jsp"%>
 <form method="POST" action="/supportEdit" class="was-validated" id="frm">
     <input type="hidden" name="id" value="${support.id}">
     <div class="mb-3">
@@ -39,7 +39,7 @@
         </div>
     </div>
 </div>
-    <jsp:include page="/WEB-INF/view/footer.jsp"/>
+    <%@ include file="/WEB-INF/view/footer.jsp" %>
 </div>
 <script>
     $(document).ready(function() {
@@ -48,7 +48,7 @@
         });
         $('#backBtn').click(
             function(e) {
-                window.location.href = "http://localhost:8080/supportList";
+                window.location.href = "/honbob/supportList";
             }
         );
     });
