@@ -15,8 +15,8 @@ public class HonmukMainPageDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public List<ReviewVO> mainReview(ReviewVO rvo){
-		return sqlSession.selectList("Honmuk.mainReview", rvo);
+	public List<ReviewVO> mainList(vo.RestaurantVO rvo){
+		return sqlSession.selectList("Honmuk.mainList", rvo);
 	}
 	
 	 

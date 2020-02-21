@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="vo.review.ReviewVO" %>
 <%@ page import="vo.RestaurantVO"%>
 <%@ page import="java.util.List"%>
 
 <%
-List<ReviewVO> reviewList = (List<ReviewVO>)request.getAttribute("reviewList");
+List<RestaurantVO> mainList = (List<RestaurantVO>)request.getAttribute("mainList");
 RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
+
 %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +34,8 @@ RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
 	    });	    
     })
     
-    </script>
+    </script>    
+    
     
     <style>
         * {
@@ -200,18 +203,20 @@ RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
 
         .review>.list>.item>.top>.img img{
             width:100%;
+            height:100%;
         }
 
-        .review>.list>.item>.top>.topRight>.id{
-            font-size: 13px;
+        .review>.list>.item>.top>.topRight>.id{ 
+            
+             font-size: 15px;
             color: #222228;
+            font-weight: 600;
             margin-bottom: 2px;
         }
 
         .review>.list>.item>.top>.topRight>.restaurant{
-            font-size: 15px;
+            font-size: 13px;
             color: #222228;
-            font-weight: 600;
             margin-bottom: 2px;
         }
         
@@ -221,7 +226,7 @@ RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
         }
 
         .review>.list>.item>.comment{
-            font-size: 13px;
+            font-size: 12px;
             color: #222228;
             margin-bottom: 5px;
             max-height: 65px;
@@ -366,32 +371,39 @@ RestaurantVO resVO = (RestaurantVO)request.getAttribute("resVO");
         </div> 
         <!--Review-->        
         <div class="review">
-            <p class="subject">실시간 리뷰</p>                      
+            <p class="subject">추천 식당</p>                      
             <div class="list">            
             <%
-            for(int i=0; i<reviewList.size(); i++){
+            for(int i=0; i<mainList.size(); i++){
+            	String img = mainList.get(i).getRes_image_name();
+            	String[] imgArr = img.split(",");
             %>                
                 <div class="item">
                     <div class="top"> <!--리뷰 상단-->
-                        <div class="img"> <!--썸네일-->                            
-								<img src="https://s3-ap-northeast-1.amazonaws.com/dcreviewsresized/300_300_20200121083816_photo1_6b93810357a8.jpg">
+                        <div class="img"> <!--썸네일-->                        	                          
+								<% if (imgArr.length > 0) { %>
+								<img src="images/food/<%=imgArr[0] %>">
+								<% }else %><img src="images/food/noimage.jpg">
                         </div>
                         <div class="topRight"><!--상단 우측-->
-                            <p class="id"><%=reviewList.get(i).getId() %></p>
-                            <p class="restaurant"><%=reviewList.get(i).getSubject() %></p>
-                            <p class="point">평점</p>                            
+                            <p class="id"><%=mainList.get(i).getRes_name() %></p>
+                            <p class="restaurant">조회수 : <%=mainList.get(i).getReadcount()%></p>
+                            <p class="point"><img src="images/list/grade_icon.png" width="15" height="15"><%=mainList.get(i).getGrade() %></p>                            
                         </div>
                     </div>                    
-                    <div class="comment"><!--한줄소개-->
-                        <p><%=reviewList.get(i).getContent() %></p>                        
+                    <div class="comment"><!--음식 종류-->
+                        <p><%=mainList.get(i).getAddress() %></p>                        
                     </div>
                     <p class="img" style="height:130px;overflow:hidden;"><!--메인 이미지-->
-                        <img src="https://s3-ap-northeast-1.amazonaws.com/dcreviewsresized/300_300_20200121083816_photo1_6b93810357a8.jpg" style="width: 48%;margin-top:-35px; float:left; height:200%;">
-                        <img src="https://s3-ap-northeast-1.amazonaws.com/dcreviewsresized/300_300_20200121083816_photo1_6b93810357a8.jpg" style="width: 48%;margin-top:-35px; float:right; height:200%">
+                    <% if (imgArr.length > 1) { %>
+                        <img src="images/food/<%=imgArr[1] %>" style="width: 48%;margin-top:-35px; float:left; height:200%;">
+                    <% }else %><img src="images/food/noimage.jpg" style="width: 48%;margin-top:-35px; float:left; height:150%;">
+                    <% if (imgArr.length > 2) { %>
+                        <img src="images/food/<%=imgArr[2] %>" style="width: 48%;margin-top:-35px; float:right; height:200%">
+                    <% }else %><img src="images/food/noimage.jpg" style="width: 48%;margin-top:-35px; float:left; height:150%;">
                     </p>
-                    <div class="bottom"><!--리뷰 하단-->
-                        <div class="btn1" style="cursor: pointer; float: left;">공감</div>
-                        <div class="btn2" style="cursor: pointer; float: right;">나도 평가하기</div>
+                    <div class="bottom"><!--리뷰 하단-->                        
+                        <div class="btn2" style="cursor: pointer; float: right;" onclick="location.href='DetailView.do?res_num=<%=mainList.get(i).getRes_num() %>';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">나도 평가하기</div>
                     </div>
                 </div>
 			<%}%>                

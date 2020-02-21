@@ -43,7 +43,8 @@ if (sess != null) userNo = sess.getUserNo();
             </div>
             </form>
             <div class="headerRight">
-                <div class="mypage" style=" cursor: pointer;" onclick="location.href='';">                    
+                <div class="mypage" style=" cursor: pointer;">  
+                                  
                 </div>                                                                          
                 <div class="headerBtn">
                 </div> 

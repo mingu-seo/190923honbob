@@ -14,8 +14,8 @@ public class HonmukMainPageService {
 	@Autowired
 	private HonmukMainPageDAO mainpageDAO;
 	
-	public List<ReviewVO> mainReview(ReviewVO rvo){
-		return mainpageDAO.mainReview(rvo);
+	public List<ReviewVO> mainList(vo.RestaurantVO rvo){
+		return mainpageDAO.mainList(rvo);
 	}
 
 	
