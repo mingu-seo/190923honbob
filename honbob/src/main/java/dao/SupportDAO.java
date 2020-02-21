@@ -3,6 +3,8 @@ package dao;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import util.PagingOption;
 import vo.support.SupportEditRequest;
 import vo.support.SupportVO;
 
@@ -13,8 +15,11 @@ public class SupportDAO {
     @Autowired
     SqlSessionTemplate sqlSession;
 
-    public List<SupportVO> getSupports(int userId) {
-        return sqlSession.selectList("Support.getSupports", userId);
+    public int countSupport() {
+    	return sqlSession.selectOne("Support.countSupport");
+    }
+    public List<SupportVO> getSupports(PagingOption pagingOption) {
+        return sqlSession.selectList("Support.getSupports", pagingOption);
     }
 
     public SupportVO getSupport(int supportDocumentId) {
