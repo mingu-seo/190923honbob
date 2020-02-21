@@ -54,7 +54,6 @@
 </div>
 
 <div class="container">
-    <div class="row">
         <form method="post" action="/honbob/reviewDelete?reviewDocumentId=${review.id}" class="was-validated">
         <div class="optionButtons mt-3 text-right">
             <button id="subjectListPageLinkBtn" type="button" class="btn btn-warning">목록</button>
@@ -62,7 +61,6 @@
             <button id=deleteBtn type="submit" class="btn btn-warning">삭제</button>
         </div>  
         </form>
-    </div>
 </div>
     <%@ include file="/WEB-INF/view/footer.jsp" %>
 </div>

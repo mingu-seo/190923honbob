@@ -62,8 +62,8 @@ public class HonmukController {
 	//기본 페이지 호출 경로
 	@RequestMapping("/searchList.do")
 	public String searchList(HttpServletRequest req, RestaurantVO resVO) {
-		req.setAttribute("resVO", resVO);
-		
+		req.setAttribute("resVO", resVO);		
+
 		return "searchList";  
 	}	
 	
@@ -92,8 +92,6 @@ public class HonmukController {
 			List<RestaurantVO> visitList = hmListService.visitList(visit_num);
 			model.addAttribute("visitList", visitList);
 		}
-		
-		
 		
 		//검색결과를 받아옴
 		List<RestaurantVO> searchlist = hmListService.searchList(resVO); 		

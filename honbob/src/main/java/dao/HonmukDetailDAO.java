@@ -85,7 +85,7 @@ public class HonmukDetailDAO {
 		return sqlSession.selectList("Honmuk.getReviewList", res_num);
 	}
 	//유저정보 가지고오기
-	public UserVO getUserInfo(String userNo) {
+	public UserVO getUserInfo(int userNo) {
 		//return sqlSession.selectOne("Honmuk.getUserInfo",userNo);
 		return null;
 	}

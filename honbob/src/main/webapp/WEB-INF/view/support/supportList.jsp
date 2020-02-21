@@ -120,11 +120,14 @@
             <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><<</a>
             </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item" aria-current="page">
-                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <c:forEach begin="1" end="${totalPages}" varStatus="loop">
+                <c:if test="${loop.index eq currentPage}">
+                    <li class="page-item active"><a class="page-link" href="supportList?page=${loop.index}">${loop.index}</a></li>
+                </c:if>
+                <c:if test="${loop.index ne currentPage}">
+                    <li class="page-item"><a class="page-link" href="supportList?page=${loop.index}">${loop.index}</a></li>
+                </c:if>
+            </c:forEach>
             <li class="page-item">
                 <a class="page-link" href="#">>></a>
             </li>
