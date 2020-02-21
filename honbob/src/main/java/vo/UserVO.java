@@ -8,7 +8,7 @@ public class UserVO {
 	private int userNo;
 	//아이디
 	private String userId;
-	//이름
+	//별명
 	private String userName;
 	//이메일
 	private String userEmail;
