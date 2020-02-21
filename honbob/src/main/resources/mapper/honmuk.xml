@@ -318,7 +318,7 @@
 		</if>		
 	</select>
 	
-	
+	<!-- 최근방문식당 데이터 받아오기 -->
 	<select id="visitList" parameterType="vo.RestaurantVO" resultType="vo.RestaurantVO">
 		select a.*, b.res_image_name from restaurant a inner join restaurantimage b on a.res_num = b.res_num where b.best_image='1' and a.res_num in
 		<foreach collection="visit_num" item="item" index="index" separator="," open="(" close=")">

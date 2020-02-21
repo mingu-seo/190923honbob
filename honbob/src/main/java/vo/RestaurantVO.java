@@ -31,7 +31,7 @@ public class RestaurantVO {
 	private int japanfood;
 	//양식
 	private int westernfood;
-	//야식
+	//기타
 	private int etcfood;
 	
 	
@@ -46,22 +46,28 @@ public class RestaurantVO {
 	//2인테이블
 	private int table2;	
 	
-	
+	//페이징 처리를 위한 값
 	private int page;
 	private int limit;
 	private int startIndex;	
+	private int count;
+
 	
+	//키워드
 	private String keyword;
 	
+	//화면에 표시할 식당정보(한식,중식 .. 강남구.. 칸막이..)를 위해 문자를 담아둘 객체
 	private String addressCut;
 	private String category;
 	private String option;
 	
-	private String res_image_name;
+	//식당 대표이미지를 담아둘 객체
+	private String res_image_name;	
 	
-	private int count;
-	
+	//최근방문식당 데이터 담아둘 객체
 	private List<String> visit_num;
+	
+	//지역코드 담을 객체
 	private int gu;
 	
 	
