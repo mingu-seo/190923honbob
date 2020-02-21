@@ -66,7 +66,7 @@
 	
 	
 	<select id="myReviewList" parameterType="vo.UserVO" resultType="vo.review.ReviewVO">
-		select * FROM review where user_userNo = #{userNo} LIMIT #{startIndex}, #{limit}
+		select * FROM review where userNo = #{userNo} LIMIT #{startIndex}, #{limit}
 	</select>
 	
 	<select id="myQnAList" parameterType="vo.UserVO" resultType="vo.support.SupportVO">

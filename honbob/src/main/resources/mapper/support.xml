@@ -3,11 +3,14 @@
 <!-- Mybatis 사용 -->
 <mapper namespace="Support">
 
-	<select id="getSupports" parameterType="int" resultType="vo.support.SupportVO">
+	<select id="countSupport" resultType="Integer">
+		SELECT COUNT(*) FROM support
+	</select>
+	
+	<select id="getSupports" parameterType="util.PagingOption" resultType="vo.support.SupportVO">
 		select *
 		from support
-		where user_userNo = #{id}
-		ORDER BY id DESC LIMIT 8;
+		ORDER BY id DESC LIMIT ${currentItemStartNumber}, ${itemsPerPage};
 	</select>
 
 	<select id="getSupport" parameterType="int" resultType="vo.support.SupportVO">
@@ -26,7 +29,7 @@
 
 	<insert id="insertSupport" parameterType="vo.support.SupportVO">
 		INSERT INTO `honmuk`.`support`
-			(`id`, `subject`, `content`, `registdate`, `lock`, `sendemail`, `user_userNo`)
-		VALUES (NULL, #{subject}, #{content}, #{registdate}, #{lock}, #{sendemail}, #{user_userId});
+			(`subject`, `content`, `registdate`, `lock`, `sendemail`, `userNo`)
+		VALUES (#{subject}, #{content}, NOW(), #{lock}, #{sendemail}, #{userNo});
 	</insert>
 </mapper>

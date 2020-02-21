@@ -163,7 +163,7 @@ public class HonmukDetailService {
 		//리뷰 숫자만큼 유저정보가 필요하기때문에 리뷰리스트의 숫자만큼 포문을 돌려준다.
 		for(int i=0;i<reviewList.size();i++) {
 			//리뷰 하나별로 저장되어있는 userNo을 이용하여 User정보를 가지고 온다.
-			UserVO uv = HonmukDao.getUserInfo(reviewList.get(i).getUser_userNo());
+			UserVO uv = HonmukDao.getUserInfo(reviewList.get(i).getUserNo());
 			//가지고온 정보를 리스트에 넣어준다.
 			reviewUserList.add(uv);
 		}

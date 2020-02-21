@@ -1,6 +1,8 @@
 package service.support;
 
 import dao.SupportDAO;
+import util.PagingOption;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vo.support.SupportEditRequest;
@@ -13,9 +15,13 @@ import java.util.List;
 public class SupportService {
     @Autowired
     private SupportDAO supportDao;
+    
+    public int countSupport() {
+        return supportDao.countSupport();
+    }
 
-    public List<SupportVO> getLatestSupports(int userId) {
-        List<SupportVO> results = supportDao.getSupports(userId);
+    public List<SupportVO> getLatestSupports(PagingOption pagingOption) {
+        List<SupportVO> results = supportDao.getSupports(pagingOption);
         return results;
     }
 
@@ -25,9 +31,6 @@ public class SupportService {
     }
 
     public void insertSupport(SupportVO vo) {
-        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        vo.setRegistdate(date);
-        vo.setUser_userId(1);
         supportDao.insertSupport(vo);
     }
 

@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="wrap">
-    <%@ include file="/WEB-INF/view/header_board.jsp"%>
+    <%@ include file="/WEB-INF/view/header.jsp"%>
 <div class="container">
     <div class="row">
         <p></p>
@@ -104,7 +104,7 @@
     <tr>
         <th scope="row">${supportPreview.id}</th>
         <td>
-            <a href="/supportDetail/${supportPreview.id}">${supportPreview.subject}
+            <a href="/honbob/supportDetail?supportDocumentId=${supportPreview.id}">${supportPreview.subject}
             </a>
         </td>
         <td>${supportPreview.registdate}</td>
@@ -120,24 +120,27 @@
             <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><<</a>
             </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item" aria-current="page">
-                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <c:forEach begin="1" end="${totalPages}" varStatus="loop">
+                <c:if test="${loop.index eq currentPage}">
+                    <li class="page-item active"><a class="page-link" href="supportList?page=${loop.index}">${loop.index}</a></li>
+                </c:if>
+                <c:if test="${loop.index ne currentPage}">
+                    <li class="page-item"><a class="page-link" href="supportList?page=${loop.index}">${loop.index}</a></li>
+                </c:if>
+            </c:forEach>
             <li class="page-item">
                 <a class="page-link" href="#">>></a>
             </li>
         </ul>
     </nav>
 </div>
-    <jsp:include page="/WEB-INF/view/footer.jsp"/>
+    <%@ include file="/WEB-INF/view/footer.jsp" %>
 </div>
     <script>
         $(document).ready(function() {
             $('#writePageBtn').click(
                 function(e) {
-                    window.location.href = "http://localhost:8080/supportWrite";
+                    window.location.href = "/honbob/supportWrite";
                 }
             );
 

@@ -16,8 +16,9 @@
 
 <body>
 <div class="wrap">
-    <%@ include file="/WEB-INF/view/header_board.jsp"%>
-<form method="POST" action="/supportEdit" class="was-validated" id="frm">
+    <%@ include file="/WEB-INF/view/header.jsp"%>
+<div class="container">
+<form method="POST" action="/honbob/supportEdit" class="was-validated" id="frm">
     <input type="hidden" name="id" value="${support.id}">
     <div class="mb-3">
         <label for="questionSubject">문의제목</label>
@@ -28,18 +29,14 @@
         <textarea name="content" class="form-control is-invalid" id="questionField" required>${support.content}</textarea>
     </div>
 </form>
-
+</div>
 <div class="container">
-    <div class="row">
-        <div class="optionButtons">
+        <div class="optionButtons mt-3 text-right">
             <button id="editBtn" type="submit" class="btn btn-warning">수정완료</button>
-        </div>
-        <div class="optionButtons">
             <button id="backBtn" type="button" class="btn btn-warning">취소</button>
         </div>
-    </div>
 </div>
-    <jsp:include page="/WEB-INF/view/footer.jsp"/>
+    <%@ include file="/WEB-INF/view/footer.jsp" %>
 </div>
 <script>
     $(document).ready(function() {
@@ -48,7 +45,7 @@
         });
         $('#backBtn').click(
             function(e) {
-                window.location.href = "http://localhost:8080/supportList";
+                window.location.href = "/honbob/supportList";
             }
         );
     });

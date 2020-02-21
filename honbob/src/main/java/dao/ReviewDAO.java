@@ -1,15 +1,15 @@
 package dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import util.PagingOption;
-import vo.RestaurantVO;
 import vo.review.ReviewEditRequest;
 import vo.review.ReviewVO;
-import vo.support.SupportEditRequest;
-
-import java.util.List;
 
 @Repository
 public class ReviewDAO {
@@ -42,6 +42,14 @@ public class ReviewDAO {
 		int theNumOfReviews = sqlSession.selectOne("Review.countReviews");
 		return theNumOfReviews;
 	}
+    
+    public int insertFile(Map map) {
+    	return sqlSession.insert("Review.insertFile", map);
+    }
+    
+    public int deleteFile(int id) {
+    	return sqlSession.delete("Review.deleteFile", id);
+    }
 
 //    public void matchingRestr(RestaurantVO vo) {sqlSession.
 //    }
