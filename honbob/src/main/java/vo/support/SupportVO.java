@@ -10,7 +10,7 @@ public class SupportVO {
 	private String subject;
 	private String content;
 	private Timestamp registdate;
-	private boolean lock;
+	private int lock;
 	private boolean sendemail;
 	private int file_num;
 	private int userNo;

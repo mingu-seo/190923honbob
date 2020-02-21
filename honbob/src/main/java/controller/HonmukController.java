@@ -35,6 +35,7 @@ import vo.RestaurantImageVO;
 import vo.RestaurantVO;
 import vo.UserVO;
 import vo.review.ReviewVO;
+import vo.support.SupportVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -590,7 +591,13 @@ public class HonmukController {
 	
 	// 나의 QnA 질문과 답변 리스트
 	@RequestMapping("/myQnA.do")
-	public String myQnAList() {
+	public String myQnAList(Model model,SupportVO vo,UserVO uv, HttpSession sess) {
+		// userNo로 조회
+		UserVO sessUv = (UserVO)sess.getAttribute("Session");
+		uv.setUserNo(sessUv.getUserNo());
+		List<SupportVO> List = hmUserService.myQnAList(uv);
+		model.addAttribute("myQnAList",List);
+		
 		return "user/myQnA";
 	}
 	
@@ -607,8 +614,9 @@ public class HonmukController {
 		model.addAttribute("listcount",listcount[0]);
 		model.addAttribute("totalpage",listcount[1]);
 		model.addAttribute("myReviewList",List);
+		
 		return "user/myReview";
-	}
+	} 
 
 	// 회원탈퇴
 	@RequestMapping("/userInfoDeleteForm.do")

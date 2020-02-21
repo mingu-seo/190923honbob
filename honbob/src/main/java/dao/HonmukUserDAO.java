@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import vo.UserVO;
 import vo.review.ReviewVO;
+import vo.support.SupportVO;
 
 @Repository
 public class HonmukUserDAO {
@@ -48,6 +49,11 @@ public class HonmukUserDAO {
 	// 나의 리뷰글(마이페이지) 
 	public List<ReviewVO> myReviewList(UserVO uv) {
 		return sqlSession.selectList("user.myReviewList",uv);
+	}
+	
+	// 나의 QnA(마이페이지) 
+	public List<SupportVO> myQnAList(UserVO uv) {
+		return sqlSession.selectList("user.myQnAList",uv);
 	}
 	
 	// 페이징 처리(마이페이지)
