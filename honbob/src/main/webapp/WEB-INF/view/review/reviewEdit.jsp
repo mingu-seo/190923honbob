@@ -21,6 +21,7 @@
         }
         .optionButtons {
             margin: 2px;
+            text-align:right;
         }
     </style>
 </head>
@@ -32,7 +33,7 @@
         <p></p>
     </div>
 
-<form method="POST" action="/reviewEdit" class="was-validated" id="frm">
+<form method="POST" action="/honbob/reviewEdit" class="was-validated" id="frm"  enctype="multipart/form-data">
     <input type="hidden" name="id" value="${review.id}">
     <div class="mb-3">
         <label for="questionSubject">제목</label>
@@ -42,18 +43,17 @@
         <label for="questionField">내용</label>
         <textarea name="content" class="form-control is-invalid" id="questionField" required>${review.content}</textarea>
     </div>
-</form>
-
-<div class="container">
-    <div class="row">
-        <div class="optionButtons">
-            <button id="editBtn" type="submit" class="btn btn-warning">수정완료</button>
+    <div class="custom-file">
+            <input type="file" class="custom-file-input" id="validatedCustomFile" name="filename">
+            <label class="custom-file-label" for="validatedCustomFile">첨부할 파일을 업로드 해주세요.</label>
+            <div class="invalid-feedback"></div>
         </div>
-        <div class="optionButtons">
+        <div class="optionButtons mt-3 text-right">
+            <button id="editBtn" type="submit" class="btn btn-warning">수정완료</button>
             <button id="backBtn" type="button" class="btn btn-warning">취소</button>
         </div>
-    </div>
-</div>
+</form>
+
     <%@ include file="/WEB-INF/view/footer.jsp" %>
 </div>
 <script>

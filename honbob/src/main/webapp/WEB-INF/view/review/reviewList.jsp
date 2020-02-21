@@ -59,19 +59,20 @@
         <div class="col-md-12">
             <c:forEach var="reviewItem" items="${reviews}" varStatus="status">
                 <div class="card" style="width: 30%;float:left;padding:10px;margin:10px;">
-                    <img src="https://post-phinf.pstatic.net/MjAxODAxMzBfMiAg/MDAxNTE3MzA3MTE4MTE2.XGLId_RK61J74j8NuM1y7dH2ZT9EYYYiHzISxSxB3AAg.suh8hDEzMqvmvHj_dF7fVQh6Jc2jVaalM-HtDGZTrUkg.JPEG/bakeup_namyo_%EB%B2%A0%EC%9D%B4%ED%81%AC%EC%97%85.jpg?type=w1200" class="card-img-top" alt="viewImage">
+                <c:if test="${empty reviewItem.imageName}">
+                	<img src="/honbob/images/unnamed.gif" class="card-img-top" alt="viewImage">
+                </c:if>
+                <c:if test="${!empty reviewItem.imageName}">
+					<img src="/honbob/upload/board/${reviewItem.imageName }" class="card-img-top" alt="viewImage">                
+                </c:if>
                     <div class="card-body">
                         <h5 class="card-title">${reviewItem.subject}</h5>
                         <h8 class="card-title">4.8</h8>
                         <p class="card-text">${reviewItem.subject} / ${reviewItem.subject}</p>
                         <p class="card-text update">${reviewItem.registdate}</p>
 
-<<<<<<< HEAD
-                            <a href="/reviewDetail?reviewDocumentId=${reviewItem.id}" id="viewPageBtn" class="btn btn-primary reviewbutton">리뷰 보기</a>
+                            <a href="/honbob/reviewDetail?reviewDocumentId=${reviewItem.id}" id="viewPageBtn" class="btn btn-primary reviewbutton">리뷰 보기</a>
                         </div>
-=======
-                        <a href="reviewDetail/${reviewItem.id}" id="viewPageBtn" class="btn btn-primary reviewbutton">리뷰 보기</a>
->>>>>>> branch 'master' of https://github.com/mingu-seo/190923honbob.git
                     </div>
                 </c:forEach>
             </div>

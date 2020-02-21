@@ -20,4 +20,6 @@ public class ReviewVO {
     private int res_num;
     private int local_num;
     private int comment_num;
+    private String userName;
+    private String imageName;
 }

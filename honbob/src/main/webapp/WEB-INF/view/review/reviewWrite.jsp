@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-    <form method="POST" action="/honbob/reviewWrite" class="was-validated">
+    <form method="POST" action="/honbob/reviewWrite" class="was-validated" enctype="multipart/form-data">
         <input type="hidden" name="res_num" value="${restaurantId}">
         <input type="hidden" name="userNo" value="<%=sess != null ? sess.getUserNo() : 0%>">
         <div class="mb-3">
@@ -48,8 +48,8 @@
             <textarea name="content" class="form-control is-invalid" id="reviewField" placeholder="내용을 입력해주세요" required></textarea>
         </div>
         <div class="custom-file">
-            <input type="file" class="custom-file-input" id="validatedCustomFile">
-            <label class="custom-file-label" for="validatedCustomFile">첨부할 파일을 업로드 해주세요.</label>
+            <input type="file" class="custom-file-input" id="validatedCustomFile" name="filename">
+            <label class="custom-file-label" for="validatedCustomFile">이미지를 업로드 해주세요.</label>
             <div class="invalid-feedback"></div>
         </div>
         <div class="optionButtons mt-3 text-right">
