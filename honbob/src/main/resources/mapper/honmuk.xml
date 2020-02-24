@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+
+
+
+
+
 <!-- Mybatis 사용 -->
 <mapper namespace="Honmuk">
 	<!-- 검색결과 식당리스트 불러오기 -->
@@ -414,9 +419,13 @@
 	<select id="getUserInfo" parameterType="Integer" resultType="vo.UserVO">
 		select * from user where userNo = #{userNo}
 	</select>
-	<!-- 메인페이지에서 최신리뷰 6개 가져오기 -->
-	<select id="mainReview" resultType="vo.review.ReviewVO" parameterType="vo.review.ReviewVO">
-			SELECT * FROM review WHERE registdate LIMIT 0,6
+	<!-- 메인페이지에서 별점순 추천식당6개 가져오기 -->
+	<select id="mainList" resultType="vo.RestaurantVO" parameterType="vo.RestaurantVO">
+			select res_num, res_name, grade, address,
+			(select group_concat(res_image_name) as res_image_name from restaurantimage where res_num=restaurantvo.res_num) as res_image_name 
+			from restaurantvo 
+			order by grade desc limit 0,6
+
 	</select>
 	
 </mapper>
