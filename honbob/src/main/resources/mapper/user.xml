@@ -13,7 +13,7 @@
 	</insert>
 
 	<select id = "search_id" parameterType = "vo.UserVO" resultType = "vo.UserVO">
-		SELECT userId honmuk.FROM user WHERE userName = #{userName} AND userEmail = #{userEmail}
+		SELECT userId FROM honmuk.user WHERE userName = #{userName} AND userEmail = #{userEmail}
 	</select>
 	
 	<select id = "search_pwd" parameterType = "vo.UserVO" resultType = "vo.UserVO">
@@ -69,11 +69,16 @@
 		select * FROM review where userNo = #{userNo} LIMIT #{startIndex}, #{limit}
 	</select>
 	
+	<select id="ReviewListCount" parameterType="vo.UserVO" resultType="Integer">
+		SELECT COUNT(*) FROM review where userNo = #{userNo}
+	</select>  
+	
 	<select id="myQnAList" parameterType="vo.UserVO" resultType="vo.support.SupportVO">
 		select * FROM support where userNo = #{userNo} LIMIT #{startIndex}, #{limit}
 	</select>
 	
-	<select id="pageUpDown" resultType="Integer">
-		SELECT COUNT(*) FROM honmuk.user
+	<select id="QnAListCount" parameterType="vo.UserVO" resultType="Integer">
+		SELECT COUNT(*) FROM support where userNo = #{userNo}
 	</select>
+
 </mapper>

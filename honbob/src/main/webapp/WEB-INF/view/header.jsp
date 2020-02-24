@@ -57,8 +57,8 @@ if (sess != null) userNo = sess.getUserNo();
 			        	<%=sess.getUserName() %>님 반갑습니다.
 						<a href = "logOut.do"> 로그아웃 </a>
 					<% } %>
-                    <div class="list" style=" cursor: pointer;" onclick="location.href='review/reviewList.do';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">리뷰게시판</div>
-                    <div class="list" style=" cursor: pointer;" onclick="location.href='support/supportList.do';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">문의하기</div>                                   
+                    <div class="list" style=" cursor: pointer;" onclick="location.href='reviewList.do';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">리뷰게시판</div>
+                    <div class="list" style=" cursor: pointer;" onclick="location.href='supportList.do';" onmouseover="this.style.color='#F5D0A9';"  onmouseout="this.style.color='#222222';">문의하기</div>                                   
                 </div>
             </div>            
         </div>       

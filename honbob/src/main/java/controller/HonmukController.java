@@ -425,7 +425,7 @@ public class HonmukController {
 		// 12자리로 비밀번호 변경 후
 		int r = hmUserService.pwdUpdate(userEmail, pwdNum);
 		// 이메일로 임시 비밀번호 전송
-		SendMail.sendEmail("duwkdutns2@naver.com", userEmail, "안녕하세요^^. [밥먹자] 임시 비밀번호 발급 입니다.", " 임시 비밀번호 : '"+ pwdNum + "' 마이페이지에서 비밀번호를 꼭 변경해주세요.");
+		SendMail.sendEmail("duwkdutns2@naver.com", userEmail, "안녕하세요^^. [밥먹자] 임시 비밀번호 발급 입니다.", " 임시 비밀번호 : "+ pwdNum + " 마이페이지에서 비밀번호를 꼭 변경해주세요.");
 
 		response.setCharacterEncoding("UTF-8");		
 		response.setContentType("text/html; charset=UTF-8");
@@ -590,28 +590,71 @@ public class HonmukController {
 	// 나의 QnA 질문과 답변 리스트
 	@RequestMapping("/myQnA.do")
 	public String myQnAList(Model model,SupportVO vo,UserVO uv, HttpSession sess) {
+
 		// userNo로 조회
 		UserVO sessUv = (UserVO)sess.getAttribute("Session");
 		uv.setUserNo(sessUv.getUserNo());
 		List<SupportVO> List = hmUserService.myQnAList(uv);
 		model.addAttribute("myQnAList",List);
 		
+		// 페이징 처리
+		
+		int listCount = hmUserService.QnAListCount(uv);
+		
+		//총 페이지 수
+   		int maxPage=(int)((double)listCount/uv.getLimit()+0.95); //0.95를 더해서 올림 처리
+   		//현재 페이지에 보여줄 시작 페이지 수(1, 11, 21 등...)
+   		int startPage = (((int) ((double)uv.getPage() / 10 + 0.9)) - 1) * 10 + 1;
+   		//현재 페이지에 보여줄 마지막 페이지 수.(10, 20, 30  등...)
+   	    int endPage = startPage+10-1;
+
+   		if (endPage> maxPage) endPage= maxPage;
+
+   		PageInfo pageInfo = new PageInfo();
+   		pageInfo.setEndPage(endPage);
+   		pageInfo.setListCount(listCount);
+		pageInfo.setMaxPage(maxPage);
+		pageInfo.setPage(uv.getPage());
+		pageInfo.setStartPage(startPage);
+		
+		model.addAttribute("pageInfo",pageInfo);
+		
 		return "user/myQnA";
 	}
 	
 	// 나의 리뷰글(마이페이지)
 	@RequestMapping("/myReview.do")
-	public String myReview(Model model,ReviewVO vo,UserVO uv, HttpSession sess) {
-		// 페이징 처리
-		 int[] listcount = hmUserService.pageUpDown();
+	public String myReview(Model model,ReviewVO vo,UserVO uv, HttpSession sess, HttpServletRequest request) {
+		
 		// userId로 조회
 		UserVO sessUv = (UserVO)sess.getAttribute("Session");
 
 		uv.setUserNo(sessUv.getUserNo());
+		
 		List<ReviewVO> List = hmUserService.myReviewList(uv);
-		model.addAttribute("listcount",listcount[0]);
-		model.addAttribute("totalpage",listcount[1]);
 		model.addAttribute("myReviewList",List);
+		
+		// 페이징 처리
+		
+		int listCount = hmUserService.ReviewListCount(uv);
+		
+		//총 페이지 수
+   		int maxPage=(int)((double)listCount/uv.getLimit()+0.95); //0.95를 더해서 올림 처리
+   		//현재 페이지에 보여줄 시작 페이지 수(1, 11, 21 등...)
+   		int startPage = (((int) ((double)uv.getPage() / 10 + 0.9)) - 1) * 10 + 1;
+   		//현재 페이지에 보여줄 마지막 페이지 수.(10, 20, 30  등...)
+   	    int endPage = startPage+10-1;
+
+   		if (endPage> maxPage) endPage= maxPage;
+
+   		PageInfo pageInfo = new PageInfo();
+   		pageInfo.setEndPage(endPage);
+   		pageInfo.setListCount(listCount);
+		pageInfo.setMaxPage(maxPage);
+		pageInfo.setPage(uv.getPage());
+		pageInfo.setStartPage(startPage);
+		
+		model.addAttribute("pageInfo",pageInfo);
 		
 		return "user/myReview";
 	} 

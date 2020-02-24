@@ -14,7 +14,7 @@ if (sess != null) userNo = sess.getUserNo();
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Ryan Login</title>
+    <title>Search_Pwd</title>
     
     <link rel="stylesheet" href="/honbob/css/user/style.css">
 </head>
