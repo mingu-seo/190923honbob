@@ -86,7 +86,8 @@ public class HonmukController {
 			resVO.setReadcount(1);
 		}		
 		
-		//방문 리스트 데이터 받아오기
+		//최근방문 리스트 데이터 받아오기
+		//res_num이 List 형태로 담긴 세션을 불러와 svc>dao>db를 이용하여 VO값을 List로 받아옴. 뷰페이지 사용을 위해 model add.
 		if(session.getAttribute("visit_num") != null) {
 			List<String> visit_num = (List<String>)session.getAttribute("visit_num");			
 			List<RestaurantVO> visitList = hmListService.visitList(visit_num);
@@ -230,23 +231,31 @@ public class HonmukController {
 		restDetail.setGradecount(gradeCnt);
 		
 		
-		//최근 방문 식당 res_num 세션 저장	
+		//최근 방문식당 기능구현
+		
+		//visit_res 정의
 		List<String> visit_res;
+		//visit_res에 데이터를 넣어줌. 만들어진 세션이 있으면 해당 세션값을 넣어줌. 없으면 초기화.
 		if (session.getAttribute("visit_num") != null) {
 			visit_res = (List<String>)session.getAttribute("visit_num");
 		} else {
 			visit_res = new ArrayList<String>();
 		}
+		//받아온(초기화한)세션의 크기가 6보다 작을때
 		if (visit_res.size() < 6) {
+			//List값 중복체크한 후 클릭한 식당을 List에 담음.
 			if (!visit_res.contains(String.valueOf(res_num))) {
 				visit_res.add(String.valueOf(res_num));
 			}
+		//5개의 최근~이 담기고 6번째 클릭이 이루어질 때, 첫번째로 담긴 데이터를 제거하고 새로운 res_num을 List에 추가.
 		} else {			
 			visit_res.remove(0);
 			visit_res.add(String.valueOf(res_num));
 		}
+		//빈 세션을 만들고 visit_res값을 담아둠. lsitAjax.do에서 사용.
 		session = req.getSession();
 		session.setAttribute("visit_num", visit_res);	
+		
 
 		
 		//모델에 넣기
@@ -275,7 +284,7 @@ public class HonmukController {
 		gradevo.setRes_num(res_num);
 		gradevo.setGrade(star_count);
 		int userGrade = hmDetailService.getUserGrade(gradevo);
-		//서버에 없으면 -1 있으면 1~5의 숫자가 나올것이다.
+		//서버에 없으면 0 있으면 1~5의 숫자가 나올것이다.
 		//서버에 없으면 새로 넣어준다.
 		if(userGrade == 0) {
 			int insertGrade = hmDetailService.insertGrade(gradevo);

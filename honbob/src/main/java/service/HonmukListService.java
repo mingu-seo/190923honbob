@@ -53,6 +53,8 @@ public class HonmukListService {
 	//최근방문 맛집 내 주소표시를 위한 글자세팅
 	public List<RestaurantVO> visitList(List<String> visit_num) {
 		List<RestaurantVO> visitlist = HonmukDao.visitList(visit_num);
+		
+		//지역코드를 뷰페이지에서 사용하기 위해 문자 세팅.
 		for(int i=0; i<visitlist.size(); i++) {
 			if(visitlist.get(i).getGu()==1)visitlist.get(i).setAddressCut("강남구");
 			if(visitlist.get(i).getGu()==2)visitlist.get(i).setAddressCut("강동구");
