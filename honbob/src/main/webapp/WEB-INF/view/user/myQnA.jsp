@@ -10,6 +10,13 @@
 %>
 <%
 	List<SupportVO> list = (List<SupportVO>) request.getAttribute("myQnAList"); 
+	
+    PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo");
+	int listCount=pageInfo.getListCount();
+	int nowPage=pageInfo.getPage();
+	int maxPage=pageInfo.getMaxPage();
+	int startPage=pageInfo.getStartPage();
+	int endPage=pageInfo.getEndPage();
 %>
 
 <!DOCTYPE html>
@@ -66,14 +73,35 @@
 				<% for ( int i=0 ; i < list.size() ; i++) { %>
 				<tr>
 					<td class = "listCon"> <%=list.get(i).getId()%></td>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/honbob/supportDetail/<%=list.get(i).getId()%>"><%=list.get(i).getSubject() %></a></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/honbob/supportDetail?supportDocumentId=<%=list.get(i).getId()%>"><%=list.get(i).getSubject() %></a></td>
 					<td class = "listCon"><%=list.get(i).getLock() %></td>
-					<td class = "listCon"><%=list.get(i).getRegistdate() %></td>
+					<td class = "listCon"><%=String.valueOf(list.get(i).getRegistdate()).substring(0,10) %></td>
 				</tr>
 				<% } %>
     		</table>
     	</div>
-
+			<section id="pageList">
+	    		<%if(nowPage<=1){ %>
+				[이전]&nbsp;
+				<%}else{ %>
+				<a href="myQnA.do?page=<%=nowPage-1%>">[이전]</a>&nbsp; 
+				<%} %>
+		
+				<%for(int a=startPage;a<=endPage;a++){
+						if(a==nowPage){%>
+				[<%=a %>]
+				<%}else{ %>
+				&nbsp;<a href="myQnA.do?page=<%=a %>">[<%=a %>]
+				</a>
+				<%} %>
+			<%} %>
+		
+				<%if(nowPage>=maxPage){ %>
+				[다음]
+				<%}else{ %>
+				&nbsp;<a href="myQnA.do?page=<%=nowPage+1%>">[다음]</a>
+				<%} %>
+			</section>
 	</div>
 	<script src="/honbob/js/user/myPage.js"></script> 
 	<%@ include file = "../footer.jsp" %>

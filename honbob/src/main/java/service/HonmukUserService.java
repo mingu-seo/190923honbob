@@ -73,18 +73,18 @@ public class HonmukUserService {
 		return honmukUserDAO.myQnAList(uv);
 	}
 	
-	// 페이징 처리(마이페이지)
-	public int[] pageUpDown() {
-		int listcount = honmukUserDAO.pageUpDown();
-		int totalpage = listcount / 5;
-		if (listcount % 5 > 0) totalpage++;
-		
-		int[] pagecount = new int[2];
-		pagecount[0] = listcount;
-		pagecount[1] = totalpage;
-		
-		return pagecount;
+	// 페이징 처리(myReview)
+	public int ReviewListCount(UserVO uv) {
+		int listcount = honmukUserDAO.ReviewListCount(uv);
+		return listcount;
 	}
+	
+	// 페이징 처리(myQnA)
+	public int QnAListCount(UserVO uv) {
+		int listcount = honmukUserDAO.QnAListCount(uv);
+		return listcount;
+	}
+	
 	
  	
 	// 별명 중복 체크(회원가입)

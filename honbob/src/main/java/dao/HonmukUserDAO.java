@@ -56,10 +56,16 @@ public class HonmukUserDAO {
 		return sqlSession.selectList("user.myQnAList",uv);
 	}
 	
-	// 페이징 처리(마이페이지)
-	public int pageUpDown() {
-		return sqlSession.selectOne("user.pageUpDown");
+	// 페이징 처리(myReview)
+	public int ReviewListCount(UserVO vo) {
+		return sqlSession.selectOne("user.ReviewListCount", vo);
 	}
+	
+	// 페이징 처리(myQnA)
+	public int QnAListCount(UserVO vo) {
+		return sqlSession.selectOne("user.QnAListCount", vo);
+	}
+	
 	// 별명 변경(마이페이지)
 	public int nameUpdate(UserVO vo) {
 		return sqlSession.update("user.nameUpdate",vo);
