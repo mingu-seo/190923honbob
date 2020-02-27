@@ -72,6 +72,8 @@ public class HonmukController {
 	public String listAjax(Model model, RestaurantVO resVO, @RequestParam(name="page", required = false) String page,
 			@RequestParam(name="filter1", required = false) String filter1, HttpSession session) {
 			
+		System.out.println(resVO.getPage());
+		System.out.println(resVO.getStartIndex());
 		//초기 검색시 별점순으로
 		if(resVO.getGrade()==0 && resVO.getReadcount() ==0 && resVO.getReviewcount()==0) {
 			resVO.setGrade(1);
@@ -231,8 +233,7 @@ public class HonmukController {
 		restDetail.setGradecount(gradeCnt);
 		
 		
-		//최근 방문식당 기능구현
-		
+		//최근 방문식당 기능구현		
 		//visit_res 정의
 		List<String> visit_res;
 		//visit_res에 데이터를 넣어줌. 만들어진 세션이 있으면 해당 세션값을 넣어줌. 없으면 초기화.

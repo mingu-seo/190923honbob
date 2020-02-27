@@ -325,7 +325,7 @@
 	
 	<!-- 최근방문식당 데이터 받아오기 -->
 	<select id="visitList" parameterType="vo.RestaurantVO" resultType="vo.RestaurantVO">
-		select a.*, b.res_image_name from restaurant a inner join restaurantimage b on a.res_num = b.res_num where b.best_image='1' and a.res_num in
+		select a.*, b.res_image_name from restaurant a inner join restaurantimage b on a.res_num = b.res_num where b.best_image='1' and a.res_num in 
 		<foreach collection="visit_num" item="item" index="index" separator="," open="(" close=")">
 			#{item}
 		</foreach>
@@ -422,8 +422,8 @@
 	<!-- 메인페이지에서 별점순 추천식당6개 가져오기 -->
 	<select id="mainList" resultType="vo.RestaurantVO" parameterType="vo.RestaurantVO">
 			select res_num, res_name, grade, address,
-			(select group_concat(res_image_name) as res_image_name from restaurantimage where res_num=restaurantvo.res_num) as res_image_name 
-			from restaurantvo 
+			(select group_concat(res_image_name) as res_image_name from restaurantimage where res_num=restaurant.res_num) as res_image_name 
+			from restaurant 
 			order by grade desc limit 0,6
 
 	</select>

@@ -31,7 +31,7 @@
                 	<c:forEach var = "res" items="${searchlist }" varStatus="status">
 						<div class="restaurants-item">
 						   <div class="restaurants-thumb" onclick="location.href='DetailView.do?res_num=${res.res_num }'" style="cursor:pointer">
-						   	<img src="images/food/${res.res_image_name }" width="385px" height="250px">
+								<img src="images/food/${res.res_image_name }" width="385px" height="250px">
 						   </div>
 						   <div class="restaurants-info">
 						       <a href="DetailView.do?res_num=${res.res_num }"><h2>${res.res_name }</h2></a>
@@ -136,7 +136,7 @@
 		<c:if test="${list.japanfood==1}">markericon.push("images/list/japanfood_border.png")</c:if>
 		<c:if test="${list.chinafood==1}">markericon.push("images/list/chinafood_border.png")</c:if>
 		<c:if test="${list.westernfood==1}">markericon.push("images/list/westernfood_border.png")</c:if>
-		<c:if test="${list.etcfood==1}">markericon.push("images/list/etcfood_border.png")</c:if>
+		<c:if test="${list.etcfood==1}">markericon.push("images/list/etcfood_border.png")</c:if> 
 		
 	</c:forEach>
 	

@@ -135,11 +135,13 @@ public class RestaurantVO {
 		this.keyword = keyword;
 	}
 
+	//초기 페이지 세팅, 1페이지당 표시될 데이터값 갯수 설정.
 	public RestaurantVO() {
 		this.page=1; 
 		this.limit=10;
 	}
 	
+	//페이지당 표시될 db데이터의 시작 인덱스 설정 (1페이지 0~9, 2페이지 10~19 ...)
 	public int getStartIndex() {
 		int i = (this.page-1)*this.limit;
 		return i;

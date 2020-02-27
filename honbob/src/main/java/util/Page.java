@@ -15,11 +15,15 @@ public class Page {
 		int p = vo.getPage();		
 		
 		int limit = vo.getLimit();
-
+		
+		//최대페이지 번호
 		int maxPage = listCount/limit;
+		//시작페이지 번호 (p-1)/limit는 int이므로 p=1~10 > 0, p=11~20 > 1, ...
 		int startPage = (p-1)/limit*limit+1;
+		//끝페이지 번호
 		int endPage = startPage+10-1;
 		
+		//1단위의 값이 남을시 추가 페이지 설정을 위함
 		if(listCount % limit != 0) {
 			maxPage += 1;
 		}

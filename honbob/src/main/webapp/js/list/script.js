@@ -1,36 +1,36 @@
 $(function(){
-		listAjax();
-		
-		$('.darken-background').click(function(){
-	        hideFilter();
-	    });
+	listAjax();
 	
-	    $('.popup-filter').click(function(event){
-	        event.stopPropagation()
-	    });
-	   
-	    $(".filterArea").click(function() {
-	    	
-	    	var idx = $(this).index(".filterArea");
-	    	$(".filterArea").removeClass("checked2");
-	    	$(".filterArea").addClass("order-icon");
-	    	
-	    	$(".filterArea input[name=filter1]").prop("checked", false);
-	    	$(".filterArea").eq(idx).removeClass("order-icon");
-	    	$(".filterArea").eq(idx).addClass("checked2");
-	    	$(".filterArea input[name=filter1]").eq(idx).prop("checked", true);
-	    });
+	$('.darken-background').click(function(){
+        hideFilter();
+    });
 
-	    $("input:checkbox").on('click', function(){
-	    	if ($(this).prop('checked')) {
-	    		$(this).parent().addClass("checked");
-	    		$(this).next().children().first().css("opacity", "0");
-	    	}else{ 
-	    		$(this).parent().removeClass("checked"); 
-	    		$(this).next().children().first().css("opacity", "1");
-	    		} 
-	    });
-	});
+    $('.popup-filter').click(function(event){
+        event.stopPropagation()
+    });
+   
+    $(".filterArea").click(function() {
+    	
+    	var idx = $(this).index(".filterArea");
+    	$(".filterArea").removeClass("checked2");
+    	$(".filterArea").addClass("order-icon");
+    	
+    	$(".filterArea input[name=filter1]").prop("checked", false);
+    	$(".filterArea").eq(idx).removeClass("order-icon");
+    	$(".filterArea").eq(idx).addClass("checked2");
+    	$(".filterArea input[name=filter1]").eq(idx).prop("checked", true);
+    });
+
+    $("input:checkbox").on('click', function(){
+    	if ($(this).prop('checked')) {
+    		$(this).parent().addClass("checked");
+    		$(this).next().children().first().css("opacity", "0");
+    	}else{ 
+    		$(this).parent().removeClass("checked"); 
+    		$(this).next().children().first().css("opacity", "1");
+    	} 
+    });
+});
 	
 	function listAjax() {
 		
